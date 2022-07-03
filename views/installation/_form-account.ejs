@@ -1,0 +1,93 @@
+<!-- Start Form Data -->
+<div class="col-12 grid-margin stretch-card">
+    <form autocomplete="off" id="formSA" class="" data-fv-framework="bootstrap4"
+        data-fv-message="<%= __('Invalid value') %>" data-fv-icon-valid="glyphicon glyphicon-ok"
+        data-fv-icon-invalid="glyphicon glyphicon-remove" data-fv-icon-validating="glyphicon glyphicon-refresh"
+        data-fv-live="enabled">
+        <div class="card">
+            <div class="card-body">
+                <h1><%= __('Register admin account')%></h1>
+                <input type='hidden' name='_csrf' value='<%= _csrf %>'> 
+                <div class="form-group">
+                    <label class="form-control-label">
+                      <%= __('User Name') %>
+                    </label>
+                    <input type="text" class="form-control" name="userName" data-fv-notempty="true"
+                      data-fv-notempty-message="<%= __('Required field') %>" required
+                      data-fv-stringlength="true" data-fv-stringlength-min="2" data-fv-stringlength-max="64"
+                      data-fv-stringlength-message="<%= __('Username must be at least 2 characters and max 64 characters') %>">
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label">
+                        <%= __('E-mail') %>
+                    </label>
+                    <input value="" type="text" class="form-control"
+                        data-fv-notempty="true" data-fv-notempty-message="<%= __('Required field') %>"
+                        data-fv-message="<%= __('Email format is invalid') %>"
+                        name="emailAddress" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label">
+                        <%= __('Phone') %>
+                    </label>
+                    <input value="" type="tel" class="form-control"
+                        data-fv-notempty="true" data-fv-notempty-message="<%= __('Required field') %>"
+                        data-fv-message="<%= __('Phone must be 9 to 12 number') %>"
+                        name="phone" pattern="[0-9]{9,12}$" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label">
+                        <%= __('Firstname') %>
+                    </label>
+                    <input value="" type="text" class="form-control"
+                        name="firstName" data-fv-notempty="true"
+                        data-fv-notempty-message="<%= __('Required field') %>" required data-fv-stringlength="true"
+                        data-fv-stringlength-min="2" data-fv-stringlength-max="20" 
+                        data-fv-stringlength-message="<%= __('Firstname must be at least 2 characters and max 20 characters') %>" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label">
+                        <%= __('Lastname') %>
+                    </label>
+                    <input value="" type="text" class="form-control"
+                        name="lastName" data-fv-notempty="true"
+                        data-fv-notempty-message="<%= __('Required field') %>" required data-fv-stringlength="true"
+                        data-fv-stringlength-min="2" data-fv-stringlength-max="20" 
+                        data-fv-stringlength-message="<%= __('Firstname must be at least 2 characters and max 20 characters') %>" />
+                </div>
+                <div class="form-group">
+                    <label for="birthDate" class="form-control-label"><%= __('Birthday') %></label>
+                    <input value="" type="date" id="birthDate"
+                        class="form-control" name="birthday">
+
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label">
+                        <%= __('Password') %>
+                    </label>
+                    <input type="password" class="form-control" name="password" id="password"
+                        data-fv-notempty="true" data-fv-notempty-message="<%= __('Required field') %>"
+                        data-fv-message="<%= __('Password must be 6 number.') %>"
+                        pattern="^(?=.{6}$) *\d* *$" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label">
+                        <%= __('Confirm password') %>
+                    </label>
+                    <input type="password" class="form-control" name="passwordConfirm" id="confirm_password" data-fv-notempty="true" data-fv-notempty-message="<%= __('Required field') %>"/>
+                </div>
+                <div class="alert alert-dismissible hidden" role="alert" data-alert-update="<%= __('Update successfully') %>">
+                    <%= __('Update successfully') %>
+                </div>
+                <button type="reset" class="btn btn-default btn-outline btn-reset-page-account waves-effect waves-classic">
+                    <%= __('Reset') %>
+                </button>
+                <button id="btnFormSA" type="submit" class="btn btn-primary waves-effect waves-classic">
+                    <%= __('Register') %>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+

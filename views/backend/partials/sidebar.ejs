@@ -1,0 +1,261 @@
+<%
+let action = moduleActive.action;
+action = action.replace(/\//g, '-'); //replace '/' by '-';
+//console.log(action);
+%>
+<aside class="left-sidebar">
+  <!-- Sidebar scroll-->
+  <div class="scroll-sidebar">
+    <!-- Sidebar navigation-->
+    <nav class="sidebar-nav">
+      <ul id="sidebarnav">
+        <li class="nav-item <%= (action == 'backend-dashboard-index') ? 'active' : '' %>">
+          <a class="waves-effect waves-dark" href="/backend/dashboard">
+            <i class="icon-speedometer"></i><span class="hide-menu"><%= __('Dashboard') %>
+          </a>
+        </li>
+
+        <%if(userActive.isMainSchoolAdmin || (userActive.role && userActive.role.permissions && userActive.role.permissions.branch && userActive.role.permissions.branch.view)){%>
+        <li class="nav-item <%= ['backend-student-list','backend-attendent-index','backend-parent-list','backend-menu-index','backend-schedule-index','backend-student-form','backend-parent-form','backend-pickup-index','backend-branch-activities'].includes(action) ? 'active' : '' %>">
+
+          <a class="has-arrow waves-effect waves-dark" aria-expanded="false" href="javascript:void(0)">
+            <i class="ti-agenda"></i>
+            <span class="hide-menu"><%= __('Management') %></span>
+          </a>
+            <ul aria-expanded="false" class="collapse">
+              <%if(listBranches.length == 0){%>
+              <li class="nav-item <%= ['backend-student-list','backend-attendent-index','backend-parent-list','backend-menu-index','backend-schedule-index','backend-student-form','backend-parent-form','backend-pickup-index','backend-branch-activities'].includes(action) ? 'active' : '' %>">
+                <a class="waves-effect waves-dark" href="/backend/branch/?action=add">
+                  <i class="mdi mdi-plus"></i><%= __('Add New Branch') %>
+                </a>
+              </li>
+            <%}else{%>
+              <% for(let branch of listBranches){%>
+                <li class="nav-item ">
+                  <a class="waves-effect waves-dark"
+                    href="/backend/branch-<%= branch.id %>/activities"><%= branch.title %></a>
+                </li>
+              <%}%>
+            <%}%>
+            </ul>
+        </li>
+        <%}%>
+
+        <%if(userActive.isMainSchoolAdmin || (userActive.role&&userActive.role.permissions&&(userActive.role.permissions.notification&&userActive.role.permissions.notification.view) || (userActive.role.permissions.event&&userActive.role.permissions.event.view) || (userActive.role.permissions.album&&userActive.role.permissions.album.view) )){%>
+        <li class="nav-item <%= ['backend-album-list','backend-album-form','backend-notification-list','backend-event-list'].includes(action) ? 'active' : '' %>">
+
+          <a class="has-arrow waves-effect waves-dark" aria-expanded="false" href="javascript:void(0)">
+            <i class="ti-announcement"></i>
+            <span class="hide-menu"><%= __('Portal') %></span>
+          </a>
+            <ul aria-expanded="false" class="collapse">
+              <%if(userActive.isMainSchoolAdmin || (userActive.role&&userActive.role.permissions&&userActive.role.permissions.notification&&userActive.role.permissions.notification.view)){%>
+              <li class="nav-item ">
+                <a class="waves-effect waves-dark <%= action %> <%= (action == 'backend-notification-list') ? 'active' : '' %>"
+                  href="/backend/notification/list"><%= __('Bulletin') %></a>
+              </li>
+              <%}%>
+              <%if(userActive.isMainSchoolAdmin || (userActive.role&&userActive.role.permissions&&userActive.role.permissions.event&&userActive.role.permissions.event.view)){%>
+              <li class="nav-item ">
+                <a class="waves-effect waves-dark <%= action %> <%= (action == 'backend-event-list') ? 'active' : '' %>"
+                  href="/backend/event/list"><%= __('Event') %></a>
+              </li>
+              <%}%>
+              <%if(userActive.isMainSchoolAdmin || (userActive.role&&userActive.role.permissions&&userActive.role.permissions.album&&userActive.role.permissions.album.view)){%>
+              <li class="nav-item">
+                <a class="waves-effect waves-dark  <%= (action == 'backend-album-list' || action == 'backend-album-form') ? 'active' : '' %>"
+                  href="/backend/album/list"><%= __('Album') %></a>
+              </li>
+              <%}%>
+            </ul>
+        </li>
+        <%}%>
+
+        <%if(userActive.isMainSchoolAdmin || (userActive.role&&userActive.role.permissions&&(userActive.role.permissions.post&&userActive.role.permissions.post.view) || (userActive.role.permissions.taxonomy&&userActive.role.permissions.taxonomy.view) )){%>
+        <li class="nav-item <%= ['backend-post-list','backend-post-form','backend-taxonomy-categories','backend-taxonomy-tag'].includes(action) ? 'active' : '' %>">
+
+          <a class="has-arrow waves-effect waves-dark" aria-expanded="false" href="javascript:void(0)">
+            <i class="ti-book"></i>
+            <span class="hide-menu"><%= __('News') %></span>
+          </a>
+            <ul aria-expanded="false" class="collapse">
+            <!-- <ul class="nav flex-column sub-menu"> -->
+              <%if(userActive.isMainSchoolAdmin || (userActive.role&&userActive.role.permissions&&userActive.role.permissions.post&&userActive.role.permissions.post.view)){%>
+              <li class="nav-item">
+                <a class="waves-effect waves-dark  <%= (action == 'backend-post-list' || action == 'backend-post-form') ? 'active' : '' %>"
+                  href="/backend/post/list"><%= __('All News') %></a>
+              </li>
+              <%}%>
+              <%if(userActive.isMainSchoolAdmin || (userActive.role&&userActive.role.permissions&&userActive.role.permissions.taxonomy&&userActive.role.permissions.taxonomy.view)){%>
+              <li class="nav-item ">
+                <a class="waves-effect waves-dark <%= action %> <%= (action == 'backend-taxonomy-categories') ? 'active' : '' %>"
+                  href="/backend/category"><%= __('Categories') %></a>
+              </li>
+              <li class="nav-item">
+                <a class="waves-effect waves-dark <%= action %> <%= (action == 'backend-taxonomy-tag') ? 'active' : '' %>"
+                  href="/backend/tag"><%= __('Tags') %></a>
+              </li>
+              <%}%>
+            </ul>
+        </li>
+        <%}%>
+
+        <!-- <%if(userActive.isMainSchoolAdmin || (userActive.role&&userActive.role.permissions&&userActive.role.permissions.post&&userActive.role.permissions.post.view)){%>
+        <li class="nav-item <%= (action == 'backend-page-list' || action == 'backend-pape-form') ? 'active' : '' %>">
+          <a class="waves-effect waves-dark" href="/backend/page/list">
+            <i class="ti-layout-width-default"></i>
+            <span class="hide-menu"><%= __('Page') %></span>
+          </a>
+        </li>
+        <%}%> -->
+
+        <%if(userActive.isMainSchoolAdmin || (userActive.role&&userActive.role.permissions&&(userActive.role.permissions.feeItem&&userActive.role.permissions.feeItem.view) || (userActive.role.permissions.feeInvoice&&userActive.role.permissions.feeInvoice.view) || (userActive.role.permissions.currency&&userActive.role.permissions.currency.view) )){%>
+        <li class="nav-item <%= ['backend-feeItem','backend-feeInvoice','backend-fee-collectin-setting','backend-currency'].includes(action) ? 'active' : '' %>">
+          <a class="has-arrow waves-effect waves-dark" aria-expanded="false" href="javascript:void(0)">
+            <i class="ti-wallet"></i>
+            <span class="hide-menu"><%= __('Fee Collection') %></span>
+          </a>
+            <ul class="nav flex-column sub-menu">
+              <%if(userActive.isMainSchoolAdmin || (userActive.role&&userActive.role.permissions&&userActive.role.permissions.feeItem&&userActive.role.permissions.feeItem.view)){%>
+              <li class="nav-item ">
+                <a class="waves-effect waves-dark <%= action %> <%= (action == 'backend-feeItem') ? 'active' : '' %>"
+                  href="/backend/feeItem"><%= __('Fee Item') %></a>
+              </li>
+              <%}%>
+              <%if(userActive.isMainSchoolAdmin || (userActive.role&&userActive.role.permissions&&userActive.role.permissions.feeInvoice&&userActive.role.permissions.feeInvoice.view)){%>
+              <li class="nav-item">
+                <a class="waves-effect waves-dark <%= action %> <%= (action == 'backend-feeInvoice') ? 'active' : '' %>"
+                  href="/backend/feeInvoice"><%= __('Fee Payment') %></a>
+              </li>
+              <%}%>
+              <%if(userActive.isMainSchoolAdmin){%>
+              <li class="nav-item">
+                <a class="waves-effect waves-dark <%= action %> <%= (action == 'backend-fee-collectin-setting') ? 'active' : '' %>"
+                  href="/backend/setting/feeCollection"><%= __('Settings') %></a>
+              </li>
+              <%}%>
+            </ul>
+        </li>
+        <%}%>
+
+        <%if(userActive.isMainSchoolAdmin || (userActive.role&&userActive.role.permissions&&(userActive.role.permissions.courseSession&&userActive.role.permissions.courseSession.view) || (userActive.role.permissions.formation&&userActive.role.permissions.formation.view) || (userActive.role.permissions.class&&userActive.role.permissions.class.view)  || (userActive.role.permissions.food&&userActive.role.permissions.food.view) || (userActive.role.permissions.subject&&userActive.role.permissions.subject.view) )){%>
+          <li class="nav-item <%= ['backend-coursesession-index','backend-class-index','backend-formation-index','backend-subject-index'].includes(action) ? 'active' : '' %>">
+
+            <a class="has-arrow waves-effect waves-dark" aria-expanded="false" href="javascript:void(0)">
+              <i class="ti-home"></i>
+              <span class="hide-menu"><%= __('Academy') %></span>
+            </a>
+              <ul aria-expanded="false" class="collapse">
+                <%if(userActive.isMainSchoolAdmin || (userActive.role&&userActive.role.permissions&&userActive.role.permissions.courseSession&&userActive.role.permissions.courseSession.view)){%>
+                <li class="nav-item ">
+                  <a class="waves-effect waves-dark <%= action %> <%= (action == 'backend-coursesession-index') ? 'active' : '' %>"
+                    href="/backend/coursesession"><%= __('Session') %></a>
+                </li>
+                <%}%>
+                <%if(userActive.isMainSchoolAdmin || (userActive.role&&userActive.role.permissions&&userActive.role.permissions.class&&userActive.role.permissions.class.view)){%>
+                <li class="nav-item ">
+                  <a class="waves-effect waves-dark <%= action %> <%= (action == 'backend-class-index') ? 'active' : '' %>"
+                    href="/backend/class"><%= __('Classes') %></a>
+                </li>
+                <li class="nav-item ">
+                  <a class="waves-effect waves-dark <%= action %> <%= (action == 'backend-class-index') ? 'active' : '' %>"
+                    href="/backend/class/change"><%= __('Change Class') %></a>
+                </li>
+                <%}%>
+                <%if(userActive.isMainSchoolAdmin || (userActive.role&&userActive.role.permissions&&userActive.role.permissions.formation&&userActive.role.permissions.formation.view)){%>
+                  <li class="nav-item ">
+                    <a class="waves-effect waves-dark <%= action %> <%= (action == 'backend-formation-index') ? 'active' : '' %>"
+                      href="/backend/formation"><%= __('Subject') %></a>
+                  </li>
+                <%}%>
+              </ul>
+            </li>
+          <%}%>
+
+          <%if(userActive.isMainSchoolAdmin || (userActive.role&&userActive.role.permissions&&(userActive.role.permissions.report&&userActive.role.permissions.report.view))){%>
+            <li class="nav-item <%= ['backend-report-student'].includes(action) ? 'active' : '' %>">
+
+              <a class="has-arrow waves-effect waves-dark" aria-expanded="false" href="javascript:void(0)">
+                <i class="ti-stats-up"></i>
+                <span class="hide-menu"><%= __('Report') %></span>
+              </a>
+                <ul aria-expanded="false" class="collapse">
+                  <%if(userActive.isMainSchoolAdmin || (userActive.role&&userActive.role.permissions&&userActive.role.permissions.report&&userActive.role.permissions.report.view)){%>
+                  <li class="nav-item ">
+                    <a class="waves-effect waves-dark <%= action %> <%= (action == 'backend-coursesession-index') ? 'active' : '' %>"
+                      href="/backend/report/student-attendance"><%= __('Student Attendance') %></a>
+                  </li>
+                  <%}%>
+                  <%if(userActive.isMainSchoolAdmin || (userActive.role&&userActive.role.permissions&&userActive.role.permissions.food&&userActive.role.permissions.food.view)){%>
+                    <li class="nav-item ">
+                      <a class="waves-effect waves-dark <%= action %> <%= (action == 'backend-food-index') ? 'active' : '' %>"
+                        href="/backend/food"><%= __('Foods') %></a>
+                    </li>
+                    <li class="nav-item ">
+                      <a class="waves-effect waves-dark <%= action %> <%= (action == 'backend-medical-index') ? 'active' : '' %>"
+                        href="/backend/medical/list"><%= __('Medical') %></a>
+                    </li>
+                    <li class="nav-item ">
+                      <a class="waves-effect waves-dark <%= action %> <%= (action == 'backend-medical-index') ? 'active' : '' %>"
+                        href="#"><%= __('Academic Reports') %></a>
+                    </li>
+                    <li class="nav-item ">
+                      <a class="waves-effect waves-dark <%= action %> <%= (action == 'backend-medical-index') ? 'active' : '' %>"
+                        href="#"><%= __('Behavior Reports') %></a>
+                    </li>
+                  <%}%>
+                </ul>
+              </li>
+          <%}%>
+          <%if(userActive.isMainSchoolAdmin || (userActive.role&&userActive.role.permissions&&(userActive.role.permissions.courseSession&&userActive.role.permissions.courseSession.view) || (userActive.role.permissions.formation&&userActive.role.permissions.formation.view) || (userActive.role.permissions.class&&userActive.role.permissions.class.view)  || (userActive.role.permissions.food&&userActive.role.permissions.food.view) || (userActive.role.permissions.subject&&userActive.role.permissions.subject.view) )){%>
+            <li class="nav-item <%= ['backend-coursesession-index','backend-class-index','backend-formation-index','backend-subject-index'].includes(action) ? 'active' : '' %>">
+  
+              <a class="has-arrow waves-effect waves-dark" aria-expanded="false" href="javascript:void(0)">
+                <i class="ti-home"></i>
+                <span class="hide-menu">Policies</span>
+              </a>
+                <ul aria-expanded="false" class="collapse">
+                  <%if(userActive.isMainSchoolAdmin || (userActive.role&&userActive.role.permissions&&userActive.role.permissions.courseSession&&userActive.role.permissions.courseSession.view)){%>
+                  <li class="nav-item ">
+                    <a class="waves-effect waves-dark <%= action %> <%= (action == 'backend-coursesession-index') ? 'active' : '' %>"
+                      href="#">Categories</a>
+                  </li>
+                  <%}%>
+                  <%if(userActive.isMainSchoolAdmin || (userActive.role&&userActive.role.permissions&&userActive.role.permissions.formation&&userActive.role.permissions.formation.view)){%>
+                    <li class="nav-item">
+                      <a class="waves-effect waves-dark <%= action %> <%= (action == 'backend-formation-index') ? 'active' : '' %>"
+                        href="#">Behavior</a>
+                    </li>
+                  <%}%>
+                  <%if(userActive.isMainSchoolAdmin || (userActive.role&&userActive.role.permissions&&userActive.role.permissions.class&&userActive.role.permissions.class.view)){%>
+                  <li class="nav-item">
+                    <a class="waves-effect waves-dark <%= action %> <%= (action == 'backend-class-index') ? 'active' : '' %>"
+                      href="#">Fee, Uniforms</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="waves-effect waves-dark <%= action %> <%= (action == 'backend-class-index') ? 'active' : '' %>"
+                      href="#">Assessments</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="waves-effect waves-dark <%= action %> <%= (action == 'backend-class-index') ? 'active' : '' %>"
+                      href="#">Food</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="waves-effect waves-dark <%= action %> <%= (action == 'backend-class-index') ? 'active' : '' %>"
+                      href="#">Attendance</a>
+                  </li>
+                  <%}%>
+                </ul>
+              </li>
+            <%}%>
+
+        <li class="nav-item <%= (action == 'backend-message') ? 'active' : '' %>">
+          <a class="waves-effect waves-dark" href="/backend/message">
+            <i class="ti-comments"></i>
+            <span class="hide-menu"><%= __('Messengers') %></span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</aside>

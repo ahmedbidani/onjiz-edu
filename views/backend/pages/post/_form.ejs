@@ -1,0 +1,129 @@
+<form autocomplete="off" id="formPost" data-edit-id="<%= (postsData != undefined) ? postsData.id : '' %>" class="" data-fv-framework="bootstrap4"
+  data-fv-message="<%= __('Invalidate') %>" data-fv-icon-valid="glyphicon glyphicon-ok"
+  data-fv-icon-invalid="glyphicon glyphicon-remove" data-fv-icon-validating="glyphicon glyphicon-refresh"
+  data-fv-live="enabled" data-manner="<%= (postsData.id == undefined) ? 'add' : 'edit' %>">
+  <input type='hidden' name='_csrf' value='<%= _csrf %>'> 
+  <input type='hidden' name='type' value='0'> 
+  <div class="row">
+    <div class="col-md-8 col-lg-9">
+      <input name="id" value="<%=(postsData) ? postsData.id : ''%>" hidden>
+      <div class="form-group">
+        <label class="form-control-label"><%= __('Title') %></label>
+        <input value="<%=(postsData) ? postsData.title : ''%>" type="text" class="form-control" id="title"
+          name="title" data-required-error="<%= __('Required field') %>" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-control-label"><%= __('Motto') %></label>
+        <textarea class="form-control" id="motto" name="motto" rows="2" required><%= (postsData) ? postsData.motto : ''%></textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="form-control-label"><%= __('Description') %></label>
+        <textarea class="form-control" name="description" id="editorDescription" required><%= (postsData) ? postsData.description : ''%></textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="form-control-label"><%= __('SEO Keyword') %></label>
+        <input value="<%=(postsData) ? postsData.metaKeyword : ''%>" type="text" class="form-control"
+          id="metaKeyword" name="metaKeyword" data-required-error="<%= __('Required field') %>" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-control-label">SEO Title</label>
+        <input value="<%=(postsData) ? postsData.metaTitle : ''%>" type="text" class="form-control"
+          id="metaTitle" name="metaTitle" data-required-error="<%= __('Required field') %>" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-control-label"><%= __('Meta description') %></label>
+        <textarea class="form-control" id="metaDescription" name="metaDescription" rows="2"><%= (postsData) ? postsData.metaDescription : '' %></textarea>
+      </div>
+    </div>
+    <div class="col-md-4 col-lg-3">
+      <div class="upload-wrap">
+        <label class="form-control-label"><%= __('Featured Image') %></label>
+        <span><%= postsData.media.thumbnail.path %></span>
+        <div class="upload">
+          <input type="file" data-default-file="<%= postsData.media ? postsData.media.thumbnail.path : '/images/no-thumb.png' %>" class="dropify" name="thumbnail" data-field="thumbnail" data-max-file-size="10M" />
+        </div>
+      </div>
+      <!-- End upload max file size -->
+
+      <div class="form-group">
+          <br/>
+        <label class="form-control-label">
+          <%= __('Categories') %>
+        </label>
+        <select name="categories" class="form-control js-process-basic-multiple select2-multiple"
+          multiple="multiple" data-placeholder="<%= __('Choose') %>">
+          <% 
+                var cateIds = []; 
+                if(postsData){
+                  _.each(postsData.categories, function (tx, ind) {
+                    cateIds.push(tx.id);
+                  });
+                }
+                _.each(listCategory, function (cat, index) {%>
+          <option value="<%= cat.id %>" <%= (cateIds.indexOf(cat.id) != -1 ? 'selected' : '') %>>
+            <%= cat.title %>
+          </option>
+          <%})%>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-control-label">
+          <%= __('Tags') %>
+        </label>
+        <select name="tags" class="form-control js-process-basic-multiple select2-multiple" multiple="multiple"
+          data-placeholder="<%= __('Choose') %>">
+          <% 
+                          var tagIds = []; 
+                          if(postsData){
+                            _.each(postsData.tags, function (tx, ind) {
+                              tagIds.push(tx.id);
+                            });
+                          }
+                          _.each(listTag, function (tagItem, index) {%>
+          <option value="<%= tagItem.id %>" <%= (tagIds.indexOf(tagItem.id) != -1 ? 'selected' : '') %>>
+            <%= tagItem.title %>
+          </option>
+          <%})%>
+        </select>
+      </div>
+
+      <div class="form-group form-material">
+        <label class="form-control-label">Status</label>
+        <ul class="list-unstyled list-inline">
+          <li class="list-inline-item">
+            <div class="form-check">
+              <label class="form-check-label">
+                <input id="statusPublish" type="radio" class="form-check-input" name="status" value="<%= STATUS.ACTIVE %>" checked
+                <%=(postsData.status == 1)? 'checked':''%> />
+                <i class="input-helper"></i>
+                <%= __('Publish') %>
+              </label>
+            </div>
+          </li>
+          <li class="list-inline-item">
+            <div class="form-check">
+              <label class="form-check-label">
+                <input id="statusDraft" type="radio" class="form-check-input" name="status" value="<%= STATUS.DRAFT %>"
+                <%=(postsData.status == 0)? 'checked':''%> />
+                <i class="input-helper"></i>
+                <%= __('Draft') %>
+              </label>
+            </div>
+          </li>
+        </ul>  
+      </div>
+      <div class="alert alert-danger hidden"></div>
+
+      <div class="form-group form-material">
+        <button id="btnFormPost" type="submit"
+          class="btn btn-primary"><%= postsData.id ? __('Update') : __('Add New') %></button>
+      </div> 
+    </div>
+  </div>
+</form>

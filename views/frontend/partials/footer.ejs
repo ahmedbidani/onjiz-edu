@@ -1,0 +1,67 @@
+<!--====== Footer START ======-->
+<footer class="footer_area bg_cover" style="background-image: url(/images/footer_bg.jpg)">
+  <div class="footer_widget pt-60 pb-80">
+      <div class="container">
+          <div class="row">
+              <div class="col-lg-3 col-sm-6">
+                  <div class="footer_about mt-50">
+                      <a href="javascript:void(0)"><img src="/images/kindie-logo.png" alt="Kindie" /></a>
+                      
+                      <p><%= webSettings && webSettings.value && webSettings.value.footerDescription ? webSettings.value.footerDescription : '[FOOTER_DESCRIPTION]' %></p>
+                      
+                      <ul class="footer_social">
+                        <li><a class="twitter" href="<%= webSettings.value.socialNetwork && webSettings.value.socialNetwork.twitter ? webSettings.value.socialNetwork.twitter : 'javascript:void(0)' %>" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="<%= webSettings.value.socialNetwork && webSettings.value.socialNetwork.facebook ? webSettings.value.socialNetwork.facebook : 'javascript:void(0)' %>" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="<%= webSettings.value.socialNetwork && webSettings.value.socialNetwork.youtube ? webSettings.value.socialNetwork.youtube : 'javascript:void(0)' %>" target="_blank"><i class="fa fa-youtube-play"></i></a></li>
+                      </ul>
+                  </div>
+              </div>
+              <div class="col-lg-9">
+                  <div class="footer_widget_wrapper d-flex flex-wrap">
+                      <div class="footer_link mt-50">
+                          <h5 class="footer_title"><%= __('Quick Links') %></h5>
+
+                          <div class="footer_link_wrapper d-flex">
+                              <ul class="link">
+                                <li><a href="<%= webSettings && webSettings.value && webSettings.value.aboutUsLink ? webSettings.value.aboutUsLink : 'javascript:void(0)' %>"><i class="fa fa-angle-right"></i> <%= __('About Us')%></a></li>
+                                <li><a href="/teacher"><i class="fa fa-angle-right"></i> <%= __('Teacher')%></a></li>
+                                <li><a href="/gallery"><i class="fa fa-angle-right"></i> <%= __('Gallery')%></a></li>
+                              </ul>
+                              <ul class="link">
+                                <li><a href="<%= webSettings && webSettings.value && webSettings.value.termsAndConditionsLink ? webSettings.value.termsAndConditionsLink : 'javascript:void(0)' %>"><i class="fa fa-angle-right"></i> <%= __('Terms & Conditions')%></a></li>
+                                <li><a href="<%= webSettings && webSettings.value && webSettings.value.privacyPolicyLink ? webSettings.value.privacyPolicyLink : 'javascript:void(0)' %>"><i class="fa fa-angle-right"></i> <%= __('Privacy Policy')%></a></li>
+                              </ul>
+                          </div>
+                      </div>
+
+                      <div class="footer_contact mt-50">
+                          <h5 class="footer_title"><%= __('Contact')%></h5>
+                          <br>
+                          <address class="text-white">
+                            <strong ><%= __('Address:')%></strong> <br>
+                            <%= webSettings && webSettings.value && webSettings.value.address ? webSettings.value.address : '[YOUR_ADDRESS]' %>
+                          </address>
+                          <span><strong class="text-white"><%= __('Phone: ')%></strong><a href="tel:<%= webSettings && webSettings.value && webSettings.value.phoneTechnical ? webSettings.value.phoneTechnical : '[YOUR_PHONE]' %>"><%= webSettings && webSettings.value && webSettings.value.phoneTechnical ? webSettings.value.phoneTechnical : '[YOUR_PHONE]'%></a></span><br>
+                          <span><strong class="text-white"><%= __('Email: ')%></strong> <a href="mailto:<%= webSettings && webSettings.value && webSettings.value.mailTechnical ? webSettings.value.mailTechnical : '[YOUR_EMAIL]' %>"><%= webSettings && webSettings.value && webSettings.value.mailTechnical ? webSettings.value.mailTechnical : '[YOUR_EMAIL]' %></a></span><br>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  
+  <div class="footer_copyright">
+      <div class="container">
+          <div class="footer_copyright_wrapper text-center d-md-flex justify-content-between">
+            <div class="copyright">
+              <p>&copy; Copyright © 2020 ZiniSoft. All rights reserved. </p>
+            </div>  
+          </div>
+      </div>
+  </div>
+</footer>
+
+<!--====== Footer PART ENDS ======-->
+<!--====== BACK TOP START ======-->
+<a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+<!--====== BACK TOP END ======-->

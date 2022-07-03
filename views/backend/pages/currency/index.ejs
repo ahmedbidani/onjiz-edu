@@ -1,0 +1,122 @@
+<!-- Page -->
+<% let BACKEND = sails.config.custom.BACKEND %> 
+<div class="card">
+    <div class="card-body">
+      <%- partial('../../partials/filter.ejs') %>
+      <div class="table-responsive"><%- partial('./_list.ejs') %></div>
+    </div>
+  </div>
+  <div class="modal fade modal-custom" id="modal-edit" tabindex="-1" role="dialog" aria-labelledby="modal-edit" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title"><%= __('Add new') %></h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true"><i class="mdi mdi-close-circle-outline"></i></span>
+                  </button>
+              </div>
+              <div class="modal-body">
+                  <form autocomplete="off" id="formCurrency" class="" data-fv-framework="bootstrap4"
+                  data-fv-icon-valid="glyphicon glyphicon-ok" data-fv-icon-invalid="glyphicon glyphicon-remove"
+                  data-fv-icon-validating="glyphicon glyphicon-refresh" data-fv-live="enabled" data-manner="add">
+                  <input type='hidden' name='_csrf' value='<%= _csrf %>'> 
+                  <div class="form-group row align-items-md-center">
+                    <label class="col-md-3"><%= __('Code') %></label>
+                    <div class="col-md-9">
+                      <input type="text" class="form-control" name="code" data-fv-notempty="true" id="code"
+                      data-fv-notempty-message="<%= __('Required field') %>" data-fv-stringlength="true"
+                      data-fv-stringlength-min="2" data-fv-stringlength-max="30"
+                      data-fv-stringlength-message="<%= __('Code must be at least 2 characters and max 30 characters') %>" />
+                    </div>
+                  </div>
+
+                  <div class="form-group row align-items-md-center">
+                    <label class="col-md-3"><%= __('Title') %></label>
+                    <div class="col-md-9">
+                      <input type="text" class="form-control" name="title" data-fv-notempty="true" id="title"
+                      data-fv-notempty-message="<%= __('Required field') %>" data-fv-stringlength="true"
+                      data-fv-stringlength-min="3" data-fv-stringlength-max="140"
+                      data-fv-stringlength-message="<%= __('Title must be at least 3 characters and max 140 characters') %>" />
+                    </div>    
+                  </div>
+
+                  <div class="form-group row align-items-md-center">
+                    <label class="col-md-3"><%= __('Symbol Left') %></label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="symbolLeft" id="symbolLeft"/>
+                    </div>
+                  </div>
+
+                  <div class="form-group row align-items-md-center">
+                    <label class="col-md-3"><%= __('Symbol Right') %></label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="symbolRight" id="symbolRight"/>
+                    </div>
+                  </div>
+
+                  <div class="form-group row align-items-md-center">
+                    <label class="col-md-3"><%= __('Decimal Point') %></label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="decimalPoint" id="decimalPoint"/>
+                    </div>
+                  </div>
+
+                  <div class="form-group row align-items-md-center">
+                    <label class="col-md-3"><%= __('Number Seperator Symbol') %></label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="numberSeperatorSymbol" id="numberSeperatorSymbol"/>
+                    </div>
+                  </div>
+
+                  <div class="form-group row align-items-md-center">
+                    <label class="col-md-3"><%= __('Decimal Places') %></label>
+                    <div class="col-md-9">
+                        <input type="number" min="0" max="3" class="form-control" name="decimalPlaces" id="decimalPlaces"/>
+                    </div>
+                  </div>
+                    
+                  <div class="form-group row align-items-md-center">
+                    <label class="col-md-3"><%= __('Status') %></label>
+                    <div class="col-md-9">
+                      <ul class="list-unstyled list-inline">
+                        <li class="list-inline-item">
+                          <div class="form-check">
+                            <label class="form-check-label">
+                              <input id="statusActive" type="radio" class="form-check-input" name="status" checked value="<%= STATUS.ACTIVE %>">
+                              <i class="input-helper"></i>
+                              <%= __('Active') %>
+                            </label>
+                          </div>
+                        </li>
+                        <li class="list-inline-item">
+                          <div class="form-check">
+                            <label class="form-check-label">
+                              <input id="statusDraft" type="radio" class="form-check-input" name="status" value="<%= STATUS.DRAFT %>">
+                              <i class="input-helper"></i>
+                              <%= __('Draft') %>
+                            </label>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                    
+                  </div>
+                  <div class="alert d-none" role="alert">
+                    <i class="mdi mdi-alert-circle"></i>
+                  </div>
+                  <div class="modal-footer row-button-fluid">
+                    <button type="reset" class="btn btn-light" data-dismiss="modal"><%= __('Cancel') %></button>
+                    <button id="btnFormCurrency" type="submit" class="btn btn-primary waves-effect waves-classic">
+                      <%= __('Add New') %>
+                      <div hidden>
+                        <%= __('Update')%>
+                      </div>
+                    </button>
+                  </div>
+                </form>
+              </div>
+          </div>
+      </div>
+  </div> 
+<% block('localScripts', '<script src="/js/backend/currency/index.js"></script>') %> 
+                            

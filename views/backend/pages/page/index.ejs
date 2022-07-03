@@ -1,0 +1,20 @@
+<!-- Page -->
+<% let BACKEND = sails.config.custom.BACKEND %>
+    <!-- Page Content -->
+<% block('localCss', '<link rel="stylesheet" href="/vendors/dropify/dropify.min.css">') %>
+<div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body"> 
+                <%- partial('../../partials/filter.ejs') %>
+                <div class="table-responsive">
+                    <%- partial('./_list.ejs') %>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<% block('localScripts', '<script src="/vendors/dropify/dropify.min.js"></script>') %>
+<% block('localScripts', '<script src="/vendors/sweetalert/sweetalert.min.js"></script>') %>
+<% block('localScripts', '<script src="/js/backend/page/list.js"></script>') %>

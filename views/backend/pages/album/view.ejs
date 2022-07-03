@@ -1,0 +1,70 @@
+<% 
+    let BACKEND = sails.config.custom.BACKEND;
+    let PAGE = 'album';
+%>
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-4 grid-margin stretch-card"> 
+                <div id="carouselExampleIndicators2" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        <% for(let i=0 ; i<photos.length; i++){%>
+                        <li data-target="#carouselExampleIndicators2" data-slide-to="<%-i%>" class="<%=(i==0)?'active':''%>"></li>
+                        <%}%>
+                    </ol>
+                    <div class="carousel-inner" role="listbox">
+                        <% for(let i=0;i<photos.length;i++){%>
+                            <div class="carousel-item <%=(i==0)?'active':''%>" data-interval="10000">
+                                <img class="img-fluid" src="<%=photos[i]%>" alt="">
+                            </div> 
+                        <%}%>
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleIndicators2" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only"><%= __('Previous') %></span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleIndicators2" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only"><%= __('Next') %></span>
+                    </a>
+                </div>
+            </div>
+            <div class="col-8 grid-margin stretch-card">
+                <ul class="list-inline font-14">
+                    <li class="p-l-0"><%= moment(albumData.createdAt).format(webSettings.value.dateFormat)%></li>
+                    <li><a href="javascript:void(0)" class="link"><%=(albumData.comments != undefined && albumData.comments.length)? albumData.comments.length: 0%> comment(s)</a></li>
+                </ul>
+                <h3 class="font-normal"><%-albumData.title%></h3>
+                <p class="m-b-0 m-t-10"><%-albumData.description%></p>
+                <h4 class="card-title m-t-10"><%= __('Comments')%></h4>
+                <% if( albumData.comments.length > 0 ) {
+                    for (let i = 0; i < albumData.comments.length; i++) {
+                        let _commentData = albumData.comments[i];
+                    %>
+                <div class="d-flex flex-row comment-row">
+                    <div class="p-2">
+                        <span class="round">
+                            <img src="<%-_commentData.userCommentObj.avatar%>" alt="user" width="50">
+                        </span>
+                    </div>
+                    <div class="comment-text w-100">
+                        <h5><%-_commentData.userCommentObj.firstName + _commentData.userCommentObj.lastName%></h5>
+                        <div class="comment-footer">
+                            <span class="date"><%= moment(_commentData.createdAt).format(webSettings.value.dateFormat)%> </span>
+                            <% if(_commentData.type) {%>
+                                <span class="label label-info">Teacher</span>
+                            <% } %>
+                        </div>
+                        <p class="m-b-5 m-t-10"><%-_commentData.contentCmt%></p>
+                    </div>
+                </div>
+                <% 
+                    }
+                } else {%>
+                    <%= __('No comment')%>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</div>
+<% block('localScripts', '<script src="/js/backend/album/album.js"></script>') %>

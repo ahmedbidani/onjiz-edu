@@ -1,0 +1,85 @@
+<form autocomplete="off" id="formPage" data-edit-id="<%= (pageData != undefined) ? pageData.id : '' %>" class="" data-fv-framework="bootstrap4"
+  data-fv-message="<%= __('Invalidate') %>" data-fv-icon-valid="glyphicon glyphicon-ok"
+  data-fv-icon-invalid="glyphicon glyphicon-remove" data-fv-icon-validating="glyphicon glyphicon-refresh"
+  data-fv-live="enabled" data-manner="<%= (pageData.id == undefined) ? 'add' : 'edit' %>">
+  <input type='hidden' name='_csrf' value='<%= _csrf %>'> 
+  <input type='hidden' name='type' value='1'> 
+  <div class="row">
+    <div class="col-md-8 col-lg-9">
+      <input name="id" value="<%=(pageData) ? pageData.id : ''%>" hidden>
+      <div class="form-group">
+        <label class="form-control-label"><%= __('Title') %></label>
+        <input value="<%=(pageData) ? pageData.title : ''%>" type="text" class="form-control" id="title"
+          name="title" data-required-error="<%= __('Required field') %>" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-control-label"><%= __('Motto') %></label>
+        <textarea class="form-control" id="motto" name="motto" rows="2" required><%= (pageData) ? pageData.motto : ''%></textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="form-control-label"><%= __('Description') %></label>
+        <textarea class="form-control" name="description" id="editorDescription" required><%= (pageData) ? pageData.description : ''%></textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="form-control-label"><%= __('SEO Keyword') %></label>
+        <input value="<%=(pageData) ? pageData.metaKeyword : ''%>" type="text" class="form-control"
+          id="metaKeyword" name="metaKeyword" data-required-error="<%= __('Required field') %>" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-control-label"><%= __('SEO Title') %></label>
+        <input value="<%=(pageData) ? pageData.metaTitle : ''%>" type="text" class="form-control"
+          id="metaTitle" name="metaTitle" data-required-error="<%= __('Required field') %>" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-control-label"><%= __('Meta description') %></label>
+        <textarea class="form-control" id="metaDescription" name="metaDescription" rows="2"><%= (pageData) ? pageData.metaDescription : '' %></textarea>
+      </div>
+    </div>
+    <div class="col-md-4 col-lg-3">
+      <div class="upload-wrap">
+        <label class="form-control-label"><%= __('Featured Image') %></label>
+        <div class="upload">
+          <input type="file" data-default-file="<%= pageData.media ? pageData.media.thumbnail.path : '/images/no-thumb.png' %>" class="dropify" name="thumbnail" data-field="thumbnail" data-max-file-size="10M" />
+        </div>
+      </div>
+      <!-- End upload max file size -->
+
+      <div class="form-group form-material">
+        <label class="form-control-label"><%= __('Status')%></label>
+        <ul class="list-unstyled list-inline">
+          <li class="list-inline-item">
+            <div class="form-check">
+              <label class="form-check-label">
+                <input id="statusPublish" type="radio" class="form-check-input" name="status" value="<%= STATUS.ACTIVE %>" checked
+                <%=(pageData.status == 1)? 'checked':''%> />
+                <i class="input-helper"></i>
+                <%= __('Publish') %>
+              </label>
+            </div>
+          </li>
+          <li class="list-inline-item">
+            <div class="form-check">
+              <label class="form-check-label">
+                <input id="statusDraft" type="radio" class="form-check-input" name="status" value="<%= STATUS.DRAFT %>"
+                <%=(pageData.status == 0)? 'checked':''%> />
+                <i class="input-helper"></i>
+                <%= __('Draft') %>
+              </label>
+            </div>
+          </li>
+        </ul>  
+      </div>
+      <div class="alert alert-danger hidden"></div>
+
+      <div class="form-group form-material">
+        <button id="btnFormPage" type="submit"
+          class="btn btn-primary"><%= pageData.id ? __('Update') : __('Add New') %></button>
+      </div> 
+    </div>
+  </div>
+</form>

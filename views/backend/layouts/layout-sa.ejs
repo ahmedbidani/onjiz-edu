@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html class="no-js css-menubar" lang="<%= lang%>">
+  <head>
+    <title>Kindergarten management | <%=webModule.headline%></title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta name="description" content="<%=webModule.description%>">
+    <meta name="author" content="ZiniSoft.NET">
+    <% /* Viewport tag for sensible mobile support */ %>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <link rel="icon" href="/images/logo-light.png">
+    <link rel="stylesheet" href="/vendors/datatables.net-bs4/css/dataTables.bootstrap4.css">
+    <link rel="stylesheet" href="/vendors/datatables.net-bs4/css/responsive.dataTables.min.css">
+    <link rel="stylesheet" href="/vendors/toast-master/css/jquery.toast.css">
+    <link rel="stylesheet" href="/vendors/formvalidation/formValidation.css">
+    <link rel="stylesheet" href="/vendors/dropify/dropify.min.css">
+    <link rel="stylesheet" href="/vendors/select2/dist/css/select2.min.css">
+    <%- blocks.localCss %>
+    <link rel="stylesheet" href="/styles/tabPage.css">
+    <link rel="stylesheet" href="/styles/style.min.css">
+    <link rel="stylesheet" href="/styles/custom.css">
+  </head>
+  <body class="horizontal-nav skin-megna fixed-layout">
+    <div class="preloader">
+        <div class="loader">
+            <div class="loader__figure"></div>
+            <p class="loader__label">Kindie</p>
+        </div>
+    </div>
+    <div class="main-wrapper">
+      <%- partial('../partials/header-sa.ejs') %>
+      <%- partial('../partials/sidebar-sa.ejs') %> 
+        <div class="page-wrapper">
+          <div class="container-fluid">
+            <%- partial('../partials/breadcrumb.ejs') %>
+            <%- body %>
+          </div>
+        </div> 
+        <%- partial('../partials/footer.ejs') %>
+      <script>delete window.self;</script>
+
+      <script src="/dependencies/sails.io.js"></script>
+      <script src="/vendors/moment/moment.min.js"></script>
+      <script src="/dependencies/lodash.js"></script>
+      <script src="/vendors/jquery/jquery-3.2.1.min.js"></script>
+      <script src="/vendors/popper/popper.min.js"></script>
+      <script src="/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+      <script src="/js/perfect-scrollbar.jquery.min.js"></script>
+      
+      <script src="/vendors/sweetalert/sweetalert.min.js"></script>
+      <script src="/vendors/formvalidation/formValidation.min.js"></script>
+      <script src="/vendors/formvalidation/framework/bootstrap4.min.js"></script>
+      <script src="/vendors/dropify/dropify.min.js"></script>
+      <script src="/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+      <script src="/vendors/datatables.net-bs4/js/dataTables.responsive.min.js"></script>
+      <script src="/vendors/select2/dist/js/select2.full.min.js"></script>
+      <script src="/vendors/toast-master/js/jquery.toast.js"></script>
+      <script src="/js/sidebarmenu.js"></script>
+      <script src="/vendors/sticky-kit-master/dist/sticky-kit.min.js"></script>
+      <script src="/vendors/sparkline/jquery.sparkline.min.js"></script>
+      <!--Custom JavaScript -->
+      <script src="/dependencies/cloud.js"></script>
+      <script src="/js/backend/cloud.setup.js"></script>
+      <script src="/js/backend/base.js"></script>
+      <%- blocks.localScripts %>
+      <script src="/js/i18n.js"></script>
+      <script src="/js/custom.min.js"></script>
+      <script src="/js/backend/main.js"></script>
+      <script>
+        var EKPAction = '<%=moduleActive.action%>';
+        var layout = 'layout';
+        var UPLOAD = {
+          EXTENSION: ['.png', '.jpg', '.jpeg', '.gif', '.heic']
+        };
+      </script>
+    </div>
+  </body>
+</html>

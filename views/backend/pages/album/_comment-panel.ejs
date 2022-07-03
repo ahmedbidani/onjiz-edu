@@ -1,0 +1,35 @@
+<div class="table-responsive m-t-40">
+    <h4><%= __('Comments')%></h4>
+    <table class="table stylish-table">
+        <tbody>
+            <% if( albumData.comments!== undefined && albumData.comments.length > 0 ) {
+                for (let i = 0; i < albumData.comments.length; i++) {
+                    let _commentData = albumData.comments[i];
+                %>
+            <tr>
+                <td style="width:40px">
+                    <img src="<%-_commentData.userCommentObj.avatar%>" width="50" class="img-circle" alt="logo">
+                </td>
+                <td>
+                        <span class="small"><strong><%-_commentData.userCommentObj.firstName + _commentData.userCommentObj.lastName%></strong></span> <span class="small date"><%= moment(_commentData.createdAt).format("hh:mm A, DD/MM/YYYY")%> </span><br/>
+                    <%-_commentData.contentCmt%>
+                </td>
+                <td align="right"> 
+                    <a href="javascript:void(0);" data-id="<%= albumData.id %>" data-index-cmt="<%= i %>" class="remove-row">
+                        <i class="mdi mdi-delete"></i>
+                     </a>
+                </td>
+            </tr> 
+            <% 
+                }
+            } else {%>
+                <tr>
+                    <td>
+                        <%= __('No comment')%>
+                    </td>
+                </tr>
+            <% } %>
+            
+        </tbody>
+    </table>
+</div>

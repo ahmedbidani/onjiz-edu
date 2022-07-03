@@ -1,0 +1,276 @@
+<% let BACKEND = sails.config.custom.BACKEND %>
+<% block('localCss', '<link rel="stylesheet" href="/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css">') %>
+
+<div class="card">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="row align-items-md-center">
+          <div class="col-md-6 form-group row align-items-md-center">
+            <label class="col-md-3"><%= __('Class') %></label>
+            <div class="col-md-9">
+              <select id="classId" class="form-control js-process-basic-multiple w-100"
+              data-placeholder="<%= __('Choose') %>">
+              <option value="">---</option>
+                <% for (let classObj of listClasses) { %>
+                <option value="<%= classObj.id %>">
+                  <%= classObj.title %>
+                </option>
+                <% } %>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-6 form-group row align-items-md-center">
+            <label class="col-md-3"><%= __('Student') %></label>
+            <div class="col-md-9">
+              <select id="studentId" class="form-control js-process-basic-multiple w-100"
+              data-placeholder="<%= __('Choose') %>">
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-hover dataTable" id="tblFeeInvoice">
+          <thead>
+            <tr class="bg-custom-primary">
+              <!-- <th width="3%">
+                <input id="js-check-all" class="js-checkbox-all checkbox" type="checkbox">
+              </th> -->
+              <th width="3%">
+                <%= __('Code') %>
+              </th>
+              <th width="20%">
+                <%= __('Name') %>
+              </th>
+              <th width="10%">
+                <%= __('Birthday') %>
+              </th>
+              <th width="8%">
+                <%= __('Gender') %>
+              </th>
+              <th width="10%">
+                <%= __('Class') %>
+              </th>
+              <th width="15%">
+                <%= __('Title') %>
+              </th>
+              <th width="10%">
+                <%= __('Total') %>
+              </th>
+              <th width="10%">
+                <%= __('Method') %>
+              </th>
+              <th width="8%">
+                <%= __('Status') %>
+              </th>
+              <th width="3%">
+                <%= __('') %>
+              </th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+      <!-- <div class="col-lg-12 js-height-scrollbar" style="height: 60vh;">
+      </div> -->
+    </div>
+  </div>
+</div>
+
+<div class="modal fade modal-custom" id="modal-take-payment" tabindex="-1" role="dialog" aria-labelledby="modal-take-payment" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"><%= __('Payment') %></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true"><i class="mdi mdi-close-circle-outline"></i></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form autocomplete="off" id="formTakePayment" class="" data-fv-framework="bootstrap4"
+        data-fv-icon-valid="glyphicon glyphicon-ok" data-fv-icon-invalid="glyphicon glyphicon-remove"
+        data-fv-icon-validating="glyphicon glyphicon-refresh" data-fv-live="enabled" data-manner="edit" data-symbolLeft="<%= currency.symbolLeft%>" data-symbolRight="<%= currency.symbolRight%>" data-numberSeperatorSymbol="<%= currency.numberSeperatorSymbol%>" data-decimalPoint="<%= currency.decimalPoint%>" data-decimalPlaces="<%= currency.decimalPlaces%>">
+        <input type='hidden' name='_csrf' value='<%= _csrf %>'>
+          <div class="row">
+            <div class="col-md-6">
+              <h5 class="modal-sub-title"><%= __('Invoice Info') %></h5>
+              <div class="form-group row align-items-md-center">
+                <label class="col-md-3"><%= __('Title') %></label>
+                <div class="col-md-9">
+                    <input type="text" class="form-control" id="titleFormTakePayment" disabled/>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="row align-items-md-center">
+                  <label class="col-md-3"><%= __('Item Name') %></label>
+                  <label class="col-md-3"><%= __('Amount') %></label>
+                  <label class="col-md-3"><%= __('Unit') %></label>
+                  <label class="col-md-3"><%= __('Total Per Item') %></label>
+                </div>
+                <div  id="itemsFormTakePayment"></div>
+              </div>
+              <div class="form-group row align-items-md-center">
+                <label class="col-md-3"><%= __('Total Amount') %></label>
+                <div class="col-md-9">
+                    <input type="text" class="form-control" id="totalAmountFormTakePayment" style="text-align: end;" disabled/>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <h5 class="modal-sub-title"><%= __('Take Payment') %></h5>
+              <div class="form-group row align-items-md-center">
+                <label class="col-md-3"><%= __('Amount') %></label>
+                <div class="col-md-9">
+                  <input type="text" oninput="this.value=this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" class="form-control" name="paidAmount" data-fv-notempty="true" id="paidAmount"/>
+                  <input type="text" class="form-control hidden" id="paidCompletely" disabled/>
+                </div>
+              </div>
+
+              <div class="form-group row align-items-md-center">
+                <label class="col-md-3"><%= __('Method') %></label>
+                <div class="col-md-9">
+                    <select class="form-control w-100" id="paymentMethod" name="paymentMethod">
+                      <option value="0"><%= __('Cash') %></option>
+                      <option value="1"><%= __('Bank') %></option>
+                      <option value="2" disabled><%= __('Stripe') %></option>
+                    </select>
+                </div>
+              </div>
+
+              <div class="form-group row align-items-md-center">
+                <label class="col-md-3"><%= __('Payment Code') %></label>
+                <div class="col-md-9">
+                  <input type="text" class="form-control" name="paymentCode" data-fv-notempty="true" id="paymentCode"/>
+                </div>
+              </div>
+
+              <div class="form-group row align-items-md-center">
+                <label class="col-md-3"><%= __('Payment Date') %></label>
+                <div class="col-md-9">
+                  <div class="input-group date" data-provide="datepicker" id="date" data-dateFormat="<%= dateFormat %>" data-currentDate="<%= currentDay %>">
+                    <input  class="form-control" name="paymentCode" id="paymentDate" type="text" value="<%=currentDay%>"%>>
+                    <span class="input-group-addon input-group-append border-left">
+                        <span class="mdi mdi-calendar input-group-text"></span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div id="paymentHistoryContainer">
+                <h5 class="modal-sub-title"><%= __('Payment History') %></h5>
+                <div class="row">
+                  <div class="col-lg-12 js-height-scrollbar" style="height: 200px;">
+                    <div class="table-responsive">
+                      <table class="table table-hover dataTable" id="tblPaymentHistory">
+                        <thead>
+                          <tr class="bg-custom-primary">
+                            <th width="30%">
+                              <%= __('Date') %>
+                            </th>
+                            <th width="20%">
+                              <%= __('Method') %>
+                            </th>
+                            <th width="50%">
+                              <%= __('Note') %>
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody id="bodyTblPaymentHistory">
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="alert d-none" role="alert">
+                <i class="mdi mdi-alert-circle"></i>
+              </div>
+              <div class="modal-footer row-button-fluid">
+                <button type="reset" class="btn btn-light" data-dismiss="modal"><%= __('Cancel') %></button>
+                <button id="btnFormTakePayment" type="submit" class="btn btn-primary waves-effect waves-classic">
+                  <%= __('Take Payment') %>
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="modal fade modal-custom" id="modal-view-invoice" tabindex="-1" role="dialog" aria-labelledby="modal-view-invoice" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-uppercase"><%= __('View invoice') %></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true"><i class="mdi mdi-close-circle-outline"></i></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form autocomplete="off" id="formViewInvoice" class="" data-fv-framework="bootstrap4"
+        data-fv-icon-valid="glyphicon glyphicon-ok" data-fv-icon-invalid="glyphicon glyphicon-remove"
+        data-fv-icon-validating="glyphicon glyphicon-refresh" data-fv-live="enabled" data-manner="add">
+              <input type='hidden' name='_csrf' value='<%= _csrf %>'>
+          <h5 class="modal-sub-title text-uppercase"><%= __('Invoice') %></h5>
+          <div class="modal-sub-title">
+            <div><%= __('Title') %></div>
+            <div><%= __('Status') %></div>
+            <div><%= __('Deadline') %></div>
+          </div>
+
+          <div class="modal-sub-content">
+            <div>
+              <%= __('Payment To') %>
+              <br/>Kindie school
+              <br/>47/2/57 Bui Dinh Tuy
+              <br/>+84 123 456 789
+            </div>
+            <div>
+              <%= __('Bill To') %>
+              <br/>Pham Quoc Toan
+              <br/>Rabbit Class
+            </div>
+          </div>
+
+          <h5 class="modal-sub-title text-uppercase"><%= __('Payment History') %></h5>
+          <div class="table-responsive">
+            <table class="table table-hover table-bordered dataTable" id="tblPaymentHistory">
+              <thead>
+                <tr class="bg-custom-primary">
+                  <th width="20%">
+                    <%= __('Title') %>
+                  </th>
+                  <th width="20%">
+                    <%= __('Total') %>
+                  </th>
+                  <th width="20%">
+                    <%= __('Status') %>
+                  </th>
+                  <th width="20%">
+                    <%= __('Method') %>
+                  </th>
+                  <th width="20%">
+                    <%= __('Date') %>
+                  </th>
+                </tr>
+              </thead>
+            </table>
+          </div>
+          <div class="alert d-none" role="alert">
+            <i class="mdi mdi-alert-circle"></i>
+          </div>
+          <div class="modal-footer row-button-fluid">
+            <button type="reset" class="btn btn-light" data-dismiss="modal"><%= __('Cancel') %></button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>  -->
+
+<% block('localScripts', '<script src="/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>') %>
+<% block('localScripts', '<script src="/js/backend/feeInvoice/index.js"></script>') %>

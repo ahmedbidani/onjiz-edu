@@ -1,0 +1,109 @@
+<% let BACKEND = sails.config.custom.BACKEND %>
+<!--Row 1-->
+<div class="row">
+	<div class="col-md-6">
+		<div class="card">
+			<div class="card-body">
+				<div class="row m-b-15">
+					<div class="col-md-9">
+						<h4 class="card-title"><%= __('From class') %></h4>
+					</div>
+					<div class="col-md-3">
+						<button class="btn waves-effect waves-light btn-block btn-dark" id="btn-move-class"><%= __('Move') %></button>
+					</div>
+					<!-- <div class="col-md-3">
+						<button class="btn waves-effect waves-light btn-block btn-dark" id="btn-promote-class"><%= __('Promote') %></button>
+					</div> -->
+				</div>
+				<%
+				let action = moduleActive.action;
+				action = action.replace(/\//g, '-'); //replace '/' by '-';
+				//console.log(action);
+				%>
+				<!-- Filter -->
+				<div class="row">
+					<div class="col-md-5">
+						<input type="text" class="form-control" id="filterKeyword" placeholder="<%= __('Search') %>">
+					</div> 
+					<div class="col-md-5">
+						<select id="filterClass" name="classes" class="form-control js-select2-class" data-placeholder="<%= __('Choose') %>">
+							<option value="-1"><%= __('All Class')%></option>
+							<%for(let session of sessionsOfBranchActive){%>
+							<optgroup label="<%=session.title%>">
+								<% for(let i = 0; i < session.classes.length; i++) {%>
+								<option value="<%= session.classes[i].id%>">
+									<%= session.classes[i].title %> ( <%= session.classes[i].totalStudent %> )
+								</option> 
+								<%}%>
+							</optgroup>
+							<%}%>
+						</select>
+					</div>
+					<div class="col-md-2">
+						<button class="btn waves-effect waves-light btn-block btn-dark" id="filterBtn" type="submit"><i class="fa fa-search"></i></button>
+					</div> 
+				</div>
+				<div class="row">
+					<div class="col-lg-12 js-height-scrollbar">
+						<div class="table-responsive">
+							
+							<table class="table table-hover dataTable" id="tblClass"  data-csrf="<%= _csrf %>" >
+								<thead>
+										<tr class="table-header">
+										<th width="25%"><%= __('Fullname') %></th>
+										<th width="15%"><%= __('DOB') %></th>
+										<th width="15%"><%= __('Gender') %></th>
+                    <th width="5%">
+                      <input id="js-check-all" class="js-checkbox-all" type="checkbox">
+                    </th>
+									</tr>
+								</thead>
+              </table>
+						</div> 
+					</div>
+				</div>
+			</div>
+		</div> 
+	</div>
+	<div class="col-md-6 grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">
+				<h4 class="card-title"><%= __('To Class') %></h4>
+				<div class="row  m-t-15">
+					<div class="col-lg-12 js-height-scrollbar" >
+						<div class="table-responsive">
+							<select id="menuNewClass" name="classes" class="form-control custom-select" data-placeholder="<%= __('Select class') %>">
+								<option value="-1"><%= __('Select class')%></option>
+								<%for(let session of sessionsOfBranchActive){%>
+								<optgroup label="<%=session.title%>">
+										<% for(let i = 0; i < session.classes.length; i++) {%>
+											<option value="<%= session.classes[i].id%>">
+												<%= session.classes[i].title %> ( <%= session.classes[i].totalStudent %> )
+											</option>
+										<%}%>
+								</optgroup>
+								<%}%>
+							</select>
+							<table class="table table-hover dataTable" id="tblNewClass">
+								<thead>
+									<tr class="table-header">
+									<th width="25%"><%= __('Fullname') %></th>
+									<th width="15%"><%= __('DOB') %></th>
+									<th width="15%"><%= __('Gender') %></th>
+									</tr>
+								</thead>
+								<tbody>
+									<td colspan="3"><%= __('No data') %></td>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</div>
+<!-- End Row 1-->
+<% block('localScripts', '<script src="/js/jquery.ddslick.min.js"></script>') %>
+<% block('localScripts', '<script src="/js/backend/class/change.js"></script>') %>

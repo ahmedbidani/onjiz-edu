@@ -1,0 +1,283 @@
+<div class="page">
+  <div class="page-header">
+    <div class="page-header-actions">
+    </div>
+  </div>
+  <!-- Page Content -->
+  <div class="page-content container-fluid ">
+    <div class="row">
+      <div class="col-xxl-12 col-xl-12 col-lg-12">
+        <!-- Start Form Data -->
+        <div class="card">
+          <div class="card-body">
+            <form autocomplete="off" id="formParent" class="" enctype="multipart/form-data"
+              data-fv-framework="bootstrap4" data-toggle="validator" data-fv-icon-valid="glyphicon glyphicon-ok"
+              data-fv-icon-invalid="glyphicon glyphicon-remove" data-fv-icon-validating="glyphicon glyphicon-refresh"
+              data-fv-live="enabled" data-manner="<%=manner%>">
+              <input type='hidden' name='_csrf' value='<%= _csrf %>'>
+              <input class="parentId" value="<%=parentObj.id%>" name="id" hidden />
+              <div class="row">
+                <div class="col-10">
+                  <div class="row">
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-control-label">
+                          <%= __('User Name') %>
+                        </label>
+                        <% if (parentObj.id == undefined) { %>
+                        <!-- UserName Add parent -->
+                        <input type="text" class="form-control" name="userName" data-fv-notempty="true"
+                          value="<%=parentObj.userName%>" data-fv-notempty-message="<%= __('Required field') %>"
+                          required data-fv-stringlength="true" data-fv-stringlength-min="2"
+                          data-fv-stringlength-max="64"
+                          data-fv-stringlength-message="<%= __('User must be at least 2 characters and max 64 characters') %>">
+                        <% } else { %>
+                        <!-- UserName Edit parent -->
+                        <input type="text" class="form-control" name="userName" readonly
+                          value="<%=parentObj.userName%>">
+                        <% } %>
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-control-label">
+                          <%= __('E-mail') %>
+                        </label>
+                        <% if(manner == 'add'){%>
+                        <input type="email" class="form-control" name="emailAddress"
+                          value="<%=(parentObj.emailAddress) ? parentObj.emailAddress : ''%>">
+                        <%}else{%>
+                        <input class="form-control" name="emailAddress" readonly
+                          value="<%=(parentObj.emailAddress) ? parentObj.emailAddress : ''%>">
+                        <%}%>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-control-label">
+                          <%= __('Firstname') %>
+                        </label>
+                        <input type="text" class="form-control" name="firstName" data-fv-notempty="true"
+                          value="<%=parentObj.firstName%>" data-fv-notempty-message="<%= __('Required field') %>"
+                          required data-fv-stringlength="true" data-fv-stringlength-min="2"
+                          data-fv-stringlength-max="20"
+                          data-fv-stringlength-message="<%= __('Firstname must be at least 2 characters and max 20 characters') %>">
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <!-- address -->
+                      <div class="form-group">
+                        <label for="currentAddress"><%= __('Address') %></label>
+                        <input type="text" class="form-control" id="currentAddress" name="currentAddress"
+                          value="<%= parentObj.currentAddress %>" placeholder="" data-fv-notempty="true"
+                          data-fv-notempty-message="<%= __('Required field') %>" data-fv-stringlength="true"
+                          data-fv-stringlength-min="2" data-fv-stringlength-max="120"
+                          data-fv-stringlength-message="<%= __('Address must be at least 2 characters') %>">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-control-label">
+                          <%= __('Lastname') %>
+                        </label>
+                        <input type="text" class="form-control" name="lastName" value="<%=parentObj.lastName%>"
+                          data-fv-notempty="true" data-fv-notempty-message="<%= __('Required field') %>" required
+                          data-fv-stringlength="true" data-fv-stringlength-min="2" data-fv-stringlength-max="20"
+                          data-fv-stringlength-message="<%= __('Lastname must be at least 2 characters and max 20 characters') %>">
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-control-label">
+                          <%= __('Phone') %>
+                        </label>
+                        <input type="tel" class="form-control" name="phone" value="<%= parentObj.phone %>"
+                          pattern="[0-9]{9,12}$" data-fv-message="<%= __('Phone must be 9 to 12 number') %>"
+                          data-fv-stringlength="true" data-fv-stringlength-max="11">
+                      </div>
+                    </div>
+                  </div>
+
+
+
+                  <div class="row">
+                    <div class="col-6">
+                      <!-- birthday-->
+                      <div class="form-group">
+                        <label for="birthDate" class="col-sm-3 control-label"><%= __('Birthday') %></label>
+                        <input type="date" id="birthDate" value="<%=birthday%>" class="form-control" name="birthday">
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <% if (parentObj.id == undefined) { %>
+                        <label class="form-control-label"><%= __('Password') %></label>
+                        <input type="password" class="form-control" name="password" id="password"
+                          data-fv-notempty="true" data-fv-notempty-message="<%= __('Required field') %>"
+                          data-fv-message="<%= __('Password must be 6 number!') %>" pattern="(?=.*).{6,}" />
+                        <% } else { %>
+                        <label class="form-control-label"><%= __('New password') %></label>
+                        <input type="password" class="form-control" name="password" id="password"
+                          data-fv-notempty-message="<%= __('Required field') %>"
+                          data-fv-message="<%= __('Password must be 6 number!') %>" pattern="(?=.*).{6,}" />
+                        <% } %>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-control-label">
+                          <%= __('Gender') %>
+                        </label>
+                        <ul class="list-unstyled list-inline">
+                          <li class="list-inline-item">
+                            <div class="form-check">
+                              <label class="form-check-label">
+                                <input id="genderMale" type="radio" class="form-check-input" name="gender"
+                                  value="<%= TYPE.MALE %>" <%=(manner == 'add')? 'checked':''%>
+                                  <%=(parentObj.gender == 1 )? 'checked':''%> />
+                                <i class="input-helper"></i>
+                                <%= __('Male') %>
+                              </label>
+                            </div>
+                          </li>
+                          <li class="list-inline-item">
+                            <div class="form-check">
+                              <label class="form-check-label">
+                                <input id="genderFemale" type="radio" class="form-check-input" name="gender"
+                                  value="<%= TYPE.FEMALE %>" <%=(parentObj.gender == 0 )? 'checked':''%> />
+                                <i class="input-helper"></i>
+                                <%= __('Female') %>
+                              </label>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-control-label">
+                          <%= __('Confirm password') %>
+                        </label>
+                        <% if (parentObj.id == undefined) { %>
+                        <input type="password" class="form-control" name="passwordConfirm" id="confirm_password"
+                          data-fv-notempty="true" data-fv-notempty-message="<%= __('Required field') %>" />
+                        <% } else { %>
+                        <input type="password" class="form-control" name="passwordConfirm" id="confirm_password" />
+                        <% } %>
+                      </div>
+                    </div>
+                  </div>
+                  <% if (manner =='edit') { %>
+                  <div class="row">
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-control-label">
+                          <%= __('Student') %>
+                        </label>
+                        <select id="students" name="students"
+                          class="form-control js-process-basic-multiple  select2-multiple"
+                          data-placeholder="<%= __('Choose') %>" multiple="multiple">
+                          <%
+                            var studentID = [];
+                            if(parentObj.students){
+                              _.each(parentObj.students, function (std, ind) {
+                                studentID.push(std.id);
+                              });
+                            }%>
+                          <% _.each(listStudent, function (std2, index) { %>
+                          <option value="<%= std2.id %>" <%= studentID.indexOf(std2.id) != -1 ? 'selected' : ''%>>
+                            <%= std2.firstName + ' ' + std2.lastName %>
+                          </option>
+                          <% }) %>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-control-label">
+                          <%= __('Status') %>
+                        </label>
+                        <ul class="list-unstyled list-inline">
+                          <li class="list-inline-item">
+                            <div class="form-check">
+                              <label class="form-check-label">
+                                <input id="statusPublish" type="radio" class="form-check-input" name="status" value="1"
+                                  checked <%=(parentObj.status == 1)? 'checked':''%> />
+                                <i class="input-helper"></i>
+                                <%= __('Active') %>
+                              </label>
+                            </div>
+                          </li>
+                          <li class="list-inline-item">
+                            <div class="form-check">
+                              <label class="form-check-label">
+                                <input id="statusActive" type="radio" class="form-check-input" name="status" value="0"
+                                  <%=(parentObj.status == 0)? 'checked':''%> />
+                                <i class="input-helper"></i>
+                                <%= __('Draft') %>
+                              </label>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <% } %>
+                  <div class="row">
+                    <div class="col-6">
+
+                    </div>
+
+                  </div>
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="alert alert-dismissible hidden" role="alert"
+                        data-alert-update="<%= __('Update successfully') %>">
+                        <%= __('Add successfully.') %>
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <div class="text-right">
+                        <% if (manner =='add') { %>
+                        <button type="reset" class="btn btn-default btn-outline waves-effect waves-classic">
+                          <%= __('Reset') %>
+                        </button>
+                        <button id="btnFormParent" type="submit" class="btn btn-primary waves-effect waves-classic">
+                          <%= __('Add') %>
+                        </button>
+                        <% } else { %>
+                        <button id="btnFormParent" type="submit"
+                          class="btn btn-primary waves-effect waves-classic"><%= __('Update') %></button>
+                        <% } %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-2 text-center">
+                  <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                    <input type="file"
+                      data-default-file="<%= parentObj.avatar? parentObj.avatar : '/images/avatar2.png' %>"
+                      class="dropify" name="thumbnail" data-field="thumbnail" data-max-file-size="10M" />
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+</div>
+<% block('localScripts', '<script src="/vendors/sweetalert/sweetalert.min.js"></script>') %>
+<% block('localScripts', '<script src="/js/backend/parent/index.js"></script>') %>

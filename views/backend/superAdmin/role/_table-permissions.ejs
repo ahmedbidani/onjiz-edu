@@ -1,0 +1,438 @@
+<table class="table table-hover dataTable" id="tblPermissions">
+  <thead>
+    <tr>
+      <th width="25%">
+      </th>
+      <th width="15%">
+        <input id="js-check-all-view" class="js-checkbox-all-view" type="checkbox"> <%= __('View') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-all-add" class="js-checkbox-all-add" type="checkbox"> <%= __('Add') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-all-edit" class="js-checkbox-all-edit" type="checkbox"> <%= __('Edit') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-all-delete" class="js-checkbox-all-delete" type="checkbox"> <%= __('Delete') %>
+      </th>
+      <th width="15%">
+      </th>
+    </tr>
+    <!-- Album -->
+    <tr>
+      <th width="25%">
+        <%= __('Album') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-view-album" class="js-checkbox-item js-checkbox-view js-checkbox-album" type="checkbox" name="viewAlbumPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.album&&listRole[0].permissions.album.view?'checked':''%> > <%= __('View') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-add-album" class="js-checkbox-item js-checkbox-add js-checkbox-album" type="checkbox" name="addAlbumPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.album&&listRole[0].permissions.album.add?'checked':''%> > <%= __('Add') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-edit-album" class="js-checkbox-item js-checkbox-edit js-checkbox-album" type="checkbox" name="editAlbumPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.album&&listRole[0].permissions.album.edit?'checked':''%> > <%= __('Edit') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-delete-album" class="js-checkbox-item js-checkbox-delete js-checkbox-album" type="checkbox" name="deleteAlbumPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.album&&listRole[0].permissions.album.delete?'checked':''%> > <%= __('Delete') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-all-album" class="js-checkbox-all-album" type="checkbox" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.album&&listRole[0].permissions.album.view&&listRole[0].permissions.album.add&&listRole[0].permissions.album.edit&&listRole[0].permissions.album.delete?'checked':''%> > <%= __('All') %>
+      </th>
+    </tr>
+    <!-- Attendance -->
+    <tr>
+      <th width="25%">
+        <%= __('Attendance') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-view-attendent" class="js-checkbox-item js-checkbox-view js-checkbox-attendent" type="checkbox" name="viewAttendentPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.attendent&&listRole[0].permissions.attendent.view?'checked':''%> > <%= __('View') %>
+      </th>
+      <th width="15%">
+      </th>
+      <th width="15%">
+        <input id="js-check-edit-attendent" class="js-checkbox-item js-checkbox-edit js-checkbox-attendent" type="checkbox" name="editAttendentPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.attendent&&listRole[0].permissions.attendent.edit?'checked':''%> > <%= __('Edit') %>
+      </th>
+      <th width="15%">
+      </th>
+      <th width="15%">
+        <input id="js-check-all-attendent" class="js-checkbox-all-attendent" type="checkbox" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.attendent&&listRole[0].permissions.attendent.view&&listRole[0].permissions.attendent.edit?'checked':''%> > <%= __('All') %>
+      </th>
+    </tr>
+    <!-- Branch -->
+    <tr>
+      <th width="25%">
+        <%= __('Branch') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-view-branch" class="js-checkbox-item js-checkbox-view js-checkbox-branch" type="checkbox" name="viewBranchPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.branch&&listRole[0].permissions.branch.view?'checked':''%> > <%= __('View') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-add-branch" class="js-checkbox-item js-checkbox-add js-checkbox-branch" type="checkbox" name="addBranchPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.branch&&listRole[0].permissions.branch.add?'checked':''%> > <%= __('Add') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-edit-branch" class="js-checkbox-item js-checkbox-edit js-checkbox-branch" type="checkbox" name="editBranchPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.branch&&listRole[0].permissions.branch.edit?'checked':''%> > <%= __('Edit') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-delete-branch" class="js-checkbox-item js-checkbox-delete js-checkbox-branch" type="checkbox" name="deleteBranchPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.branch&&listRole[0].permissions.branch.delete?'checked':''%> > <%= __('Delete') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-all-branch" class="js-checkbox-all-branch" type="checkbox" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.branch&&listRole[0].permissions.branch.view&&listRole[0].permissions.branch.add&&listRole[0].permissions.branch.edit&&listRole[0].permissions.branch.delete?'checked':''%> > <%= __('All') %>
+      </th>
+    </tr>
+    <!-- Class -->
+    <tr>
+      <th width="25%">
+        <%= __('Class') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-view-class" class="js-checkbox-item js-checkbox-view js-checkbox-class" type="checkbox" name="viewClassPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.class&&listRole[0].permissions.class.view?'checked':''%> > <%= __('View') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-add-class" class="js-checkbox-item js-checkbox-add js-checkbox-class" type="checkbox" name="addClassPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.class&&listRole[0].permissions.class.add?'checked':''%> > <%= __('Add') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-edit-class" class="js-checkbox-item js-checkbox-edit js-checkbox-class" type="checkbox" name="editClassPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.class&&listRole[0].permissions.class.edit?'checked':''%> > <%= __('Edit') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-delete-class" class="js-checkbox-item js-checkbox-delete js-checkbox-class" type="checkbox" name="deleteClassPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.class&&listRole[0].permissions.class.delete?'checked':''%> > <%= __('Delete') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-all-class" class="js-checkbox-all-class" type="checkbox" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.class&&listRole[0].permissions.class.view&&listRole[0].permissions.class.add&&listRole[0].permissions.class.edit&&listRole[0].permissions.class.delete?'checked':''%> > <%= __('All') %>
+      </th>
+    </tr>
+    <!-- Session -->
+    <tr>
+      <th width="25%">
+        <%= __('Session') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-view-courseSession" class="js-checkbox-item js-checkbox-view js-checkbox-courseSession" name="viewCourseSessionPermission" type="checkbox" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.courseSession&&listRole[0].permissions.courseSession.view?'checked':''%> > <%= __('View') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-add-courseSession" class="js-checkbox-item js-checkbox-add js-checkbox-courseSession" type="checkbox" name="addCourseSessionPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.courseSession&&listRole[0].permissions.courseSession.add?'checked':''%> > <%= __('Add') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-edit-courseSession" class="js-checkbox-item js-checkbox-edit js-checkbox-courseSession" type="checkbox" name="editCourseSessionPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.courseSession&&listRole[0].permissions.courseSession.edit?'checked':''%> > <%= __('Edit') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-delete-courseSession" class="js-checkbox-item js-checkbox-delete js-checkbox-courseSession" type="checkbox" name="deleteCourseSessionPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.courseSession&&listRole[0].permissions.courseSession.delete?'checked':''%> > <%= __('Delete') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-all-courseSession" class="js-checkbox-all-courseSession" type="checkbox" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.courseSession&&listRole[0].permissions.courseSession.view&&listRole[0].permissions.courseSession.add&&listRole[0].permissions.courseSession.edit&&listRole[0].permissions.courseSession.delete?'checked':''%> > <%= __('All') %>
+      </th>
+    </tr>
+    <!-- Currency -->
+    <tr>
+      <th width="25%">
+        <%= __('Currency') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-view-currency" class="js-checkbox-item js-checkbox-view js-checkbox-currency" type="checkbox" name="viewCurrencyPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.currency&&listRole[0].permissions.currency.view?'checked':''%> > <%= __('View') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-add-currency" class="js-checkbox-item js-checkbox-add js-checkbox-currency" type="checkbox" name="addCurrencyPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.currency&&listRole[0].permissions.currency.add?'checked':''%> > <%= __('Add') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-edit-currency" class="js-checkbox-item js-checkbox-edit js-checkbox-currency" type="checkbox" name="editCurrencyPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.currency&&listRole[0].permissions.currency.edit?'checked':''%> > <%= __('Edit') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-delete-currency" class="js-checkbox-item js-checkbox-delete js-checkbox-currency" type="checkbox" name="deleteCurrencyPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.currency&&listRole[0].permissions.currency.delete?'checked':''%> > <%= __('Delete') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-all-currency" class="js-checkbox-all-currency" type="checkbox" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.currency&&listRole[0].permissions.currency.view&&listRole[0].permissions.currency.add&&listRole[0].permissions.currency.edit&&listRole[0].permissions.currency.delete?'checked':''%> > <%= __('All') %>
+      </th>
+    </tr>
+    <!-- Event -->
+    <tr>
+      <th width="25%">
+        <%= __('Event') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-view-event" class="js-checkbox-item js-checkbox-view js-checkbox-event" type="checkbox" name="viewEventPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.event&&listRole[0].permissions.event.view?'checked':''%> > <%= __('View') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-add-event" class="js-checkbox-item js-checkbox-add js-checkbox-event" type="checkbox" name="addEventPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.event&&listRole[0].permissions.event.add?'checked':''%> > <%= __('Add') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-edit-event" class="js-checkbox-item js-checkbox-edit js-checkbox-event" type="checkbox" name="editEventPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.event&&listRole[0].permissions.event.edit?'checked':''%> > <%= __('Edit') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-delete-event" class="js-checkbox-item js-checkbox-delete js-checkbox-event" type="checkbox" name="deleteEventPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.event&&listRole[0].permissions.event.delete?'checked':''%> > <%= __('Delete') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-all-event" class="js-checkbox-all-event" type="checkbox" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.event&&listRole[0].permissions.event.view&&listRole[0].permissions.event.add&&listRole[0].permissions.event.edit&&listRole[0].permissions.event.delete?'checked':''%> > <%= __('All') %>
+      </th>
+    </tr>
+    <!-- Fee Payment -->
+    <tr>
+      <th width="25%">
+        <%= __('Fee Payment') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-view-feeInvoice" class="js-checkbox-item js-checkbox-view js-checkbox-feeInvoice" name="viewFeeInvoicePermission" type="checkbox" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.feeInvoice&&listRole[0].permissions.feeInvoice.view?'checked':''%> > <%= __('View') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-add-feeInvoice" class="js-checkbox-item js-checkbox-add js-checkbox-feeInvoice" type="checkbox" name="addFeeInvoicePermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.feeInvoice&&listRole[0].permissions.feeInvoice.add?'checked':''%> > <%= __('Add') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-edit-feeInvoice" class="js-checkbox-item js-checkbox-edit js-checkbox-feeInvoice" type="checkbox" name="editFeeInvoicePermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.feeInvoice&&listRole[0].permissions.feeInvoice.edit?'checked':''%> > <%= __('Edit') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-delete-feeInvoice" class="js-checkbox-item js-checkbox-delete js-checkbox-feeInvoice" type="checkbox" name="deleteFeeInvoicePermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.feeInvoice&&listRole[0].permissions.feeInvoice.delete?'checked':''%> > <%= __('Delete') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-all-feeInvoice" class="js-checkbox-all-feeInvoice" type="checkbox" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.feeInvoice&&listRole[0].permissions.feeInvoice.view&&listRole[0].permissions.feeInvoice.add&&listRole[0].permissions.feeInvoice.edit&&listRole[0].permissions.feeInvoice.delete?'checked':''%> > <%= __('All') %>
+      </th>
+    </tr>
+    <!-- Fee Item -->
+    <tr>
+      <th width="25%">
+        <%= __('Fee Item') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-view-feeItem" class="js-checkbox-item js-checkbox-view js-checkbox-feeItem" name="viewFeeItemPermission" type="checkbox" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.feeItem&&listRole[0].permissions.feeItem.view?'checked':''%> > <%= __('View') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-add-feeItem" class="js-checkbox-item js-checkbox-add js-checkbox-feeItem" type="checkbox" name="addFeeItemPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.feeItem&&listRole[0].permissions.feeItem.add?'checked':''%> > <%= __('Add') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-edit-feeItem" class="js-checkbox-item js-checkbox-edit js-checkbox-feeItem" type="checkbox" name="editFeeItemPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.feeItem&&listRole[0].permissions.feeItem.edit?'checked':''%> > <%= __('Edit') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-delete-feeItem" class="js-checkbox-item js-checkbox-delete js-checkbox-feeItem" type="checkbox" name="deleteFeeItemPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.feeItem&&listRole[0].permissions.feeItem.delete?'checked':''%> > <%= __('Delete') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-all-feeItem" class="js-checkbox-all-feeItem" type="checkbox" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.feeItem&&listRole[0].permissions.feeItem.view&&listRole[0].permissions.feeItem.add&&listRole[0].permissions.feeItem.edit&&listRole[0].permissions.feeItem.delete?'checked':''%> > <%= __('All') %>
+      </th>
+    </tr>
+    <!-- Food -->
+    <tr>
+      <th width="25%">
+        <%= __('Food') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-view-food" class="js-checkbox-item js-checkbox-view js-checkbox-food" type="checkbox" name="viewFoodPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.food&&listRole[0].permissions.food.view?'checked':''%> > <%= __('View') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-add-food" class="js-checkbox-item js-checkbox-add js-checkbox-food" type="checkbox" name="addFoodPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.food&&listRole[0].permissions.food.add?'checked':''%> > <%= __('Add') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-edit-food" class="js-checkbox-item js-checkbox-edit js-checkbox-food" type="checkbox" name="editFoodPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.food&&listRole[0].permissions.food.edit?'checked':''%> > <%= __('Edit') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-delete-food" class="js-checkbox-item js-checkbox-delete js-checkbox-food" type="checkbox" name="deleteFoodPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.food&&listRole[0].permissions.food.delete?'checked':''%> > <%= __('Delete') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-all-food" class="js-checkbox-all-food" type="checkbox" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.food&&listRole[0].permissions.food.view&&listRole[0].permissions.food.add&&listRole[0].permissions.food.edit&&listRole[0].permissions.food.delete?'checked':''%> > <%= __('All') %>
+      </th>
+    </tr>
+    <!-- Menu -->
+    <tr>
+      <th width="25%">
+        <%= __('Menu') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-view-menu" class="js-checkbox-item js-checkbox-view js-checkbox-menu" type="checkbox" name="viewMenuPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.menu&&listRole[0].permissions.menu.view?'checked':''%> > <%= __('View') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-add-menu" class="js-checkbox-item js-checkbox-add js-checkbox-menu" type="checkbox" name="addMenuPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.menu&&listRole[0].permissions.menu.add?'checked':''%> > <%= __('Add') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-edit-menu" class="js-checkbox-item js-checkbox-edit js-checkbox-menu" type="checkbox" name="editMenuPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.menu&&listRole[0].permissions.menu.edit?'checked':''%> > <%= __('Edit') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-delete-menu" class="js-checkbox-item js-checkbox-delete js-checkbox-menu" type="checkbox" name="deleteMenuPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.menu&&listRole[0].permissions.menu.delete?'checked':''%> > <%= __('Delete') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-all-menu" class="js-checkbox-all-menu" type="checkbox" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.menu&&listRole[0].permissions.menu.view&&listRole[0].permissions.menu.add&&listRole[0].permissions.menu.edit&&listRole[0].permissions.menu.delete?'checked':''%> > <%= __('All') %>
+      </th>
+    </tr>
+    <!-- Notification -->
+    <tr>
+      <th width="25%">
+        <%= __('Notification') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-view-notification" class="js-checkbox-item js-checkbox-view js-checkbox-notification" type="checkbox" name="viewNotificationPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.notification&&listRole[0].permissions.notification.view?'checked':''%> > <%= __('View') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-add-notification" class="js-checkbox-item js-checkbox-add js-checkbox-notification" type="checkbox" name="addNotificationPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.notification&&listRole[0].permissions.notification.add?'checked':''%> > <%= __('Add') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-edit-notification" class="js-checkbox-item js-checkbox-edit js-checkbox-notification" type="checkbox" name="editNotificationPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.notification&&listRole[0].permissions.notification.edit?'checked':''%> > <%= __('Edit') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-delete-notification" class="js-checkbox-item js-checkbox-delete js-checkbox-notification" type="checkbox" name="deleteNotificationPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.notification&&listRole[0].permissions.notification.delete?'checked':''%> > <%= __('Delete') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-all-notification" class="js-checkbox-all-notification" type="checkbox" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.notification&&listRole[0].permissions.notification.view&&listRole[0].permissions.notification.add&&listRole[0].permissions.notification.edit&&listRole[0].permissions.notification.delete?'checked':''%> > <%= __('All') %>
+      </th>
+    </tr>
+    <!-- Parent -->
+    <tr>
+      <th width="25%">
+        <%= __('Parent') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-view-parent" class="js-checkbox-item js-checkbox-view js-checkbox-parent" type="checkbox" name="viewParentPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.parent&&listRole[0].permissions.parent.view?'checked':''%> > <%= __('View') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-add-parent" class="js-checkbox-item js-checkbox-add js-checkbox-parent" type="checkbox" name="addParentPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.parent&&listRole[0].permissions.parent.add?'checked':''%> > <%= __('Add') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-edit-parent" class="js-checkbox-item js-checkbox-edit js-checkbox-parent" type="checkbox" name="editParentPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.parent&&listRole[0].permissions.parent.edit?'checked':''%> > <%= __('Edit') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-delete-parent" class="js-checkbox-item js-checkbox-delete js-checkbox-parent" type="checkbox" name="deleteParentPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.parent&&listRole[0].permissions.parent.delete?'checked':''%> > <%= __('Delete') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-all-parent" class="js-checkbox-all-parent" type="checkbox" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.parent&&listRole[0].permissions.parent.view&&listRole[0].permissions.parent.add&&listRole[0].permissions.parent.edit&&listRole[0].permissions.parent.delete?'checked':''%> > <%= __('All') %>
+      </th>
+    </tr>
+    <!-- Pick Up -->
+    <tr>
+      <th width="25%">
+        <%= __('Pick Up') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-view-pickUp" class="js-checkbox-item js-checkbox-view js-checkbox-pickUp" type="checkbox" name="viewPickUpPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.pickUp&&listRole[0].permissions.pickUp.view?'checked':''%> > <%= __('View') %>
+      </th>
+      <th width="15%">
+      </th>
+      <th width="15%">
+        <input id="js-check-edit-pickUp" class="js-checkbox-item js-checkbox-edit js-checkbox-pickUp" type="checkbox" name="editPickUpPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.pickUp&&listRole[0].permissions.pickUp.edit?'checked':''%> > <%= __('Edit') %>
+      </th>
+      <th width="15%">
+      </th>
+      <th width="15%">
+        <input id="js-check-all-pickUp" class="js-checkbox-all-pickUp" type="checkbox" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.pickUp&&listRole[0].permissions.pickUp.edit?'checked':''%> > <%= __('All') %>
+      </th>
+    </tr>
+    <!-- News & Page -->
+    <tr>
+      <th width="25%">
+        <%= __('News & Page') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-view-post" class="js-checkbox-item js-checkbox-view js-checkbox-post" type="checkbox" name="viewPostPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.post&&listRole[0].permissions.post.view?'checked':''%> > <%= __('View') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-add-post" class="js-checkbox-item js-checkbox-add js-checkbox-post" type="checkbox" name="addPostPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.post&&listRole[0].permissions.post.add?'checked':''%> > <%= __('Add') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-edit-post" class="js-checkbox-item js-checkbox-edit js-checkbox-post" type="checkbox" name="editPostPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.post&&listRole[0].permissions.post.edit?'checked':''%> > <%= __('Edit') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-delete-post" class="js-checkbox-item js-checkbox-delete js-checkbox-post" type="checkbox" name="deletePostPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.post&&listRole[0].permissions.post.delete?'checked':''%> > <%= __('Delete') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-all-post" class="js-checkbox-all-post" type="checkbox" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.post&&listRole[0].permissions.post.view&&listRole[0].permissions.post.add&&listRole[0].permissions.post.edit&&listRole[0].permissions.post.delete?'checked':''%> > <%= __('All') %>
+      </th>
+    </tr>
+    <!-- Schedule -->
+    <tr>
+      <th width="25%">
+        <%= __('Schedule') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-view-schedule" class="js-checkbox-item js-checkbox-view js-checkbox-schedule" type="checkbox" name="viewSchedulePermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.schedule&&listRole[0].permissions.schedule.view?'checked':''%> > <%= __('View') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-add-schedule" class="js-checkbox-item js-checkbox-add js-checkbox-schedule" type="checkbox" name="addSchedulePermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.schedule&&listRole[0].permissions.schedule.add?'checked':''%> > <%= __('Add') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-edit-schedule" class="js-checkbox-item js-checkbox-edit js-checkbox-schedule" type="checkbox" name="editSchedulePermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.schedule&&listRole[0].permissions.schedule.edit?'checked':''%> > <%= __('Edit') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-delete-schedule" class="js-checkbox-item js-checkbox-delete js-checkbox-schedule" type="checkbox" name="deleteSchedulePermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.schedule&&listRole[0].permissions.schedule.delete?'checked':''%> > <%= __('Delete') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-all-schedule" class="js-checkbox-all-schedule" type="checkbox" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.schedule&&listRole[0].permissions.schedule.view&&listRole[0].permissions.schedule.add&&listRole[0].permissions.schedule.edit&&listRole[0].permissions.schedule.delete?'checked':''%> > <%= __('All') %>
+      </th>
+    </tr>
+    <!-- Student -->
+    <tr>
+      <th width="25%">
+        <%= __('Student') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-view-student" class="js-checkbox-item js-checkbox-view js-checkbox-student" type="checkbox" name="viewStudentPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.student&&listRole[0].permissions.student.view?'checked':''%> > <%= __('View') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-add-student" class="js-checkbox-item js-checkbox-add js-checkbox-student" type="checkbox" name="addStudentPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.student&&listRole[0].permissions.student.add?'checked':''%> > <%= __('Add') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-edit-student" class="js-checkbox-item js-checkbox-edit js-checkbox-student" type="checkbox" name="editStudentPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.student&&listRole[0].permissions.student.edit?'checked':''%> > <%= __('Edit') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-delete-student" class="js-checkbox-item js-checkbox-delete js-checkbox-student" type="checkbox" name="deleteStudentPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.student&&listRole[0].permissions.student.delete?'checked':''%> > <%= __('Delete') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-all-student" class="js-checkbox-all-student" type="checkbox" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.student&&listRole[0].permissions.student.view&&listRole[0].permissions.student.add&&listRole[0].permissions.student.edit&&listRole[0].permissions.student.delete?'checked':''%> > <%= __('All') %>
+      </th>
+    </tr>
+    <!-- Subject -->
+    <tr>
+      <th width="25%">
+        <%= __('Subject') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-view-subject" class="js-checkbox-item js-checkbox-view js-checkbox-subject" type="checkbox" name="viewSubjectPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.subject&&listRole[0].permissions.subject.view?'checked':''%> > <%= __('View') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-add-subject" class="js-checkbox-item js-checkbox-add js-checkbox-subject" type="checkbox" name="addSubjectPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.subject&&listRole[0].permissions.subject.add?'checked':''%> > <%= __('Add') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-edit-subject" class="js-checkbox-item js-checkbox-edit js-checkbox-subject" type="checkbox" name="editSubjectPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.subject&&listRole[0].permissions.subject.edit?'checked':''%> > <%= __('Edit') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-delete-subject" class="js-checkbox-item js-checkbox-delete js-checkbox-subject" type="checkbox" name="deleteSubjectPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.subject&&listRole[0].permissions.subject.delete?'checked':''%> > <%= __('Delete') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-all-subject" class="js-checkbox-all-subject" type="checkbox" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.subject&&listRole[0].permissions.subject.view&&listRole[0].permissions.subject.add&&listRole[0].permissions.subject.edit&&listRole[0].permissions.subject.delete?'checked':''%> > <%= __('All') %>
+      </th>
+    </tr>
+    <!-- Category & Tag -->
+    <tr>
+      <th width="25%">
+        <%= __('Category & Tag') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-view-taxonomy" class="js-checkbox-item js-checkbox-view js-checkbox-taxonomy" type="checkbox" name="viewTaxonomyPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.taxonomy&&listRole[0].permissions.taxonomy.view?'checked':''%> > <%= __('View') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-add-taxonomy" class="js-checkbox-item js-checkbox-add js-checkbox-taxonomy" type="checkbox" name="addTaxonomyPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.taxonomy&&listRole[0].permissions.taxonomy.add?'checked':''%> > <%= __('Add') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-edit-taxonomy" class="js-checkbox-item js-checkbox-edit js-checkbox-taxonomy" type="checkbox" name="editTaxonomyPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.taxonomy&&listRole[0].permissions.taxonomy.edit?'checked':''%> > <%= __('Edit') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-delete-taxonomy" class="js-checkbox-item js-checkbox-delete js-checkbox-taxonomy" type="checkbox" name="deleteTaxonomyPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.taxonomy&&listRole[0].permissions.taxonomy.delete?'checked':''%> > <%= __('Delete') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-all-taxonomy" class="js-checkbox-all-taxonomy" type="checkbox" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.taxonomy&&listRole[0].permissions.taxonomy.view&&listRole[0].permissions.taxonomy.add&&listRole[0].permissions.taxonomy.edit&&listRole[0].permissions.taxonomy.delete?'checked':''%> > <%= __('All') %>
+      </th>
+    </tr>
+    <!-- Staff -->
+    <tr>
+      <th width="25%">
+        <%= __('Staff') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-view-user" class="js-checkbox-item js-checkbox-view js-checkbox-user" type="checkbox" name="viewUserPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.user&&listRole[0].permissions.user.view?'checked':''%> > <%= __('View') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-add-user" class="js-checkbox-item js-checkbox-add js-checkbox-user" type="checkbox" name="addUserPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.user&&listRole[0].permissions.user.add?'checked':''%> > <%= __('Add') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-edit-user" class="js-checkbox-item js-checkbox-edit js-checkbox-user" type="checkbox" name="editUserPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.user&&listRole[0].permissions.user.edit?'checked':''%> > <%= __('Edit') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-delete-user" class="js-checkbox-item js-checkbox-delete js-checkbox-user" type="checkbox" name="deleteUserPermission" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.user&&listRole[0].permissions.user.delete?'checked':''%> > <%= __('Delete') %>
+      </th>
+      <th width="15%">
+        <input id="js-check-all-user" class="js-checkbox-all-user" type="checkbox" <%=listRole&&listRole.length&&listRole[0].permissions&&listRole[0].permissions.user&&listRole[0].permissions.user.view&&listRole[0].permissions.user.add&&listRole[0].permissions.user.edit&&listRole[0].permissions.user.delete?'checked':''%> > <%= __('All') %>
+      </th>
+    </tr>
+  </thead>
+</table>

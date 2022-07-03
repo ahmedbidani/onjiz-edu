@@ -1,0 +1,41 @@
+<div class="card">
+    <div class="row">
+        <div class="col-lg-2 col-md-3">
+              <%- partial('_left-column.ejs') %>
+        </div>
+        <div class="col-lg-10 col-md-9 border-left">
+            <div class="card b-all shadow-none">
+                <div class="card-body">
+                    <h3 class="card-title"><%= __('Inbox')%></h3>
+                
+                    <div class="table-responsive">
+                        <table class="table table-hover table-striped dataTable no-footer">
+                            <tbody>
+                            <%if(listFeedback.length > 0){%>
+                                <%for(let i = 0; i < listFeedback.length; i++){%>
+                                <tr class="unread">
+                                    <td style="width:40px" class="hidden-xs-down"><i class="fa fa-star-o"></i></td>
+                                    <% if(listFeedback[i].me){ %>
+                                    <td class="hidden-xs-down"><%= "Me" %></td>
+                                    <% } else { %>  
+                                    <td class="hidden-xs-down"><%= listFeedback[i].createdBy.fullName %></td>
+                                    <% } %>
+                                    <!-- <td class="hidden-xs-down">Hritik Roshan</td> -->
+                                    <td class="max-texts"> <a href="/backend/feedback/form/<%=listFeedback[i].id%>" /><%= listFeedback[i].title %></td>
+                                    <!-- <td class="hidden-xs-down"><i class="fa fa-paperclip"></i></td> -->
+                                    <td class="text-right"><%= moment(listFeedback[i].createdAt).format(webSettings.value.dateFormat) %></td>
+                                </tr>
+                            <%} 
+                            } else { %>
+                                <div class="mail-contnet">
+                                <h5><%= __('No data')%></h5>
+                                </div>
+                            <%}%>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

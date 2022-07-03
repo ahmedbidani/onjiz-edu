@@ -1,0 +1,14 @@
+<a href="javascript:;" data-target="#addNewMedia" data-toggle="modal" id="addNewForm" class="btn btn-info m-b-10"><i class="fa fa-plus-circle"></i> <%= __('Add media') %></a>
+
+<div class="row list-medias">
+    <ul id="list-medias-inner" class="list-medias-inner">
+    <% for(let i=0;i<photos.length;i++){%>
+       <li>
+            <div class="el-card-avatar"> 
+                <img class="img-fluid" src="<%=photos[i].thumbnail.sizes.thumbnail.path%>" alt="">
+                <a class="btn btn-primary btn-xs action-remove" data-id="<%-photos[i].id%>" href="javascript:void(0)" role="button"><%= __('Remove') %></a>
+            </div>
+        </li>
+    <%}%>
+    </ul>
+</div>

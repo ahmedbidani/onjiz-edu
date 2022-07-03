@@ -1,0 +1,91 @@
+<% block('localCss', '<link rel="stylesheet" href="/styles/media.css">') %>
+<div class="modal fade media-modal" id="addNewMedia" aria-hidden="true" aria-labelledby="addNewMedia" role="dialog">
+	<div class="modal-dialog modal-simple modal-lg">
+		<div class="modal-content">
+			<form id="formMedia">
+				<input type='hidden' name='_csrf' value='<%= _csrf %>'> 
+				<div class="modal-header">
+					<h4 class="modal-title">
+						<%= __('Add Media') %>
+					</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<ul class="nav nav-tabs nav-tabs-line" role="tablist">
+					<li class="nav-item" role="presentation"><a class="nav-link active" data-toggle="tab"
+							href="#fromComputer" aria-controls="fromComputer" role="tab"><%= __('Upload') %></a></li>
+					<li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab" href="#fromSystem"
+							aria-controls="fromSystem" role="tab"><%= __('Media Library') %></a></li>
+				</ul>
+
+				<div class="modal-body">
+					<div class="tab-content">
+						<div class="tab-pane active" id="fromComputer" role="tabpanel">
+							<div class="upload-zone upload-form">
+								<input type="file" id="inputUpload" name="files[]" multiple="" />
+								<div class="uploader-inline">
+									<p class="upload-instructions"><%= __('Drop files anywhere to upload') %></p>
+								</div>
+								<div class="file-wrap">
+									<div class="file-list row"></div>
+								</div>
+							</div>
+						</div>
+
+						<div class="tab-pane" id="fromSystem" role="tabpanel">
+							<!-- Media Content -->
+							<div id="mediaContent" class="page-content page-content-table" data-plugin="selectable">
+
+								<!-- Actions -->
+								<div class="page-content-actions">
+									<div class="checkbox-custom checkbox-primary checkbox-lg">
+										<input type="checkbox" id="media_all" class="selectable-all">
+										<label for="media_all"></label>
+									</div>
+								</div>
+
+								<!-- Media -->
+								<div class="row">
+									<div class="col-lg-12 js-height-scrollbar" style="max-height: 500px;">
+										<div class="media-list is-grid pb-50">
+											<ul class="blocks">
+												
+											</ul>
+										</div>
+									</div>
+								</div>
+
+							</div>
+							<div class="text-center">
+								<a href="javascript:void(0)" id="mediaLoadMore"><%= __('Load more')%></a>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="modal-footer">
+					<button id="btn-upload-all" type="button"
+						class="btn btn-warning waves-effect waves-classic"><%= __('Upload'); %></button>
+					<button id="btn-select" type="button" class="btn btn-warning waves-effect waves-classic"
+						style="display: none;"><%= __('Select'); %></button>
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="alert hidden" role="alert">asdf</div>
+</div>
+
+<% block('localScripts', '<script src="/vendors/jqueryui/jquery-ui.min.js"></script>') %>
+<% block('localScripts', '<script src="/vendors/blueimp-tmpl/tmpl.js"></script>') %>
+<% block('localScripts', '<script src="/vendors/blueimp-canvas-to-blob/canvas-to-blob.js"></script>') %>
+<% block('localScripts', '<script src="/vendors/blueimp-load-image/load-image.all.min.js"></script>') %>
+<% block('localScripts', '<script src="/vendors/blueimp-file-upload/jquery.fileupload.js"></script>') %>
+<% block('localScripts', '<script src="/vendors/blueimp-file-upload/jquery.fileupload-process.js"></script>') %>
+<% block('localScripts', '<script src="/vendors/blueimp-file-upload/jquery.fileupload-image.js"></script>') %>
+<% block('localScripts', '<script src="/vendors/blueimp-file-upload/jquery.fileupload-audio.js"></script>') %>
+<% block('localScripts', '<script src="/vendors/blueimp-file-upload/jquery.fileupload-video.js"></script>') %>
+<% block('localScripts', '<script src="/vendors/blueimp-file-upload/jquery.fileupload-validate.js"></script>') %>
+<% block('localScripts', '<script src="/vendors/blueimp-file-upload/jquery.fileupload-ui.js"></script>') %>
+<% block('localScripts', '<script src="/vendors/sweetalert/sweetalert.min.js"></script>') %>
+<% block('localScripts', '<script src="/js/backend/media/upload.js"></script>') %>

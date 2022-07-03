@@ -1,0 +1,47 @@
+<!--====== Courses Details Banner PART START ======-->
+
+<section class="courses_details_banner bg_cover" style="background-image: url(/images/top_bg.jpg)">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-9 col-sm-11">
+                <div class="details_banner_content"> 
+                    <h4 class="title"><%= albumObj.title%></h4>
+                    <p class="white pt-10"><%- albumObj.description%></p>
+
+                    <div class="details_media_wrapper d-flex flex-wrap">
+                        <div class="details_media d-flex align-items-center mt-30">
+                            <div class="media_image">
+                                <i class="fa fa-star"></i>
+                            </div>
+                            <div class="media_content"> 
+                                <ul class="port-project-info">
+                                    <li><p><span><%= __('Album by:') %></span> <%= albumObj.owner.firstName%> <%= albumObj.owner.lastName%></p></li>
+                                    <li><p><span><%= __('Date:') %></span> <%= moment(albumObj.createdAt).format('MM-DD-YYYY') %></p></li>
+                                    <li><p><span><%= __('Class:') %></span> <%= albumObj.classObj ? albumObj.classObj.title : __('All class') %></p> </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--====== Courses Details Banner PART ENDS ======-->
+<section class="pt-50 pb-120">
+    <div class="container">
+        <div class="row"> 
+                <% if(albumObj.photos.length > 0) {%>
+                    <%for(let i = 0; i < albumObj.photos.length; i++){%>
+                        <div class="col-lg-3 col-sm-6">
+                                <div class="mt-30">
+                                    <img src="<%= albumObj.photos && albumObj.photos[i].thumbnail ? albumObj.photos[i].thumbnail.sizes.medium_large.path : ''%>" alt="">
+                                </div> 
+                        </div>
+                    <%}%>
+                <%}%> 
+        </div>
+    </div>
+</section>
+<% block('localScripts', '<script src="/js/frontend/gallery/index.js"></script>') %> 

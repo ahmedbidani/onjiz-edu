@@ -1,0 +1,83 @@
+<header class="topbar">
+  <nav class="navbar top-navbar navbar-expand-md navbar-dark">
+    <!-- ============================================================== -->
+    <!-- Logo -->
+    <!-- ============================================================== -->
+    <div class="navbar-header">
+      <a class="navbar-brand" href="<%= (userActive.userType == 3) ? '/sa/school' : '/'%>">
+        <b>
+          <img src="/images/logo-light.png" alt="Kindie" class="light-logo" />
+        </b>
+        <!-- Logo text -->
+        <span>
+          <!-- Light Logo text -->    
+          <img src="/images/logo-light-text.png" class="light-logo" alt="homepage" />
+        </span>
+      </a>
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Logo -->
+    <!-- ============================================================== -->
+    <div class="navbar-collapse">
+      <!-- ============================================================== -->
+      <!-- toggle and nav items -->
+      <!-- ============================================================== -->
+      <ul class="navbar-nav mr-auto">
+      </ul>
+      <!-- ============================================================== -->
+      <!-- User profile and search -->
+      <!-- ============================================================== -->
+      <ul class="navbar-nav my-lg-0">
+        <!-- ============================================================== -->
+        <!-- Comment -->
+        <!-- ============================================================== -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle waves-effect waves-dark" href="#" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <!-- <img src="<%= userActive.avatar ? userActive.avatar : '/images/avatar2.png'%>" alt="profile"> -->
+            Hi,
+            <% if(userActive.isAgency){ %>
+              <span class="nav-profile-name"><%=userActive.name %></span>
+              <% } else{ %>
+                <span class="nav-profile-name"><%=userActive.firstName + ' ' + userActive.lastName %></span>
+              <% } %>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right mailbox animated">
+            <ul>
+              
+              <li>
+                <% if(userActive.isAgency){ %>
+                  <a class="dropdown-item" href="/agency/profile?id=<%=userActive.id%>">
+                    <i class="mdi mdi-account text-primary"></i>
+                    <%= __('Profile') %>
+                  </a>
+                  <% } else{ %>
+                    <a class="dropdown-item" href="/backend/account/profile">
+                      <i class="mdi mdi-account text-primary"></i>
+                      <%= __('Profile') %>
+                    </a>
+                  <% } %>
+               
+              </li>
+              <!-- <% if (userActive.isSuperAdmin) { %>
+              <li>
+                <a class="dropdown-item" href="/backend/setting">
+                  <i class="mdi mdi-settings text-primary"></i>
+                  <%= __('Settings') %>
+                </a>
+              </li>
+              <% } %> -->
+              <li>
+                <a class="dropdown-item" href="/backend/logout">
+                  <i class="mdi mdi-logout text-primary"></i>
+                  <%= __('Logout') %>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+        <!-- ============================================================== -->
+      </ul>
+    </div>
+  </nav>
+</header>

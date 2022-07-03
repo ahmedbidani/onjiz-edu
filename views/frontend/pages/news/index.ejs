@@ -1,0 +1,60 @@
+<section class="team_area pt-80 pb-80">
+    <div class="container">
+        <div class="row">
+            <!--start left col main--> 
+            <div class="col-md-8 col-sm-12 col-xs-12">
+                <div class="row justify-content-center">
+                    <% if(listNews.length > 0){ %>
+                        <%for(let postObj of listNews){%>
+                            <div class="col-lg-6 col-md-6 mb-30">
+                                <div class="single_blog">
+                                    <div class="blog_image">
+                                        <img src="<%= postObj.media && postObj.media.thumbnail ? postObj.media.thumbnail.sizes.medium_large.path : '/images/no-thumb.png'%>" alt="blog">
+                                    </div>
+                                    <div class="blog_content">
+                                        <span class="date"><span><%= postObj && postObj ? moment(postObj.createdAt).format('DD') : '' %> </span></br><%= postObj && postObj ? moment(postObj.createdAt).format('MMM') : '' %></span>
+                                        
+                                        <div class="blog_content_wrapper">
+                                            <ul class="blog_meta">
+                                                <li><a href="#"><%= postObj && postObj.author ? postObj.author.lastName : '' %></a></li>
+                                                <!-- <li><a href="#"><%= postObj && postObj ? moment(postObj.createdAt).format('DD MMM YYYY') : '' %></a></li> -->
+                                            </ul>
+                                            <h4 class="blog_title"><a href="/news/<%= postObj.alias%>/<%=postObj && postObj ? postObj.id : ''%>"><%= postObj && postObj ? postObj.title : '' %></a></h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <%}%>
+                        <%- partial ('../../partials/paging.ejs') %>
+                    <%}else{%>
+                        <div class="ce-feature-box-52 margin-bottom">
+                            <%= __('Data empty') %>
+                        </div>
+                    <%}%>
+                </div>
+            </div>
+            <!--end left col main--> 
+
+            <!--start right col main--> 
+            <div class="col-md-4 col-sm-12 col-xs-12">
+                <div class="sidebar">
+                    <div class="sidebar_list">
+                        <h5 class="sidebar_title"><%= __('Categories') %></h5>
+                            
+                        <%if(listCategories.length){%>
+                        <ul class="archives_list">
+                            <%for(let cate of listCategories){%>
+                            <li><a class="<%= params.category && params.category == cate.id ? 'active' : ''%> " href="/news?category=<%= cate.id%>"><i class="fa fa-angle-right"></i> <%= cate.title%></a></li>
+                            <%}%>
+                        </ul>
+                        <%}else{%>
+                        <p><%= __('No Category')%></p>
+                        <%}%>
+                    </div>
+                </div>
+            </div>
+            <!--end right col main--> 
+        </div>
+    </div>
+</section>
+<% block('localScripts', '<script src="/js/frontend/news/index.js"></script>') %>

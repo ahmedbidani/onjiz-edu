@@ -1,0 +1,116 @@
+<% let BACKEND = sails.config.custom.BACKEND %>
+<% block('localCss', '<link rel="stylesheet" href="/vendors/formvalidation/formValidation.css">') %>
+
+<section class="contact_area pt-80 pb-130">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-7 col-sm-12 col-xs-12">
+        <div class="section_title pb-30">
+          <h2 class="main_title"><%=__('Contact us')%></h2>
+        </div>
+        <br />
+        <form autocomplete="off" id="formContact" data-fv-framework="bootstrap4"
+        data-fv-icon-valid="glyphicon glyphicon-ok" data-fv-icon-invalid="glyphicon glyphicon-remove"
+        data-fv-icon-validating="glyphicon glyphicon-refresh" data-fv-live="enabled">
+          <input type='hidden' name='_csrf' value='<%= _csrf %>'> 
+          <input type='hidden' name='schoolId' value='<%= school.id %>'> 
+          <label class="form-control-label"><%=__('Name')%> <em>*</em></label>
+          <div class="form-group">
+            <input class="form-control" type="text" name="name" id="name" data-fv-notempty="true" id="title"
+            data-fv-notempty-message="<%= __('Required field') %>" required>
+          </div>
+          <div class="clearfix"></div>
+
+          <label class="form-control-label"><%=__('E-mail')%> <em>*</em></label>
+          <div class="form-group">
+            <input class="form-control" type="email" name="email" id="email" data-fv-notempty="true" data-fv-notempty-message="<%= __('Email is required') %>"
+            data-fv-message="<%= __('Email format is invalid') %>" required>
+          </div>
+          <div class="clearfix"></div>
+
+          <label class="form-control-label"><%=__('Phone')%> <em>*</em></label>
+          <div class="form-group">
+              <input class="form-control" type="tel" name="phone" id="phone" pattern="[0-9]{9,12}$" data-fv-notempty="true" data-fv-notempty-message="<%= __('Phone is required') %>" data-fv-message="<%= __('Phone is 9 or 12 number') %>" data-fv-stringlength="true"
+              data-fv-stringlength-max="12" required>
+          </div>
+          <div class="clearfix"></div>
+
+          <label class="form-control-label"><%=__('Subject')%> <em>*</em></label>
+          <div class="form-group">
+            <input class="form-control" type="text" name="subject" id="subject" data-fv-notempty="true" id="title"
+            data-fv-notempty-message="<%= __('Required field') %>" required>
+          </div>
+          <div class="clearfix"></div>
+
+          <label class="form-control-label"><%=__('Message')%> <em>*</em></label>
+          <div class="form-group">
+            <textarea class="form-control" rows="5" name="message" id="message" data-fv-notempty="true" id="title"
+            data-fv-notempty-message="<%= __('Required field') %>" required></textarea>
+          </div>
+          <div class="clearfix"></div>
+
+          <div class="alert alert-dismissible hidden" role="alert">
+            <%= __('Thanks for your message!') %>
+          </div>
+          <div class="cforms_sty3">
+            <button type="submit" id="btnFormContact" class="btn main-btn"><%=__('Send Message')%></button>
+          </div>
+        </form><!-- end .smart-wrap section -->
+        <!-- end .smart-forms section -->
+      </div>
+      <!--end item-->
+
+      <div class="col-md-5 col-sm-12 col-xs-12 contact_info pt-20">
+        <ul>
+            <li>
+                <div class="single_info d-flex align-items-center mt-30">
+                    <div class="info_icon">
+                        <i class="fa fa-home"></i>
+                    </div>
+                    <div class="info_content media-body">
+                        <p><%= webSettings && webSettings.value && webSettings.value.address ? webSettings.value.address : '[YOUR_ADDRESS]' %></p>
+                    </div>
+                </div> <!-- single info -->
+            </li>
+            <li>
+                <div class="single_info d-flex align-items-center mt-30">
+                    <div class="info_icon">
+                        <i class="fa fa-phone"></i>
+                    </div>
+                    <div class="info_content media-body">
+                        <p><%= webSettings && webSettings.value && webSettings.value.phoneTechnical ? webSettings.value.phoneTechnical : '[YOUR_PHONE]' %></p>
+                    </div>
+                </div> <!-- single info -->
+            </li>
+            <li>
+                <div class="single_info d-flex align-items-center mt-30">
+                    <div class="info_icon">
+                        <i class="fa fa-envelope"></i>
+                    </div>
+                    <div class="info_content media-body">
+                        <p><a href="mailto:<%= webSettings && webSettings.value && webSettings.value.mailTechnical ? webSettings.value.mailTechnical : 'hi@zinisoft.com' %>"><%= webSettings && webSettings.value && webSettings.value.mailTechnical ? webSettings.value.mailTechnical : '[YOUR_EMAIL]' %></a></p>
+                    </div>
+                </div> <!-- single info -->
+            </li>
+            <li>
+              <div class="single_info d-flex align-items-center mt-30">
+                  <div class="info_icon">
+                      <i class="fa fa-chrome"></i>
+                  </div>
+                  <div class="info_content media-body">
+                      <p><a href="<%= webSettings && webSettings.value && webSettings.value.website ? webSettings.value.website : 'https://kindie.zinisoft.net' %>"><%= webSettings && webSettings.value && webSettings.value.website ? webSettings.value.website : '[YOUR_WEBSITE_ADDRESS]' %></a></p>
+                  </div>
+              </div> <!-- single info -->
+          </li>
+        </ul> 
+        <div class="contact_map mt-50">
+          <%- webSettings && webSettings.value && webSettings.value.mapIframe ? webSettings.value.mapIframe : '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.26191129929!2d106.7504580148009!3d10.791241192311496!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3175278cfb60e4d1%3A0x2321e9b8bba9c98e!2sCentana%20Th%E1%BB%A7%20Thi%C3%AAm%20Apartment!5e0!3m2!1svi!2s!4v1584592484099!5m2!1svi!2s" width="470" height="300" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>' %>
+        </div>
+    </div>
+  </div>
+</section>
+<div class="clearfix"></div>
+<!-- end section -->
+<% block('localScripts', '<script src="/vendors/formvalidation/formValidation.min.js"></script>') %>
+<% block('localScripts', '<script src="/vendors/formvalidation/framework/bootstrap4.min.js"></script>') %>
+<% block('localScripts', '<script src="/js/frontend/contact/index.js"></script>') %>

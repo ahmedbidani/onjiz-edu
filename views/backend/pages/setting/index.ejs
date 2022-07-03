@@ -1,0 +1,795 @@
+<% block('localCss', '<link rel="stylesheet" href="/vendors/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css"></script>') %>
+<% block('localCss', '<link rel="stylesheet" href="/vendors/summernote/summernote-bs4.css">') %>
+<div class="card">
+  <div class="card-body">
+    <!-- <h4 class="card-title"><%= __('General settings') %></h4> -->
+    <!-- Page Content -->
+    <form autocomplete="off" id="formSetting" class="" data-fv-framework="bootstrap4" data-fv-message="<%= __('Invalidate') %>"
+        data-fv-icon-valid="glyphicon glyphicon-ok" data-fv-icon-invalid="glyphicon glyphicon-remove" data-fv-icon-validating="glyphicon glyphicon-refresh"
+        data-fv-live="enabled" data-manner="edit">
+        <input type='hidden' name='_csrf' value='<%= _csrf %>'> 
+          <div class="row">
+            <div class="col-md-12 col-lg-12">
+              <!-- Example Tabs -->
+              <div class="example-wrap">
+                  <div class="nav-tabs-horizontal" data-plugin="tabs">
+                    <ul class="nav nav-tabs" role="tablist">
+                      <li class="nav-item" role="presentation"><a class="nav-link active" data-toggle="tab" href="#general"
+                        aria-controls="app" role="tab"><%= __('General')%></a></li>
+                      <li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab" href="#web"
+                          aria-controls="web" role="tab"><%= __('Web')%></a></li>
+                      <li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab" href="#app"
+                          aria-controls="app" role="tab"><%= __('App')%></a></li>
+                      
+                    </ul>
+                    <div class="tab-content pt-3">
+                      <div class="tab-pane active" id="general" data-countSlot="<%= web.value.rangeTimeMenu ? web.value.rangeTimeMenu.length : 0 %>" role="tabpanel">
+                          <div class="row">
+                            <div class="col-12">
+                              <div class="accordion" id="accordion" role="tablist">
+                              </div>
+                            </div>
+                          </div>
+                          <div class="card">
+                            <div class="card-header" role="tab" id="heading-0">
+                              <h6 class="mb-0">
+                                <a data-toggle="collapse" href="#collapse-0" aria-expanded="true" aria-controls="collapse-0" class="collapsed">
+                                    <%= __('Menu settings') %>
+                                </a>
+                              </h6>
+                            </div>
+                            <div id="collapse-0" class="collapse show" role="tabpanel" aria-labelledby="heading-0" data-parent="#accordion">
+                              <div class="card-body">
+                                <div class="repeater" id="repeaterRangeTimeMenu">
+                                  <div class="slotFeedings" data-repeater-list="slotFeedings">
+                                  <% if (web && web.value && web.value.rangeTimeMenu && web.value.rangeTimeMenu.length > 0) { 
+                                    for (let i = 0; i < web.value.rangeTimeMenu.length; i++ ) {%>
+                                    <div data-repeater-item class="row">
+                                      <div class="col-4">
+                                        <div class="form-group">
+                                          <label><%= __('Name') %></label>
+                                          <input type="text" name="name" class="form-control" value="<%= web.value.rangeTimeMenu[i].name %>" />
+                                        </div>
+                                      </div>
+                                      <div class="col-3">
+                                        <div class="form-group">
+                                          <label><%= __('Start time') %></label>
+                                          <div class="input-group date timeStart" data-target-input="nearest"  id="timeStart<%=i%>" data-target="#timeStart<%=i%>">
+                                            <div class="input-group timeStart" id="timeStart<%=i%>" data-target="#timeStart<%=i%>"
+                                              data-toggle="datetimepicker">
+                                              <input type="text" name="timeStart" class="form-control bootstrap-datetimepicker-input"  id="timeStart<%=i%>" data-target="#timeStart<%=i%>" value="<%= web.value.rangeTimeMenu[i].timeStart %>"  data-value="<%= web.value.rangeTimeMenu[i].timeStart %>" />
+                                              <div class="input-group-addon input-group-append">
+                                                <i class="mdi mdi-clock input-group-text"></i>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="col-3">
+                                        <div class="form-group">
+                                          <label><%= __('End time') %></label>
+                                          <div class="input-group date timeEnd" data-target-input="nearest"  id="timeEnd<%=i%>" data-target="#timeEnd<%=i%>">
+                                            <div class="input-group timeEnd" id="timeEnd<%=i%>" data-target="#timeEnd<%=i%>"
+                                              data-toggle="datetimepicker">
+                                              <input type="text" name="timeEnd" class="form-control bootstrap-datetimepicker-input"  id="timeEnd<%=i%>" data-target="#timeEnd<%=i%>" value="<%= web.value.rangeTimeMenu[i].timeEnd %>" data-value="<%= web.value.rangeTimeMenu[i].timeEnd %>" />
+                                              <div class="input-group-addon input-group-append">
+                                                <i class="mdi mdi-clock input-group-text"></i>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="col-2 d-flex align-items-center">
+                                        <button data-repeater-delete type="button" class="btn btn-danger btn-sm icon-btn ml-2">
+                                          <i class="mdi mdi-delete"></i>
+                                        </button>
+                                      </div>
+                                    </div>
+                                    <% }%>
+                                  <%}else{%>
+                                    <div data-repeater-item class="row">
+                                      <div class="col-4">
+                                        <div class="form-group">
+                                          <label><%= __('Name') %></label>
+                                          <input type="text" name="name" class="form-control" value="Morning" />
+                                        </div>
+                                      </div>
+                                      <div class="col-3">
+                                        <div class="form-group">
+                                          <label><%= __('Start time') %></label>
+                                          <div class="input-group date timeStart" data-target-input="nearest"  id="timeStart0" data-target="#timeStart0">
+                                            <div class="input-group timeStart" id="timeStart0" data-target="#timeStart0"
+                                              data-toggle="datetimepicker">
+                                              <input type="text" name="timeStart" class="form-control bootstrap-datetimepicker-input"  id="timeStart0" data-target="#timeStart0" value="07:00"  data-value="" />
+                                              <div class="input-group-addon input-group-append">
+                                                <i class="mdi mdi-clock input-group-text"></i>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="col-3">
+                                        <div class="form-group">
+                                          <label><%= __('End time') %></label>
+                                          <div class="input-group date timeEnd" data-target-input="nearest"  id="timeEnd0" data-target="#timeEnd0">
+                                            <div class="input-group timeEnd" id="timeEnd0" data-target="#timeEnd0"
+                                              data-toggle="datetimepicker">
+                                              <input type="text" name="timeEnd" class="form-control bootstrap-datetimepicker-input"  id="timeEnd0" data-target="#timeEnd0" value="08:00" data-value="" />
+                                              <div class="input-group-addon input-group-append">
+                                                <i class="mdi mdi-clock input-group-text"></i>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="col-2 d-flex align-items-center">
+                                        <button data-repeater-delete type="button" class="btn btn-danger btn-sm icon-btn ml-2">
+                                          <i class="mdi mdi-delete"></i>
+                                        </button>
+                                      </div>
+                                    </div>
+                                    <%}%>
+                                  </div>
+                                  <button data-repeater-create type="button" class="btn btn-info btn-sm icon-btn">
+                                    <i class="mdi mdi-plus"></i>
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="card">
+                            <div class="card-header" role="tab" id="heading-3">
+                              <h6 class="mb-0">
+                                <a data-toggle="collapse" href="#collapse-3" aria-expanded="true" aria-controls="collapse-3" class="collapsed">
+                                    <%= __('More settings') %>
+                                </a>
+                              </h6>
+                            </div>
+                            <div id="collapse-3" class="collapse show" role="tabpanel" aria-labelledby="heading-3" data-parent="#accordion">
+                              <div class="card-body">
+                                <div class="row">
+                                  <div class="col-6">
+                                    <div class="form-group">
+                                      <label class="form-control-label"><%= __('Weekend: ') %></label>
+                                      <select id="weekend" name="weekend" class="form-control js-process-basic-multiple  select2-multiple"
+                                        data-placeholder="<%= __('Choose') %>" multiple="multiple">
+                                        <option value="1" <%= web && web.value &&  web.value.weekend.includes('1') ? 'selected' : ''%>>
+                                            <%= __('Monday') %>
+                                        </option>
+                                        <option value="2" <%= web && web.value && web.value.weekend.includes('2') ? 'selected' : ''%>>
+                                            <%= __('Tuesday') %>
+                                        </option>
+                                        <option value="3" <%= web && web.value && web.value.weekend.includes('3') ? 'selected' : ''%>>
+                                            <%= __('Wednesday') %>
+                                        </option>
+                                        <option value="4" <%= web && web.value && web.value.weekend.includes('4') ? 'selected' : ''%>>
+                                            <%= __('Thursday') %>
+                                        </option>
+                                        <option value="5" <%= web && web.value && web.value.weekend.includes('5') ? 'selected' : ''%>>
+                                            <%= __('Friday') %>
+                                        </option>
+                                        <option value="6" <%= web && web.value && web.value.weekend.includes('6') ? 'selected' : ''%>>
+                                            <%= __('Saturday') %>
+                                        </option>
+                                        <option value="7" <%= web && web.value && web.value.weekend.includes('7') ? 'selected' : ''%>>
+                                            <%= __('Sunday') %>
+                                        </option>
+                                        </select>
+                                    </div>
+                                  </div>
+                                  <div class="col-6">
+                                    <div class="form-group">
+                                      <label class="form-control-label"><%= __('Maximum size of file upload (MB): ') %></label>
+                                      <input type="number" class="form-control" value="<%=web.value.maximumUploadSize%>" id="maximumUploadSize" name="maximumUploadSize">
+                                    </div>
+                                  </div>
+                                  <div class="col-6">
+                                    <div class="form-group">
+                                      <label class="form-control-label"><%= __('Turn on shuttle bus: ') %></label>
+                                      <ul class="list-unstyled list-inline">
+                                        <li class="list-inline-item">
+                                          <div class="radio-custom radio-primary">
+                                            <input type="radio" name="allowShuttleBus" value="1" <%=web&&web.value&&web.value.allowShuttleBus==true?'checked':''%> />
+                                            <label for="">
+                                                <%= __('On')%>
+                                            </label>
+                                          </div>
+                                        </li>
+                                        <li class="list-inline-item">
+                                          <div class="radio-custom radio-primary">
+                                            <input type="radio" name="allowShuttleBus" value="0" <%=web&&web.value&&web.value.allowShuttleBus==false?'checked':''%> />
+                                            <label for="">
+                                                <%= __('Off')%>
+                                            </label>
+                                          </div>
+                                        </li>
+                                      </ul>
+                                    </div>
+                                  </div>
+                                  <div class="col-6">
+                                    <div class="form-group">
+                                      <label class="form-control-label"><%= __('Turn on shuttle person info: ') %></label>
+                                      <ul class="list-unstyled list-inline">
+                                        <li class="list-inline-item">
+                                          <div class="radio-custom radio-primary">
+                                            <input type="radio" name="allowShuttlePersonInfo" value="1" <%=web&&web.value&&web.value.allowShuttlePersonInfo==true?'checked':''%> />
+                                            <label for="">
+                                                <%= __('On')%>
+                                            </label>
+                                          </div>
+                                        </li>
+                                        <li class="list-inline-item">
+                                          <div class="radio-custom radio-primary">
+                                            <input type="radio" name="allowShuttlePersonInfo" value="0" <%=web&&web.value&&web.value.allowShuttlePersonInfo==false?'checked':''%> />
+                                            <label for="">
+                                                <%= __('Off')%>
+                                            </label>
+                                          </div>
+                                        </li>
+                                      </ul>
+                                    </div>
+                                  </div>
+                                </div>
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+                      <div class="tab-pane" id="web"  data-countSlider="<%= web.value.homeSettings && web.value.homeSettings.sliders ? web.value.homeSettings.sliders.length : 0 %>" role="tabpanel">
+                        <div class="vtabs">
+                          <ul class="nav nav-tabs tabs-vertical" role="tablist">
+                              <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#generalWeb" role="tab"> <span class="hidden-xs-down"><%= __('General')%></span> </a> </li>
+                              <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#homeSettings" role="tab"> <span class="hidden-xs-down"><%= __('Home Setting')%></span> </a> </li>
+                              <!-- <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#about" role="tab"> <span class="hidden-xs-down"><%= __('About')%></span></a> </li> -->
+                              <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#social" role="tab"> <span class="hidden-xs-down"><%= __('Social networking')%></span></a> </li>
+                              <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#widget" role="tab"><span class="hidden-xs-down"><%= __('Widget')%></span></a> </li>
+                          </ul>
+                          <!-- Tab panes -->
+                          <div class="tab-content">
+                              <div class="tab-pane active" id="generalWeb" role="tabpanel">
+                                  <div class="p-20">
+                                    <div class="form-group">
+                                        <label><%= __('Name')%></label>
+                                        <input type="text" class="form-control" value="<%= web && web.value && web.value.name ? web.value.name : '' %>" id="webName" name="webName">
+                                        <span class="text-help"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label><%= __('Description')%></label>
+                                      <input type="text" class="form-control" value="<%= web && web.value && web.value.description ? web.value.description : '' %>" id="webDescription" name="webDescription">
+                                      <span class="text-help"></span>
+                                    </div>
+                                    <div class="form-group">
+                                      <label><%= __('Version')%></label>
+                                      <input type="text" class="form-control" value="<%= web && web.value && web.value.version ? web.value.version : ''%>" id="webVersion" name="webVersion">
+                                      <span class="text-help"></span>
+                                    </div> 
+                                    <div class="form-group">
+                                        <label><%= __('License')%></label>
+                                        <input type="text" class="form-control" value="<%= web && web.value && web.value.license ? web.value.license : '' %>" id="webLicense" name="webLicense">
+                                        <span class="text-help"></span>
+                                    </div> 
+                                    <div class="form-group">
+                                      <label><%= __('Language')%></label>
+                                      <select id="webLanguage" name="webLanguage" class="form-control js-process-basic-multiple w-100"
+                                      data-placeholder="<%= __('Choose') %>">
+                                      <option value="">---</option>
+                                        <% for (let language of languages) { %>
+                                        <option value="<%= language.code %>" <%=web&&web.value&&web.value.language&&web.value.language==language.code?'selected':''%>>
+                                          <%= language.name %>
+                                        </option>
+                                        <% } %>
+                                      </select>
+                                    </div>
+                                    <div class="form-group">
+                                      <label><%= __('Display name')%></label>
+                                      <select id="webDisplayName" name="webDisplayName" class="form-control js-process-basic-multiple w-100"
+                                      data-placeholder="<%= __('Choose') %>">
+                                        <option value="firstlast" <%=web&&web.value&&web.value.displayName&&web.value.displayName=='firstlast'?'selected':''%>><%= __('First/Last Name')%></option>
+                                        <option value="lastfirst" <%=web&&web.value&&web.value.displayName&&web.value.displayName=='lastfirst'?'selected':''%>><%= __('Last/First Name')%></option>
+                                        <!-- <option value="first" <%=web&&web.value&&web.value.displayName&&web.value.displayName=='first'?'selected':''%>><%= __('First Name')%></option>
+                                        <option value="last" <%=web&&web.value&&web.value.displayName&&web.value.displayName=='last'?'selected':''%>><%= __('Last Name')%></option> -->
+                                      </select> 
+                                    </div>
+                                    <div class="form-group">
+                                      <label><%= __('Date format')%></label>
+                                      <fieldset>
+                                        <label><input type="radio" name="webDateFormat" value="MMM DD YYYY" <%= (web && web.value && web.value.dateFormat == "MMM DD YYYY")? 'checked="checked"': ''%>> <span class="date-time-text format-i18n">July 05 2019</span> [<code>MM D Y</code>]</label><br>
+                                        <label><input type="radio" name="webDateFormat" value="YYYY/MM/DD" <%= (web && web.value && web.value.dateFormat == "YYYY/MM/DD")? 'checked="checked"': ''%>> <span class="date-time-text format-i18n">2019-07-15</span> [<code>Y-m-d</code>]</label><br>
+                                        <label><input type="radio" name="webDateFormat" value="MM/DD/YYYY" <%= (web && web.value && web.value.dateFormat == "MM/DD/YYYY")? 'checked="checked"': ''%>> <span class="date-time-text format-i18n">07/15/2019</span> [<code>m/d/Y</code>]</label><br>
+                                        <label><input type="radio" name="webDateFormat" value="DD/MM/YYYY" <%= (web && web.value && web.value.dateFormat == "DD/MM/YYYY")? 'checked="checked"': ''%>> <span class="date-time-text format-i18n">15/07/2019</span> [<code>d/m/Y</code>]</label><br>
+                                        <label><input type="radio" name="webDateFormat" value="DD-MM-YYYY" <%= (web && web.value && web.value.dateFormat == "d-m-Y")? 'checked="checked"': ''%>> <span class="date-time-text format-i18n">15-07-2019</span> [<code>d-m-Y</code>]</label><br>
+                                        <label><input type="radio" name="webDateFormat" value="MM-DD-YYYY" <%= (web && web.value && web.value.dateFormat == "m-d-Y")? 'checked="checked"': ''%>> <span class="date-time-text format-i18n">07-15-2019</span> [<code>m-d-Y</code>]</label>
+                                      </fieldset>
+                                    </div>
+                                  </div>
+                              </div>
+                              <div class="tab-pane p-20" id="homeSettings" role="tabpanel">
+                                <div class="row">
+                                  <div class="col-12">
+                                    <div class="accordion" id="accordionHomeSettings" role="tablist">
+                                    </div>
+                                  </div>
+                                </div>
+                                <!-- Section Slider -->
+                                <div class="card">
+                                  <div class="card-header" role="tab" id="heading-0">
+                                    <h6 class="mb-0">
+                                      <a data-toggle="collapse" href="#collapse-0" aria-expanded="true" aria-controls="collapse-0" class="collapsed">
+                                          <%= __('Slider') %>
+                                      </a>
+                                    </h6>
+                                  </div>
+                                  <div id="collapse-0" class="collapse show" role="tabpanel" aria-labelledby="heading-0" data-parent="#accordionHomeSettings">
+                                    <div class="card-body">
+                                      <div class="repeater" id="repeaterSlider">
+                                        <div class="sliders" data-repeater-list="sliders">
+                                        <% if (web && web.value && web.value.homeSettings && web.value.homeSettings.sliders && web.value.homeSettings.sliders.length > 0) { 
+                                          for (let i = 0; i < web.value.homeSettings.sliders.length; i++ ) {%>
+                                          <div data-repeater-item class="row">
+                                            <div class="col-6">
+                                              <div class="form-group">
+                                                <input type="file" data-default-file="<%= web.value.homeSettings.sliders[i].background %>" class="dropify" name="background" data-field="thumbnail" data-max-file-size="10M" />
+                                              </div>
+                                              <div class="form-group">
+                                                <label><%= __('Link') %></label>
+                                                <input type="text" name="link" class="form-control" value="<%= web.value.homeSettings.sliders[i].link %>" />
+                                              </div>
+                                            </div>
+                                            <div class="col-5">
+                                              <div class="form-group">
+                                                <label><%= __('Headline') %></label>
+                                                <input type="text" name="headline" class="form-control" value="<%= web.value.homeSettings.sliders[i].headline %>" />
+                                              </div>
+                                              <div class="form-group">
+                                                <label><%= __('Title') %></label>
+                                                <input type="text" name="title" class="form-control" value="<%= web.value.homeSettings.sliders[i].title %>" />
+                                              </div>
+                                              <div class="form-group">
+                                                <label><%= __('Description')%></label>
+                                                <textarea class="form-control editor" name="description"><%= web.value.homeSettings.sliders[i].description %></textarea>
+                                                <span class="text-help"></span>
+                                              </div>
+                                            </div>
+                                            <div class="col-1 d-flex align-items-center">
+                                              <button data-repeater-delete type="button" class="btn btn-danger btn-sm icon-btn ml-2">
+                                                <i class="mdi mdi-delete"></i>
+                                              </button>
+                                            </div>
+                                          </div>
+                                          <% }
+                                        }else{%>
+                                          <div data-repeater-item class="row">
+                                            <div class="col-6">
+                                              <div class="form-group">
+                                                <input type="file" data-default-file="/images/no-thumb.png" class="dropify" name="background" data-field="thumbnail" data-max-file-size="10M" />
+                                              </div>
+                                              <div class="form-group">
+                                                <label><%= __('Link') %></label>
+                                                <input type="text" name="link" class="form-control" value="" />
+                                              </div>
+                                            </div>
+                                            <div class="col-5">
+                                              <div class="form-group">
+                                                <label><%= __('Headline') %></label>
+                                                <input type="text" name="headline" class="form-control" value="" />
+                                              </div>
+                                              <div class="form-group">
+                                                <label><%= __('Title') %></label>
+                                                <input type="text" name="title" class="form-control" value="" />
+                                              </div>
+                                              <div class="form-group">
+                                                <label><%= __('Description')%></label>
+                                                <textarea class="form-control editor" name="description"></textarea>
+                                                <span class="text-help"></span>
+                                              </div>
+                                            </div>
+                                            <div class="col-1 d-flex align-items-center">
+                                              <button data-repeater-delete type="button" class="btn btn-danger btn-sm icon-btn ml-2">
+                                                <i class="mdi mdi-delete"></i>
+                                              </button>
+                                            </div>
+                                          </div>
+                                        <%}%>
+                                        </div>
+                                        <button data-repeater-create type="button" class="btn btn-info btn-sm icon-btn">
+                                          <i class="mdi mdi-plus"></i>
+                                        </button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <!-- End Section Banner -->
+
+                                <!-- Section About -->
+                                <div class="card">
+                                  <div class="card-header" role="tab" id="heading-1">
+                                    <h6 class="mb-0">
+                                      <a data-toggle="collapse" href="#collapse-1" aria-expanded="true" aria-controls="collapse-1" class="collapsed">
+                                          <%= __('Section About') %>
+                                      </a>
+                                    </h6>
+                                  </div>
+                                  <div id="collapse-1" class="collapse show" role="tabpanel" aria-labelledby="heading-1" data-parent="#accordionHomeSettings">
+                                    <div class="card-body">
+                                      <div class="fomr-group mb-2">
+                                        <label><%= __('Display on homepage:  ')%></label>
+                                        <label class="switch">
+                                          <input name="webIsDisplayAbout" type="checkbox" <%= web && web.value && web.value.homeSettings && web.value.homeSettings.isDisplayAbout ? 'checked' : ' '%> >
+                                          <span class="slider"></span>
+                                        </label>
+                                      </div>
+                                      <div class="form-group">
+                                          <label><%= __('Thumbnail')%></label>
+                                          <input type="file" data-default-file="<%= web && web.value && web.value.homeSettings && web.value.homeSettings.aboutThumb ? web.value.homeSettings.aboutThumb : '/images/no-thumb.png' %>" class="dropify" name="webAboutThumb" id="webAboutThumb" data-field="thumbnail" data-max-file-size="10M" />
+                                          <span class="text-help"></span>
+                                      </div>
+                                      <div class="form-group">
+                                          <label><%= __('Headline')%></label>
+                                        <input type="text" class="form-control" value="<%= web && web.value && web.value.homeSettings && web.value.homeSettings.aboutHeadline ? web.value.homeSettings.aboutHeadline : '' %>" id="webAboutHeadline" name="webAboutHeadline">
+                                        <span class="text-help"></span>
+                                      </div>
+                                      <div class="form-group">
+                                          <label><%= __('Title')%></label>
+                                        <input type="text" class="form-control" value="<%= web && web.value && web.value.homeSettings && web.value.homeSettings.aboutTitle ? web.value.homeSettings.aboutTitle : '' %>" id="webAboutTitle" name="webAboutTitle">
+                                        <span class="text-help"></span>
+                                      </div>
+                                      <div class="form-group">
+                                        <label><%= __('Motto')%></label>
+                                        <textarea class="form-control editor" name="webAboutMotto" id="webAboutMotto" ><%= web && web.value && web.value.homeSettings && web.value.homeSettings.aboutMotto ? web.value.homeSettings.aboutMotto : '' %></textarea>
+                                        <span class="text-help"></span>
+                                      </div>
+                                      <div class="form-group">
+                                        <label><%= __('Description')%></label>
+                                        <textarea class="form-control editor" name="webAboutDescription" id="webAboutDescription" ><%= web && web.value && web.value.homeSettings && web.value.homeSettings.aboutDescription ? web.value.homeSettings.aboutDescription : ' '%></textarea>
+                                        <span class="text-help"></span>
+                                      </div> 
+                                      <div class="form-group">
+                                          <label><%= __('Read More Link')%></label>
+                                        <input type="text" class="form-control" value="<%= web && web.value && web.value.homeSettings && web.value.homeSettings.aboutReadMoreLink ? web.value.homeSettings.aboutReadMoreLink : '' %>" id="webAboutReadMoreLink" name="webAboutReadMoreLink">
+                                        <span class="text-help"></span>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <!-- End Section About -->
+
+                                <!-- Section Teacher -->
+                                <div class="card">
+                                  <div class="card-header" role="tab" id="heading-2">
+                                    <h6 class="mb-0">
+                                      <a data-toggle="collapse" href="#collapse-2" aria-expanded="true" aria-controls="collapse-2" class="collapsed">
+                                          <%= __('Section Teacher') %>
+                                      </a>
+                                    </h6>
+                                  </div>
+                                  <div id="collapse-2" class="collapse show" role="tabpanel" aria-labelledby="heading-2" data-parent="#accordionHomeSettings">
+                                    <div class="card-body">
+                                      <div class="fomr-group mb-2">
+                                        <label><%= __('Display on homepage:  ')%></label>
+                                        <label class="switch">
+                                          <input name="webIsDisplayTeacher" type="checkbox" <%= web && web.value && web.value.homeSettings && web.value.homeSettings.isDisplayTeacher ? 'checked' : ' '%> >
+                                          <span class="slider"></span>
+                                        </label>
+                                      </div>
+                                      <!-- <div class="form-group">
+                                        <label><%= __('Background')%></label>
+                                        <input type="file" data-default-file="<%= web && web.value && web.value.homeSettings && web.value.homeSettings.teacherBackground ? web.value.homeSettings.teacherBackground : '/images/no-thumb.png' %>" class="dropify" name="webTeacherBackground" id="webTeacherBackground" data-field="thumbnail" data-max-file-size="10M" />
+                                        <span class="text-help"></span>
+                                      </div> -->
+                                      <div class="form-group">
+                                          <label><%= __('Headline')%></label>
+                                        <input type="text" class="form-control" value="<%= web && web.value && web.value.homeSettings && web.value.homeSettings.teacherHeadline ? web.value.homeSettings.teacherHeadline : '' %>" id="webTeacherHeadline" name="webTeacherHeadline">
+                                        <span class="text-help"></span>
+                                      </div>
+                                      <div class="form-group">
+                                          <label><%= __('Title')%></label>
+                                        <input type="text" class="form-control" value="<%= web && web.value && web.value.homeSettings && web.value.homeSettings.teacherTitle ? web.value.homeSettings.teacherTitle : '' %>" id="webTeacherTitle" name="webTeacherTitle">
+                                        <span class="text-help"></span>
+                                      </div>
+                                      <!-- <div class="form-group">
+                                          <label><%= __('Motto')%></label>
+                                        <input type="text" class="form-control" value="<%= web && web.value && web.value.homeSettings && web.value.homeSettings.teacherMotto ? web.value.homeSettings.teacherMotto : '' %>" id="webTeacherMotto" name="webTeacherMotto">
+                                        <span class="text-help"></span>
+                                      </div> -->
+                                    </div>
+                                  </div>
+                                </div>
+                                <!-- End Section Teacher -->
+
+                                <!-- Section News -->
+                                <div class="card">
+                                  <div class="card-header" role="tab" id="heading-3">
+                                    <h6 class="mb-0">
+                                      <a data-toggle="collapse" href="#collapse-3" aria-expanded="true" aria-controls="collapse-3" class="collapsed">
+                                          <%= __('Section News') %>
+                                      </a>
+                                    </h6>
+                                  </div>
+                                  <div id="collapse-3" class="collapse show" role="tabpanel" aria-labelledby="heading-3" data-parent="#accordionHomeSettings">
+                                    <div class="card-body">
+                                      <div class="fomr-group mb-2">
+                                        <label><%= __('Display on homepage:  ')%></label>
+                                        <label class="switch">
+                                          <input name="webIsDisplayNews" type="checkbox" <%= web && web.value && web.value.homeSettings && web.value.homeSettings.isDisplayNews ? 'checked' : ' '%> >
+                                          <span class="slider"></span>
+                                        </label>
+                                      </div>
+                                      <div class="form-group">
+                                          <label><%= __('Headline')%></label>
+                                        <input type="text" class="form-control" value="<%= web && web.value && web.value.homeSettings && web.value.homeSettings.newsHeadline ? web.value.homeSettings.newsHeadline : '' %>" id="webNewsHeadline" name="webNewsHeadline">
+                                        <span class="text-help"></span>
+                                      </div>
+                                      <div class="form-group">
+                                          <label><%= __('Title')%></label>
+                                        <input type="text" class="form-control" value="<%= web && web.value && web.value.homeSettings && web.value.homeSettings.newsTitle ? web.value.homeSettings.newsTitle : '' %>" id="webNewsTitle" name="webNewsTitle">
+                                        <span class="text-help"></span>
+                                      </div> 
+                                    </div>
+                                  </div>
+                                </div>
+                                <!-- End Section News --> 
+                              </div>
+                              
+                              <div class="tab-pane p-20" id="social" role="tabpanel">
+                                  <div class="form-group">
+                                      <label><%= __('Facebook')%></label>
+                                      <input type="text" class="form-control" value="<%= web && web.value && web.value.socialNetwork && web.value.socialNetwork.facebook ? web.value.socialNetwork.facebook : '' %>" id="facebook" name="facebook">
+                                      <span class="text-help"></span>
+                                  </div>
+                                  <div class="form-group">
+                                      <label><%= __('Instagram')%></label>
+                                    <input type="text" class="form-control" value="<%= web && web.value && web.value.socialNetwork && web.value.socialNetwork.instagram ? web.value.socialNetwork.instagram : '' %>" id="instagram" name="instagram">
+                                    <span class="text-help"></span>
+                                  </div>
+                                  <div class="form-group">
+                                    <label><%= __('Youtube')%></label>
+                                    <input type="text" class="form-control" value="<%= web && web.value && web.value.socialNetwork && web.value.socialNetwork.youtube ? web.value.socialNetwork.youtube : ''%>" id="youtube" name="youtube">
+                                    <span class="text-help"></span>
+                                  </div> 
+                                  <div class="form-group">
+                                    <label><%= __('Google')%></label>
+                                    <input type="text" class="form-control" value="<%= web && web.value && web.value.socialNetwork && web.value.socialNetwork.google ? web.value.socialNetwork.google : ''%>" id="google" name="google">
+                                    <span class="text-help"></span>
+                                  </div> 
+                              </div>
+
+                              <div class="tab-pane p-20" id="widget" role="tabpanel">
+                                <div class="form-group">
+                                    <label><%= __('Phone')%></label>
+                                    <input type="text" class="form-control" value="<%= web && web.value && web.value.phoneTechnical ? web.value.phoneTechnical : '' %>" id="webPhoneTechnical" name="webPhoneTechnical">
+                                    <span class="text-help"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label><%= __('E-mail')%></label>
+                                  <input type="text" class="form-control" value="<%= web && web.value && web.value.mailTechnical ? web.value.mailTechnical : '' %>" id="webMailTechnical" name="webMailTechnical">
+                                  <span class="text-help"></span>
+                                </div>
+                                <div class="form-group">
+                                  <label><%= __('Address')%></label>
+                                  <input type="text" class="form-control" value="<%= web && web.value && web.value.address ? web.value.address : ''%>" id="webAddress" name="webAddress">
+                                  <span class="text-help"></span>
+                                </div>
+                                <div class="form-group">
+                                  <label><%= __('Website Address')%></label>
+                                  <input type="text" class="form-control" value="<%= web && web.value && web.value.website ? web.value.website : ''%>" id="webUrl" name="webUrl">
+                                  <span class="text-help"></span>
+                                </div>
+                                <div class="form-group">
+                                  <label><%= __('Map Iframe (Perfect size is 470x300 px)')%></label>
+                                  <input type="text" class="form-control" value="<%= web && web.value && web.value.mapIframe ? web.value.mapIframe : ' '%>" name="webMapIframe"></input>
+                                  <span class="text-help"></span>
+                                </div>
+                                <div class="form-group">
+                                  <label><%= __('About Us link')%></label>
+                                  <input type="text" class="form-control" value="<%= web && web.value && web.value.aboutUsLink ? web.value.aboutUsLink : ' '%>" name="webAboutUsLink"></input>
+                                  <span class="text-help"></span>
+                                </div>
+                                <div class="form-group">
+                                  <label><%= __('Terms and Conditions link')%></label>
+                                  <input type="text" class="form-control" value="<%= web && web.value && web.value.termsAndConditionsLink ? web.value.termsAndConditionsLink : ' '%>" name="webTermsAndConditionsLink"></input>
+                                  <span class="text-help"></span>
+                                </div>
+                                <div class="form-group">
+                                  <label><%= __('Privacy policy link')%></label>
+                                  <input type="text" class="form-control" value="<%= web && web.value && web.value.privacyPolicyLink ? web.value.privacyPolicyLink : ' '%>" name="webPrivacyPolicyLink"></input>
+                                  <span class="text-help"></span>
+                                </div>
+                                <div class="form-group">
+                                  <label><%= __('Footer Description')%></label>
+                                  <textarea class="form-control editor" name="webFooterDescription"><%= web && web.value && web.value.footerDescription ? web.value.footerDescription : ' '%></textarea>
+                                  <span class="text-help"></span>
+                                </div>
+                              </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="tab-pane" id="app" role="tabpanel">
+                        <div class="form-group">
+                          <label><%= __('Name')%></label>
+                          <input type="text" class="form-control" value="<%= app && app.value && app.value.name %>" id="appName" name="appName">
+                          <span class="text-help"></span>
+                        </div>
+                        <div class="form-group">
+                          <label><%= __('Description')%></label>
+                          <input type="text" class="form-control" value="<%= app && app.value && app.value.description %>" id="appDescription" name="appDescription">
+                          <span class="text-help"></span>
+                        </div>
+                        <div class="form-group">
+                          <label><%= __('Version')%></label>
+                          <input type="text" class="form-control" value="<%= app && app.value && app.value.version %>" id="appVersion" name="appVersion">
+                          <span class="text-help"></span>
+                        </div>
+                        <div class="form-group">
+                          <label><%= __('Language')%></label>
+                          <select id="language" name="appLanguage" class="form-control js-process-basic-multiple w-100"
+                          data-placeholder="<%= __('Choose') %>">
+                          <option value="">---</option>
+                            <% for (let language of languages) { %>
+                            <option value="<%= language.code %>" <%=app&&app.value&&app.value.language&&app.value.language==language.code?'selected':''%>>
+                              <%= language.name %>
+                            </option>
+                            <% } %>
+                          </select>
+                          <span class="text-help"></span>
+                        </div> 
+                        <div class="form-group">
+                          <label><%= __('Technical e-mail')%></label>
+                          <input type="text" class="form-control " value="<%= app.value.mailTechnical %>" id="appMailTechnical" name="appMailTechnical">
+                          <span class="text-help"></span>
+                        </div>
+                        <div class="form-group">
+                          <label><%= __('Sales e-mail')%></label>
+                          <input type="text" class="form-control " value="<%= app.value.mailSales %>" id="appMailSales" name="appMailSales">
+                          <span class="text-help"></span>
+                        </div>
+                        <div class="form-group">
+                          <label><%= __('Hotline')%></label>
+                          <input type="text" class="form-control " value="<%= app.value.hotline %>" id="appHotline" name="appHotline">
+                          <span class="text-help"></span>
+                        </div>
+                        <div class="form-group">
+                          <label><%= __('Technical phone')%></label>
+                          <input type="text" class="form-control " value="<%= app.value.phoneTechnical %>" id="appPhoneTechnical" name="appPhoneTechnical">
+                          <span class="text-help"></span>
+                        </div>
+                        <div class="form-group">
+                          <label><%= __('Sales phone')%></label>
+                          <input type="text" class="form-control " value="<%= app.value.phoneSales %>" id="appPhoneSales" name="appPhoneSales">
+                          <span class="text-help"></span>
+                        </div>
+                        <div class="form-group">
+                          <label><%= __('Maximum number of albums displayed on home page')%></label>
+                          <input type="number" class="form-control " value="<%= app.value.maxAlbum %>" id="appMaxAlbum" name="appMaxAlbum">
+                          <span class="text-help"></span>
+                        </div>
+                        <div class="form-group">
+                            <label><%= __('Allow push notifications for news')%></label>
+                          <ul class="list-unstyled list-inline">
+                            <li class="list-inline-item">
+                              <div class="radio-custom radio-primary">
+                                <input type="radio" id="newsYes" name="appNotificationNews" value="1" <%=app&&app.value&&app.value.notificationNews==true?'checked':''%> />
+                                <label for="inputRadiosNewsYes">
+                                    <%= __('Yes')%>
+                                </label>
+                              </div>
+                            </li>
+                            <li class="list-inline-item">
+                              <div class="radio-custom radio-primary">
+                                <input type="radio" id="newsNo" name="appNotificationNews" value="0" <%=app&&app.value&&app.value.notificationNews==false?'checked':''%> />
+                                <label for="inputRadiosNewsNo">
+                                    <%= __('No')%>
+                                </label>
+                              </div>
+                            </li>
+                          </ul>
+                        </div>  
+                        <div class="form-group">
+                            <label><%= __('Allow push notifications for album')%></label>
+                          <ul class="list-unstyled list-inline">
+                            <li class="list-inline-item">
+                              <div class="radio-custom radio-primary">
+                                <input type="radio" id="albumYes" name="appNotificationAlbum" value="1" <%=app&&app.value&&app.value.notificationAlbum==true?'checked':''%> />
+                                <label for="inputRadiosAlbumYes">
+                                    <%= __('Yes')%>
+                                </label>
+                              </div>
+                            </li>
+                            <li class="list-inline-item">
+                              <div class="radio-custom radio-primary">
+                                <input type="radio" id="albumNo" name="appNotificationAlbum" value="0" <%=app&&app.value&&app.value.notificationAlbum==false?'checked':''%> />
+                                <label for="inputRadiosAlbumNo">
+                                    <%= __('No')%>
+                                </label>
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+
+                        <div class="form-group">
+                            <label><%= __('Allow push notifications for menus')%></label>
+                          <ul class="list-unstyled list-inline">
+                            <li class="list-inline-item">
+                              <div class="radio-custom radio-primary">
+                                <input type="radio" id="menuYes" name="appNotificationMenu" value="1" <%=app&&app.value&&app.value.notificationMenu==true?'checked':''%> />
+                                <label for="inputRadiosMenuYes">
+                                    <%= __('Yes')%>
+                                </label>
+                              </div>
+                            </li>
+                            <li class="list-inline-item">
+                              <div class="radio-custom radio-primary">
+                                <input type="radio" id="menuNo" name="appNotificationMenu" value="0" <%=app&&app.value&&app.value.notificationMenu==false?'checked':''%> />
+                                <label for="inputRadiosMenuNo">
+                                    <%= __('No')%>
+                                </label>
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+
+                        <div class="form-group">
+                            <label><%= __('Allow push notifications for schedules')%></label>
+                          <ul class="list-unstyled list-inline">
+                            <li class="list-inline-item">
+                              <div class="radio-custom radio-primary">
+                                <input type="radio" id="scheduleYes" name="appNotificationSchedule" value="1" <%=app&&app.value&&app.value.notificationSchedule==true?'checked':''%> />
+                                <label for="inputRadiosScheduleYes">
+                                  <%= __('Yes')%>
+                                </label>
+                              </div>
+                            </li>
+                            <li class="list-inline-item">
+                              <div class="radio-custom radio-primary">
+                                <input type="radio" id="scheduleNo" name="appNotificationSchedule" value="0" <%=app&&app.value&&app.value.notificationSchedule==false?'checked':''%> />
+                                <label for="inputRadiosScheduleNo">
+                                  <%= __('No')%>
+                                </label>
+                              </div>
+                            </li>
+                          </ul>
+                        </div> 
+
+                        <div class="form-group">
+                            <label><%= __('Allow push notifications for day off')%></label>
+                          <ul class="list-unstyled list-inline">
+                            <li class="list-inline-item">
+                              <div class="radio-custom radio-primary">
+                                <input type="radio" id="dayOffYes" name="appNotificationDayOff" value="1" <%=app&&app.value&&app.value.notificationDayOff==true?'checked':''%> />
+                                <label for="inputRadiosDayOffYes">
+                                  <%= __('Yes')%>
+                                </label>
+                              </div>
+                            </li>
+                            <li class="list-inline-item">
+                              <div class="radio-custom radio-primary">
+                                <input type="radio" id="dayOffNo" name="appNotificationDayOff" value="0" <%=app&&app.value&&app.value.notificationDayOff==false?'checked':''%> />
+                                <label for="inputRadiosDayOffNo">
+                                  <%= __('No')%>
+                                </label>
+                              </div>
+                            </li>
+                          </ul>
+                        </div> 
+                      </div> 
+          
+                      <div class="alert d-none" role="alert">
+                        <i class="mdi mdi-alert-circle"></i>
+                      </div>
+                      <button id="btnFormSetting" type="submit" class="btn btn-primary mr-2"><%= __('Save') %></button>
+                    </div>
+                  </div>
+              </div> 
+            </div>
+          </div>
+    </form>
+    <!--End Page content-->
+  </div>
+</div>
+<!-- summernote Editor --> 
+<% block('localScripts', '<script type="text/javascript" src="/vendors/summernote/summernote-bs4.js"></script>') %> 
+<!-- summernote Editor --> 
+<% block('localScripts', '<script src="/vendors/moment/moment.min.js"></script>') %>
+<% block('localScripts', '<script src="/vendors/moment/moment-timezone.min.js"></script>') %>
+<% block('localScripts', '<script src="/vendors/sweetalert/sweetalert.min.js"></script>') %>
+<% block('localScripts', '<script src="/vendors/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>') %>
+<% block('localScripts', '<script src="/vendors/jquery.repeater/jquery.repeater.min.js"></script>') %>
+<% block('localScripts', '<script src="/js/backend/setting/index.js"></script>') %>

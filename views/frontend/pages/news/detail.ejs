@@ -1,0 +1,73 @@
+<%if(postObj != null){%>
+<section class="pt-80 pb-80">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-sm-12 col-xs-12">
+        <div class="blog_details">
+            <div class="details_image">
+                <img src="<%= postObj && postObj.media ? postObj.media.thumbnail.sizes.medium_large.path : '/iamges/no-thumg.png'%>" alt="blog">
+            </div>
+            <div class="details_content">
+                 <span class="date"><span><%=moment(postObj.createdAt).format('DD')%></span></br><%=moment(postObj.createdAt).format('MMM')%></span>
+                 
+                 <div class="blog_content_wrapper">
+                    <ul class="blog_meta">
+                        <li><a href="javascript:void(0)"><%= postObj.author ? postObj.author.firstName+' '+postObj.author.lastName : 'No name' %></a></li>
+                    </ul>
+                    <h4 class="blog_title"><%= postObj.title %></h4>
+                </div>
+                <p><%= postObj.motto %></p>
+                <%- postObj.description %>
+            </div>
+
+        </div>
+      </div>
+      <!--end left col main-->
+      
+      <div class="col-md-4 col-sm-12 col-xs-12">
+        <div class="sidebar">
+          <div class="sidebar_list">
+            <h5 class="sidebar_title"><%= __('Categories') %></h5>
+              
+            <%if(listCategories.length){%>
+              <ul class="archives_list">
+                <%for(let cate of listCategories){%>
+                  <li><a class="<%= cateActive.includes(cate.id) ? 'active' : ''%> " href="/news?category=<%= cate.id%>"><i class="fa fa-angle-right"></i> <%= cate.title%></a></li>
+                <%}%>
+              </ul>
+            <%}else{%>
+            <p><%= __('No Category')%></p>
+            <%}%>
+          </div>
+
+          <div class="sidebar_post mt-30">
+              <h5 class="sidebar_title"><%= __('Related Posts') %></h5>
+              <%if(listLastestPost.length > 0){%>
+              <ul>
+                <%for(let item of listLastestPost){%>
+                  <li>
+                      <div class="single_sidebar_post d-flex mt-30">
+                          <div class="post_image">
+                              <img src="<%= item && item.media ? item.media.thumbnail.sizes.thumbnail.path : '/images/no-thumb.png'%>" alt="<%= item ? item.title : 'post'%>">
+                          </div>
+                          <div class="post_content media-body">
+                              <h6 class="title"><a href="/news/<%= item.alias%>/<%= item.id%>"><%= item ? item.title : ''%></a></h6>
+                              <p class="date"><%= item ? moment(item.createdAt).format('DD MMM YYYY') : '' %></p>
+                          </div>
+                      </div>
+                  </li>
+                <%}%>
+              </ul>
+              <%}else{%>
+                <p><%= __('No Post')%></p>
+              <%}%>
+          </div>
+        </div>
+      </div>
+      <!--end right col--> 
+      
+    </div>
+  </div>
+</section>
+<%}%>
+<% block('localScripts', '<script src="/js/frontend/news/index.js"></script>') %>

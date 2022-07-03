@@ -1,0 +1,19 @@
+<%if(pageObj != null){%>
+<section class="pt-80 pb-80">
+  <div class="container">
+    <div class="blog_details">
+      <h2 class="blog_title"><%= pageObj.title %></h2>
+      <p class="motto"><%= pageObj.motto %></p>
+      <p class="author"><%= __('By ')%><%= pageObj.author?pageObj.author.firstName+' '+pageObj.author.lastName:''%><%= __(', on ')%><%= moment(pageObj.createdAt).format('DD/MM/YYYY')%></p>
+      </br>
+      <%if(pageObj.media&&pageObj.media.thumbnail&&pageObj.media.thumbnail.path){%>
+      <div class="details_image">
+        <img src="<%= pageObj.media.thumbnail.path%>" alt="blog">
+      </div>
+      <br />
+      <%}%>
+      <%- pageObj.description %>
+    </div>
+  </div>
+</section>
+<%}%>

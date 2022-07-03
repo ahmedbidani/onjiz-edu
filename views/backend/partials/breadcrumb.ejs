@@ -1,0 +1,73 @@
+<% if (moduleActive.action == 'backend/student/list' || moduleActive.action == 'backend/parent/list' || moduleActive.action == 'backend/pickup/index'
+|| moduleActive.action == 'backend/attendent/index' || moduleActive.action == 'backend/schedule/index' || moduleActive.action == 'backend/menu/index') {%>
+    <div class="card">
+        <div class="row">
+            <div class="col-md-5 p-b-5">
+                    <nav class="breadcrumb m-b-0 p-t-15 p-b-0">
+                        <li class="breadcrumb-item"><a href="/backend/branch-<%=branchActiveObj?branchActiveObj.id:'' %>/activities/"><%=branchActiveObj?branchActiveObj.title:'' %></a></li>
+                        <li class="breadcrumb-item active"><%=classActiveObj?classActiveObj.title : titleClass %>(<%=classActiveObj?classActiveObj.totalStudent:total %>)</li>
+                    </nav>
+            </div>
+            <div class="col-md-7 align-self-center">
+                <ul class="nav nav-tabs profile-tab">
+                    <%if(userActive.isMainSchoolAdmin || (userActive.role&&userActive.role.permissions&&userActive.role.permissions.student&&userActive.role.permissions.student.view)){%>
+                    <li class="box-label ">
+                        <a class="nav-link <%= (moduleActive.action == 'backend/student/list') ? 'active' : '' %>" href="/backend/student/filter?branchId=<%= branchActive %>&classId=<%= classActive %>"><%= __('Students') %></a>
+                    </li>
+                    <%}%>
+                    <%if(userActive.isMainSchoolAdmin || (userActive.role&&userActive.role.permissions&&userActive.role.permissions.parent&&userActive.role.permissions.parent.view)){%>
+                    <li class="box-label ">
+                        <a class="nav-link <%= (moduleActive.action == 'backend/parent/list') ? 'active' : '' %>" href="/backend/parent/filter?branchId=<%= branchActive %>&classId=<%= classActive %>"><%= __('Parent') %></a>
+                    </li>
+                    <%}%>
+                    <%if(userActive.isMainSchoolAdmin || (userActive.role&&userActive.role.permissions&&userActive.role.permissions.attendent&&userActive.role.permissions.attendent.view)){%>
+                    <li class="box-label">
+                        <a class="nav-link <%= (moduleActive.action == 'backend/attendent/index') ? 'active' : '' %>" href="/backend/attendent/filter?branchId=<%= branchActive %>&classId=<%= classActive %>"><%= __('Attendance') %></a>
+                    </li>
+                    <%}%>
+                    <!-- <%if(userActive.isMainSchoolAdmin || (userActive.role&&userActive.role.permissions&&userActive.role.permissions.pickUp&&userActive.role.permissions.pickUp.view)){%>
+                    <li class="box-label">
+                        <a class="nav-link <%= (moduleActive.action == 'backend/pickup/index') ? 'active' : '' %>" href="/backend/pickup/filter?branchId=<%= branchActive %>&classId=<%= classActive %>"><%= __('Pickup') %></a>
+                    </li>
+                    <%}%> -->
+                    <%if(userActive.isMainSchoolAdmin || (userActive.role&&userActive.role.permissions&&userActive.role.permissions.schedule&&userActive.role.permissions.schedule.view)){%>
+                    <li class="box-label">
+                        <a class="nav-link  <%= (moduleActive.action == 'backend/schedule/index') ? 'active' : '' %>" href="/backend/class-<%= classActive %>/schedule"><%= __('Schedule') %></a>
+                    </li>
+                    <%}%>
+                    <%if(userActive.isMainSchoolAdmin || (userActive.role&&userActive.role.permissions&&userActive.role.permissions.menu&&userActive.role.permissions.menu.view)){%>
+                    <li class="box-label">
+                        <a class="nav-link <%= (moduleActive.action == 'backend/menu/index') ? 'active' : '' %>" href="/backend/class-<%= classActive %>/menu"><%= __('Menu') %></a>
+                    </li>
+                    <%}%>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <%}%>
+
+<div class="row page-titles">
+    <!-- Bread crumb-->
+
+    <div class="col-md-3 align-self-center">
+        <h4 class="text-themecolor"><%=__(webModule.headline)%></h4>
+    </div>
+    <div class="col-md-6 align-self-center">
+
+    </div>
+    <div class="col-md-3 align-self-center text-right">
+        <% if(webModule.actions.length > 0){ %>
+        <div class="d-flex justify-content-end align-items-center">
+            <% for(let i = 0; i < webModule.actions.length; i++) {%>
+                <%if(webModule.actions[i].href) { %>
+                <a href="<%- webModule.actions[i].href %>" class="btn btn-info d-none d-lg-block m-l-15"><i class="fa fa-plus-circle"></i> <%- __(webModule.actions[i].title)%></a>
+                <% } %>
+                <%if(webModule.actions[i].modal) { %>
+                <button data-target="<%- webModule.actions[i].modal %>" data-toggle="modal" id="btnAdd" class="btn btn-info d-none d-lg-block m-l-15"><i class="fa fa-plus-circle"></i> <%- __(webModule.actions[i].title) %></button>
+                <%}%>
+            <% } %>
+        </div>
+        <% } %>
+    </div>
+</div>
+<!-- End -->

@@ -1,0 +1,26 @@
+<!--====== Category PART START ======-->
+
+<section class="section-gallery pt-80 pb-120"> 
+    
+     <div class="container-fluid">
+         <div class="row justify-content-center">
+            <% if(listAlbum.length > 0) {%>
+                <% for(let albumObj of listAlbum) {%>
+                <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6">
+                    <div class="single_category mt-30 bg_cover" style="background-image: url(<%= albumObj && albumObj.photos? albumObj.photos[0].thumbnail.sizes.medium_large.path : '/images/no-thumb.png'%>)">
+                        <div class="category_wrapper">
+                            <h5 class="category_title"><%= albumObj ? albumObj.title : ''%></h5>
+                            <p><%= albumObj ? albumObj.title : ''%></p>
+                            <a href="/gallery/<%= albumObj.alias %>/<%= albumObj.id%>" class="cbp-l-caption-buttonRight"  rel="nofollow"></a>
+                        </div>
+                    </div>
+                </div>
+                <%}%>
+            <%}%> 
+         </div>
+     </div>
+ </section>
+
+ <!--====== Category PART ENDS ======--> 
+  
+<% block('localScripts', '<script src="/js/frontend/gallery/index.js"></script>') %> 

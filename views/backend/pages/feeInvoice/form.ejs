@@ -1,0 +1,337 @@
+<!-- Page -->
+<% let BACKEND = sails.config.custom.BACKEND %> 
+<% block('localCss', '<link rel="stylesheet" href="/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css">') %>
+<!-- <div class="card"> -->
+  <div class="card-body">
+    <div class="row" id="formAddFeeInvoiceContainer">
+
+      <!-------------------------------  FORM ADD INVOICE  --------------------------------------->
+      <div class="col-md-6 row">
+        <div class="card">
+          <div class="card-body">
+            <form autocomplete="off" id="formAddFeeInvoice" data-fv-framework="bootstrap4"
+            data-fv-icon-valid="glyphicon glyphicon-ok" data-fv-icon-invalid="glyphicon glyphicon-remove"
+            data-fv-icon-validating="glyphicon glyphicon-refresh" data-fv-live="enabled" data-manner="add" data-symbolLeft="<%= currency.symbolLeft%>" data-symbolRight="<%= currency.symbolRight%>" data-numberSeperatorSymbol="<%= currency.numberSeperatorSymbol%>" data-decimalPoint="<%= currency.decimalPoint%>" data-decimalPlaces="<%= currency.decimalPlaces%>">
+            <input type='hidden' name='_csrf' value='<%= _csrf %>'> 
+              <div class="row align-items-md-center">
+                  <div class="col-md-2">
+                    <label><%= __('Title') %></label>
+                  </div>
+                  <div class="col-md-4">
+                    <input type="text" class="form-control" name="title" data-fv-notempty="true" 
+                    data-fv-notempty-message="<%= __('Required field') %>" data-fv-stringlength="true"
+                    data-fv-stringlength-min="2" data-fv-stringlength-max="30"
+                    data-fv-stringlength-message="<%= __('Title must be at least 2 characters and max 30 characters') %>" />
+                  </div>
+                  <div class="col-md-2">
+                    <label><%= __('Deadline') %></label>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="input-group date" data-provide="datepicker" id="date" data-dateFormat="<%= dateFormat %>" data-currentDate="<%= currentDay %>">
+                        <input  class="form-control" name="deadline" id="deadline" type="text" value="<%=selectDate%>"%>>
+                        <span class="input-group-addon input-group-append border-left">
+                            <span class="mdi mdi-calendar input-group-text"></span>
+                        </span>
+                    </div> 
+                  </div>
+              </div>
+
+              <div class="form-group align-items-md-center">
+                <div class="row">
+                    <label class="col-md-3"><%= __('Fee Item') %></label>
+                    <label class="col-md-3"><%= __('Amount') %></label>
+                    <label class="col-md-3"><%= __('Unit') %></label>
+                    <label class="col-md-3"><%= __('Total') %></label>
+                    <label class="col-md-3"></label>
+                </div>
+                <div class="repeater repeaterFormAdd">
+                    <div class="items" data-repeater-list="items">
+                      <div data-repeater-item class="row">
+                        <div class="col-3">
+                          <div class="form-group">
+                            <select name="feeItem" class="form-control feeItemFormAdd"
+                            data-placeholder="<%= __('Choose') %>">
+                              <option value="">---</option>
+                              <% for (let feeItemObj of listFeeItems) { %>
+                              <option value="<%= feeItemObj.id %>">
+                                <%= feeItemObj.title %>
+                              </option>
+                              <% } %>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-3">
+                          <div class="form-group">
+                            <input name="amountPerItem" type="text" class="form-control amountPerItemFormAdd" style="text-align: end;" disabled />
+                          </div>
+                        </div>
+                        <div class="col-3">
+                          <div class="form-group">
+                              <input name="numberOfItems" type="number" class="form-control numberOfItemsFormAdd" min="1" />
+                              <input name="numberOfItemsValue" type="text" class="form-control hidden"/>
+                          </div>
+                        </div>
+                        <div class="col-2">
+                          <div class="form-group">
+                              <input name="totalPerItem" type="text" class="form-control totalPerItemFormAdd" style="text-align: end;" disabled />
+                          </div>
+                        </div>
+                        <div class="col-1">
+                          <button data-repeater-delete type="button" class="btn btn-danger btn-sm icon-btn ml-2">
+                            <i class="mdi mdi-delete"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <button data-repeater-create type="button" class="btn btn-info btn-sm icon-btn">
+                      <i class="mdi mdi-plus"></i>
+                    </button>
+                </div>   
+              </div>
+
+              <div class="form-group row align-items-md-center">
+                <label class="col-md-2"><%= __('Total') %></label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" name="totalAmount" id="totalAmountFormAdd"
+                    value="0" style="text-align: end;" disabled/>
+                </div>
+              </div>
+              <button id="btnFormAddFeeInvoice" type="submit" class="btn btn-primary waves-effect waves-classic" hidden>
+                <%= __('Next') %>
+              </button>
+              <div class="alert d-none" role="alert">
+                <i class="mdi mdi-alert-circle"></i>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <!-------------------------------  END FORM ADD INVOICE  --------------------------------------->
+
+      <!-------------------------------  LIST STUDENT FOR ADD INVOICE  --------------------------------------->
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <div class="row align-items-md-center">
+              <div class="col-md-2">
+                <label><%= __('Class') %></label>
+              </div>
+              <div class="col-md-4">
+                <select id="classIdFormAdd" class="form-control js-process-basic-multiple"
+                data-placeholder="<%= __('Select class') %>">
+                <option value=""><%= __('Select class')%></option>
+                <%for(let session of sessionsOfBranchActive){%>
+                  <optgroup label="<%=session.title%>">
+                      <% for(let i = 0; i < session.classes.length; i++) {%>
+                        <option value="<%= session.classes[i].id%>">
+                          <%= session.classes[i].title %> ( <%= session.classes[i].totalStudent %> )
+                        </option>
+                      <%}%>
+                  </optgroup>
+                  <%}%>
+                </select>
+              </div>
+              <div class="col-md-2">
+                <label><%= __('Student') %></label>
+              </div>
+              <div class="col-md-4">
+                <select id="studentIdFormAdd" class="form-control js-process-basic-multiple"
+                data-placeholder="<%= __('Choose') %>">
+                </select>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-12 js-height-scrollbar">
+                <div class="table-responsive">
+                  <table class="table table-hover dataTable" id="tblStudentFormAdd">
+                    <thead>
+                      <tr class="bg-custom-primary">
+                        <th width="3%">
+                          <input id="js-check-all" class="js-checkbox-all checkbox" type="checkbox">
+                        </th>
+                        <th width="3%">
+                          <%= __('Code') %>
+                        </th>
+                        <th width="20%">
+                          <%= __('Name') %>
+                        </th>
+                        <th width="15%">
+                          <%= __('Birthday') %>
+                        </th>
+                        <th width="3%">
+                          <%= __('Gender') %>
+                        </th>
+                      </tr>
+                    </thead>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-------------------------------  END LIST STUDENT FOR ADD INVOICE  --------------------------------------->
+    </div>
+    
+    <!-------------------------------  LIST EDIT INVOICE  --------------------------------------->
+    <div class="row hidden" id="listEditFeeInvoiceContainer">
+      <div class="col-md-6 grid-margin stretch-card">
+        <div class="row align-items-md-center">
+          <div class="col-md-6 form-group row align-items-md-center">
+            <label class="col-md-3"><%= __('Class') %></label>
+            <div class="col-md-9">
+              <select id="classIdListEdit" class="form-control js-process-basic-multiple"
+              data-placeholder="<%= __('Choose') %>">
+              <option value="">---</option>
+                <% for (let classObj of listClasses) { %>
+                <option value="<%= classObj.id %>">
+                  <%= classObj.title %>
+                </option>
+                <% } %>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-6 form-group row align-items-md-center">
+            <label class="col-md-3"><%= __('Student') %></label>
+            <div class="col-md-9">
+              <select id="studentIdListEdit" class="form-control js-process-basic-multiple"
+              data-placeholder="<%= __('Choose') %>">
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-12 js-height-scrollbar" style="height: 60vh;">
+        <div class="table-responsive">
+          <table class="table table-hover dataTable" id="tblFeeInvoice">
+            <thead>
+              <tr class="bg-custom-primary">
+                <!-- <th width="3%">
+                  <input id="js-check-all" class="js-checkbox-all checkbox" type="checkbox">
+                </th> -->
+                <th width="3%">
+                  <%= __('Code') %>
+                </th>
+                <th width="20%">
+                  <%= __('Name') %>
+                </th>
+                <th width="15%">
+                  <%= __('Birthday') %>
+                </th>
+                <th width="3%">
+                  <%= __('Gender') %>
+                </th>
+                <th width="15%">
+                  <%= __('Class') %>
+                </th>
+                <th width="15%">
+                  <%= __('Title') %>
+                </th>
+                <th width="10%">
+                  <%= __('Total') %>
+                </th>
+                <th width="3%">
+                  <%= __('Method') %>
+                </th>
+                <th width="3%">
+                  <%= __('Status') %>
+                </th>
+                <th width="3%">
+                  <%= __('') %>
+                </th>
+              </tr>
+            </thead>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!------------------------------- END LIST EDIT INVOICE  --------------------------------------->
+  </div>
+  <div class="card-footer row-button-fluid">
+    <div id="btnFormAddFeeInvoiceContainer">
+      <a href="/backend/feeInvoice"><button class="btn btn-primary"> <%= __('Back') %></button></a>
+      <button id="btnNext" class="btn btn-primary waves-effect waves-classic">
+        <%= __('Next') %>
+      </button>
+    </div>
+    <button id="btnPublicFeeInvoice" class="btn btn-primary waves-effect waves-classic hidden">
+      <%= __('Finish') %>
+    </button>
+  </div>
+<!-- </div> -->
+
+<!-------------------------------  MODAL EDIT INVOICE  --------------------------------------->
+<div class="modal fade modal-custom" id="modal-edit" tabindex="-1" role="dialog" aria-labelledby="modal-edit" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-edit-fee-invoice" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><%= __('Edit') %></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true"><i class="mdi mdi-close-circle-outline"></i></span>
+                </button>
+            </div>
+            <div class="modal-body">
+              <form autocomplete="off" id="formEditFeeInvoice" data-fv-framework="bootstrap4"
+              data-fv-icon-valid="glyphicon glyphicon-ok" data-fv-icon-invalid="glyphicon glyphicon-remove"
+              data-fv-icon-validating="glyphicon glyphicon-refresh" data-fv-live="enabled" data-manner="edit" data-id="">
+                <div class="form-group row align-items-md-center">
+                  <input type='hidden' name='_csrf' value='<%= _csrf %>'> 
+                  <label class="col-md-2"><%= __('Title') %></label>
+                  <div class="col-md-10">
+                    <input type="text" class="form-control" name="title" id="titleFormEdit" data-fv-notempty="true" 
+                    data-fv-notempty-message="<%= __('Required field') %>" data-fv-stringlength="true"
+                    data-fv-stringlength-min="2" data-fv-stringlength-max="30"
+                    data-fv-stringlength-message="<%= __('Title must be at least 2 characters and max 30 characters') %>" readonly />
+                  </div>
+                </div>
+
+                <div class="form-group row align-items-md-center">
+                  <label class="col-md-2"><%= __('Payment') %></label>
+                  <div class="col-md-10">
+                    <div class="row">
+                        <label class="col-md-3"><%= __('Title') %></label>
+                        <label class="col-md-2"><%= __('Amount') %></label>
+                        <label class="col-md-2"><%= __('Unit') %></label>
+                        <label class="col-md-2"><%= __('Total') %></label>
+                        <label class="col-md-3"></label>
+                    </div>
+                    <div class="repeater repeaterFormEdit">
+                        <div class="itemsFormEdit" data-repeater-list="items">
+                        </div>
+                        <button data-repeater-create type="button" class="btn btn-info btn-sm icon-btn">
+                          <i class="mdi mdi-plus"></i>
+                        </button>
+                    </div>
+                  </div>    
+                </div>
+
+                <div class="form-group row align-items-md-center">
+                  <label class="col-md-2"><%= __('Total') %></label>
+                  <div class="col-md-10">
+                      <input type="text" class="form-control" style="text-align: end;" name="totalAmount" data-fv-notempty="true" id="totalAmountFormEdit"
+                      data-fv-notempty-message="<%= __('Required field') %>" disabled />
+                  </div>
+                </div>
+
+                <div class="alert d-none" role="alert">
+                  <i class="mdi mdi-alert-circle"></i>
+                </div>
+                <div class="modal-footer row-button-fluid">
+                  <button type="reset" class="btn btn-light" data-dismiss="modal"><%= __('Cancel') %></button>
+                  <button id="btnFormEditFeeInvoice" type="submit" class="btn btn-primary waves-effect waves-classic">
+                    <%= __('Update') %>
+                  </button>
+                </div>
+              </form>
+            </div>
+        </div>
+    </div>
+</div> 
+<!-------------------------------  END MODAL EDIT INVOICE  --------------------------------------->
+
+<% block('localScripts', '<script src="/vendors/moment/moment.min.js"></script>') %>
+<% block('localScripts', '<script src="/vendors/moment/moment-timezone.min.js"></script>') %>
+<% block('localScripts', '<script src="/vendors/sweetalert/sweetalert.min.js"></script>') %>
+<% block('localScripts', '<script src="/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>') %> 
+<% block('localScripts', '<script src="/vendors/jquery.repeater/jquery.repeater.min.js"></script>') %>
+<% block('localScripts', '<script src="/js/backend/feeInvoice/form.js"></script>') %>

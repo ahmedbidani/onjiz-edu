@@ -1,0 +1,140 @@
+<!-- Page -->
+<% let BACKEND = sails.config.custom.BACKEND %>
+<% block('localCss', '<link rel="stylesheet" href="/vendors/fullcalendar/lib/main.min.css">') %>
+<% block('localCss', '<link rel="stylesheet" href="/vendors/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.css">') %>
+<% block('localCss', '<link rel="stylesheet" href="/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css">') %>
+<% block('localCss', '<link rel="stylesheet" href="/vendors/bootstrap-daterangepicker/daterangepicker.css"></script>') %>
+<!-- Modal Add Menu -->
+<div class="modal fade" id="modalMenu" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true"
+  data-classactive="<%= classActive %>" data-coursesession="<%= currCourseSession.id %>" data-manner="add"
+  data-starttime="<%= startOfMonth %>" data-endtime="<%= endOfMonth %>" data-rangeTimeLength="<%= rangeTime ? rangeTime.length : 0 %>" data-menuId="">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title font-weight-bold text-uppercase">
+          <span class="txtAdd"><%= __('Add New') %></span>
+          <span class="txtUpdate"><%= __('Update') %></span>
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body menuFromContent">
+        <form>
+          <input type='hidden' name='_csrf' value='<%= _csrf %>'> 
+          <div id="singleDay">
+            <div class="form-group">
+              <label for="dateMenu"><%= __('Date') %></label>
+              <div id="datepicker-popup" class="input-group date datepicker dateAddMenu">
+                <input type="text" id="dateMenu" name="dateMenu" class="form-control"
+                  value="<%=  manner != 'add' && dateUse ? dateUse : '' %>">
+                <span class="input-group-addon input-group-append border-left">
+                  <span class="mdi mdi-calendar input-group-text"></span>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-control-label"><%= __('Class') %></label>
+            <select id="classes" name="classes" class="form-control js-process-basic-multiple  select2-multiple"
+              data-placeholder="<%= __('Choose') %>" multiple="multiple">
+              <%  
+                var clsId = [];
+                if(classesApply.length > 0){
+                  _.each(classesApply, function (id, idx) {
+                    clsId.push(id);
+                  });
+                }
+                _.each(listClasses, function (cls, idx) {
+              %>
+              <option value="<%= cls.id %>" <%= clsId.indexOf(cls.id) != -1 ? 'selected' : ''%>>
+                <%= cls.title %>
+              </option>
+              <% }) %>
+            </select>
+          </div>
+          <div class="slotFeedingsWrap">
+            <div class="row">
+              <div class="col-12">
+                <div class="accordion" id="accordion" role="tablist">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="slotFeedings col-lg-12 js-height-scrollbar mb-2" style="max-height: 450px;" data-repeater-list="slotFeedings">
+            <% if (rangeTime && rangeTime.length > 0) { 
+              for (let i = 0; i < rangeTime.length; i++ ) {%>
+                <div class="card">
+                  <div class="card-header" role="tab" id="heading-<%=i%>">
+                    <h6 class="mb-0">
+                      <a data-toggle="collapse" href="#collapse-<%=i%>" aria-expanded="true"
+                        aria-controls="collapse-<%=i%>">
+                        <%=rangeTime[i].name%> ( <%=rangeTime[i].timeStart%> -> <%=rangeTime[i].timeEnd%>)
+                      </a>
+                    </h6>
+                  </div>
+                  <div id="collapse-<%=i%>" class="collapse show" role="tabpanel"
+                    aria-labelledby="heading-<%=i%>" data-parent="#accordion" data-timeStart="<%=rangeTime[i].timeStart%>" data-timeEnd="<%=rangeTime[i].timeEnd%>">
+                    <div class="mt-1">
+                      <select id="food<%=i%>" name="foods" class="form-control js-process-basic-multiple  select2-multiple"
+                        data-placeholder="<%= __('Choose') %>" multiple="multiple">
+                        <%  
+                          var foodIds = []; 
+                          if(listFoods.length > 0){
+                            _.each(listFoods, function (food, ind) {
+                              foodIds.push(food.id);
+                            });
+                          }
+                          _.each(listFoods, function (food, index) {
+                        %>
+                        <option value="<%= food.id %>" <% (foodIds.indexOf(food.id) != -1 ? 'selected' : '')%>>
+                          <%= food.title %>
+                        </option>
+                        <% }) %> 
+                      </select>
+                    </div>
+                  </div>
+                </div>
+            <% }
+            }%>
+          </div>
+        </div>
+          </div>
+        </form>
+      </div>
+      <div class="row">
+        <div class="col-12" style="padding: 0px 31px">
+            <div class="alert alert-dismissible hidden" role="alert" data-alert-update="<%= __('Update successfully') %>">
+              <%= __('Update successfully') %>
+            </div>
+        </div>
+      </div>
+      <div class="modal-footer"> 
+        <button type="button" class="btn btn-secondary" data-dismiss="modal"><%= __('Cancel') %></button>
+        <button type="button" id="submitFormMenu" class="btn btn-info">
+          <span class="btnUpdate"><%= __('Update') %></span>
+          <span class="btnAdd"><%= __('Add new') %></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div id="calendarMenu" data-classactive="<%= classActive %>" class="full-calendar"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% block('localScripts', '<script src="/vendors/moment/moment.min.js"></script>') %>
+<% block('localScripts', '<script src="/vendors/moment/moment-timezone.min.js"></script>') %> 
+<% block('localScripts', '<script src="/vendors/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.js"></script>') %>
+<% block('localScripts', '<script src="/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>') %>
+<% block('localScripts', '<script src="/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>') %>
+<% block('localScripts', '<script src="/vendors/fullcalendar/lib/main.min.js"></script>') %>
+<% block('localScripts', '<script src="/vendors/fullcalendar/lib/locales-all.min.js"></script>') %>
+<% block('localScripts', '<script src="/vendors/jquery.repeater/jquery.repeater.min.js"></script>') %>
+<% block('localScripts', '<script src="/js/backend/menu/index.js"></script>') %>

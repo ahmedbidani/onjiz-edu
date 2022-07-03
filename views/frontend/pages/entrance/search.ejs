@@ -1,0 +1,30 @@
+<div class="wrapper pt-135 pb-80">
+    <div class="container">
+        <%if(eventPost.length){%>
+        <ul class="row">
+            <%for(let obj of eventPost){%>
+            <li class="col-6 pb-30">
+                <div class="single_events_2 d-sm-flex">
+                    <div class="events_image_2">
+                        <img src="<%= obj.media && obj.media.thumbnail ? obj.media.thumbnail.sizes.medium_large.path : '/images/no-thumb.png'%>" alt="<%= obj.title%>">
+                    </div>
+                    <div class="events_content_2 media-body">
+                        <%if(obj.dateStart){%>
+                        <span class="meta"><i class="fa fa-map-marker"></i><%= obj.venue%> <%= obj.address%></span>
+                        <h5 class="event_title"><a href="/event/<%=obj.alias%>/<%=obj.id%>"><%= obj.title%></a></h5>
+                        <%}else{%>
+                        <h5 class="event_title"><a href="/news/<%=obj.alias%>/<%=obj.id%>"><%= obj.title%></a></h5>
+                        <%}%>
+    
+                        <span class="date"><span><%= moment(obj.createdAt).format('DD')%></span></br><%= moment(obj.createdAt).format('MMM')%></span>
+                    </div>
+                </div>
+            </li>
+            <%}%>
+        </ul>
+        <%- partial('../../partials/paging.ejs') %>
+        <%}else{%>
+        <p><%= __('There are no result match with keywork:')%> <%= keyword%></p>
+        <%}%>
+    </div>
+</div>

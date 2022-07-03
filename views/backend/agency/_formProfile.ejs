@@ -1,0 +1,72 @@
+<div class="col-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title"> <%=__('Profile agency')%></h4>  
+        <form autocomplete="off" id="formAgency" class="" data-fv-framework="bootstrap4" data-fv-message="<%= __('Invalidate') %>"
+          data-fv-icon-valid="glyphicon glyphicon-ok" data-fv-icon-invalid="glyphicon glyphicon-remove" data-fv-icon-validating="glyphicon glyphicon-refresh"
+          data-fv-live="enabled" data-manner="<%= (agencyData.id == undefined) ? 'add' : 'edit' %>">
+          <input type='hidden' name='_csrf' value='<%= _csrf %>'>
+          <div class="row">
+              <div class="col-xxl-12 col-xl-12 col-lg-12">
+                  <input value="<%= agencyData.id%>" name="id" id="agencyId" hidden>
+                  <div class="row">
+                      <div class="col-xxl-6 col-xl-6 col-lg-6">
+                          <div class="form-group">
+                              <label class="form-control-label">
+                                <%= __('Code') %>
+                              </label>
+                              <input type="text" class="form-control" name="code"
+                                value="<%= agencyData.code%>" readonly>
+                          </div>
+                      </div>
+                      <div class="col-xxl-6 col-xl-6 col-lg-6">
+                          <div class="form-group">
+                              <label class="form-control-label">
+                                <%= __('Name') %>
+                              </label>
+                              <input type="text" class="form-control" name="name" 
+                                value="<%= agencyData.name%>" readonly>
+                          </div>
+                      </div>
+                  </div> 
+              </div>
+              <div class="col-xxl-12 col-xl-12 col-lg-12">
+                  <div class="row">
+                      <div class="col-xxl-6 col-xl-6 col-lg-6">
+                          <div class="form-group">
+                              <label class="form-control-label">
+                                <%= __('E-mail') %>
+                              </label>  
+                                <input class="form-control" name="emailAddress" readonly value="<%=(agencyData.emailAddress) ? agencyData.emailAddress : ''%> ">
+                          </div>
+                      </div>
+                      <div class="col-xxl-6 col-xl-6 col-lg-6">
+                          <div class="form-group">
+                              <label class="form-control-label">
+                                <%= __('Phone') %>
+                              </label>
+                              <input type="number" class="form-control" name="phone" value="<%= agencyData.phone%>" readonly>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-xxl-12 col-xl-12 col-lg-12">
+                <div class="row">
+                  <div class="col-xxl-6 col-xl-6 col-lg-6">
+                    <div class="form-group">
+                      <label class="form-control-label">
+                          <%= __('Address') %>
+                      </label>
+                      <input type="text" class="form-control" name="address" value="<%= agencyData.address%>" readonly>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </form>
+      </div>
+    </div>
+</div>
+      
+  
+  

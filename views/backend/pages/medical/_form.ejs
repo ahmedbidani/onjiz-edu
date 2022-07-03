@@ -1,0 +1,60 @@
+<form autocomplete="off" id="formMedical" data-edit-id="<%= (medical != undefined) ? medical.id : '' %>" class="" data-fv-framework="bootstrap4"
+  data-fv-icon-valid="glyphicon glyphicon-ok"
+  data-fv-icon-invalid="glyphicon glyphicon-remove" data-fv-icon-validating="glyphicon glyphicon-refresh"
+  data-fv-live="enabled" data-manner="<%= (medical.id == undefined) ? 'add' : 'edit' %>" >
+      <input name="id" value="<%=(medical) ? medical.id : ''%>" hidden>
+      <input type='hidden' name='_csrf' value='<%= _csrf %>'>
+      <div class="row">
+        <div class = "col-md-6">
+          <div class="form-group">
+            <label class="form-control-label">
+              <%= __('Select class') %>
+            </label>
+            <select id="classes" name="classes" class="form-control multiChoose"
+              data-placeholder="<%= __('Choose') %>">
+              <%
+                var classIds = [];
+                if(listClasses){
+                  _.each(listClasses, function (tx, ind) {
+                    classIds.push(tx.id);
+                  });
+                }
+                _.each(listClasses, function (classObj, index) {
+              %>
+              <option value="<%= classObj.id %>"
+                <%= (classIds.indexOf(classObj.id) != -1 ? 'selected' : '')%>>
+                <%= classObj.title %>
+              </option>
+              <% }) %>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="dateOfBirth"><%= __('Date') %></label>
+            <input type="date" class="form-control" id="date" name="date" placeholder="DOB"
+              value="<%= medical.date %>" data-fv-notempty="true"
+              data-fv-notempty-message="<%= __('Required field') %>"
+              data-fv-date___format="<%= __('MM/DD/YYYY') %>"
+              data-fv-date___message="<%= __('Date format is not valid') %>">
+          </div>
+        </div>
+        <div class = "col-md-6">
+          <div class="form-group">
+            <label class="form-control-label"><%= __('Note') %></label>
+            <textarea class="form-control" name="note" id="editorDescription"><%= (medical.note) ? medical.note : ''%></textarea>
+          </div>
+        </div>
+      </div>
+    <div class="col-12">
+      <div class="alert alert-danger hidden"></div>
+      <div class="text-left">
+        <a class="btn btn-primary" href="/backend/medical/list"><%= __('Back') %></a>
+      </div>
+      <div class="text-right">
+        <div class="form-group form-material">
+          <button id="btnFormMedical" type="submit"
+            class="btn btn-primary"><%= medical.id ? __('Update') : __('Add New') %></button>
+        </div>
+      </div>  
+    </div>
+</form>

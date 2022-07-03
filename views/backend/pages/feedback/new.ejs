@@ -1,0 +1,49 @@
+  <div class="card">
+      <div class="row">
+        <div class="col-lg-2 col-md-3">
+          <%- partial('_left-column.ejs') %>
+        </div>
+        <div class="col-lg-10 col-md-9 border-left">
+            <div class="card-body">
+                <h3 class="card-title"><%= __('Inbox')%></h3>
+                <form autocomplete="off" id="formFeedback" class="">
+                  <input type='hidden' name='_csrf' value='<%= _csrf %>'>
+                  <div class="row">
+                    <div class="col-md-8">
+                        <div class="form-group">
+                          <label for="receiver"><%= __('Receiver')%></label>
+                          <select id="receiver" name="receiver" class="form-control js-process-basic-multiple"
+                          data-placeholder="<%= __('Choose') %>" multiple="multiple"> 
+                          <% _.each(user, function(userObj, index) { %>
+                            <option value="<%= userObj.id %>">
+                              <%= userObj.fullName + ' <' + userObj.emailAddress + '>' %>
+                            </option>
+                            <% }) %>
+                          <% _.each(parents, function(userObj, index) { %>
+                            <option value="<%= userObj.id %>">
+                              <%= userObj.fullName + ' <' + userObj.emailAddress + '>' %>
+                            </option>
+                            <% }) %>
+                          </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-8">
+                        <div class="form-group"> 
+                            <input class="form-control" placeholder="<%= __('Title')%>" id="title" name="title">
+                        </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-8"> 
+                          <textarea class="textarea_editor form-control" id="description" name="description" rows="10" placeholder="<%= __('Your message ...')%>"></textarea>
+                    </div>
+                  </div>
+                  <button id="btnFeedback" type="submit" class="btn btn-info d-none d-lg-block m-t-10"><%= __('Send')%></button> 
+                </form>
+            </div>
+        </div>
+      </div>
+  </div>
+<% block('localScripts', '<script src="/js/backend/feedback/new.js"></script>') %>

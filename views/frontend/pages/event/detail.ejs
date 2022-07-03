@@ -1,0 +1,94 @@
+<!--====== Event Details START ======-->
+
+<section class="courses_details_banner bg_cover" style="background-image: url(/images/top_bg.jpg)">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-9 col-sm-11">
+                <div class="details_banner_content">
+                    <h4 class="title"><%= eventObj.title%></h4>
+
+                    <div class="details_media_wrapper d-flex flex-wrap">
+                        <div class="details_media d-flex align-items-center mt-30">
+                            <div class="media_image">
+                                <img class="author" src="<%= eventObj.author&&eventObj.author.avatar ? eventObj.author.avatar : '/images/avatar.png'%>" alt="author">
+                            </div>
+                            <div class="media_content media-body">
+                                <p><%= __('Teacher') %></p>
+                                <h6 class="title"><%= eventObj.author ? eventObj.author.firstName+' '+eventObj.author.lastName : ''%></h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--====== Event Details ENDS ======-->
+
+<!--====== Event Details START ======-->
+
+<section class="courses_details_area pt-80 pb-130">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 order-lg-last">
+                <div class="courses_details_sidebar">
+                    <div class="courses_sidebar_image">
+                        <img src="<%=eventObj.media ? eventObj.media.thumbnail.path : '/images/courses-details.jpg'%>" alt="courses details">
+                        <div class="price">
+                            <div class="price_wrapper">
+                                <%if(eventObj.amount){%>
+                                    <p><%= __('Price') %></p>
+                                    <span><%= eventObj.amount%></span>
+                                <%} else {%>
+                                    <p><%= __('Free')%></p>
+                                <%}%>
+                            </div>
+                        </div>
+                        <%if(eventObj.amount){%>
+                            <div class="courses_btn">
+                                <a class="main-btn" href="javascript:void(0)"><%= __('Join Now')%></a>
+                            </div>
+                        <%}%>
+                    </div>
+                    <div class="courses_sidebar_title">
+                        <h4 class="title"><%= __('Event Details')%></h4>
+                    </div>
+                    <div class="courses_sidebar_list">
+                        <ul class="list">
+                            <% if(eventObj.type == 0){%>
+                            <li><i class="fa fa-hourglass-start"></i> <%= __('Start')%><span><%= eventObj.dateStart %> @ <%= eventObj.timeStart %></span></li>
+                            <li><i class="fa fa-hourglass-end"></i> <%= __('End')%><span><%= eventObj.dateEnd %> @ <%= eventObj.timeEnd %></span></li>
+                            <%} else {%>
+                            <li><i class="fa fa-hourglass-start"></i> <%= __('Start')%><span><%= eventObj.dateStart %></span></li>
+                            <li><i class="fa fa-hourglass-end"></i> <%= __('End')%><span><%= eventObj.dateEnd %></span></li>
+                            <li><i class="fa fa-clock-o"></i> <%= __('Time')%><span><%= eventObj.timeStart %> - <%= eventObj.timeEnd %></span></li>
+                            <li><i class="fa fa-repeat"></i> <%= __('Recurring')%><span><%= eventObj.recurringDay %></span></li>
+                            <% } %>
+                            <li><i class="fa fa-building"></i> <%= __('Venue')%><span><%= eventObj.venue %></span></li>
+                            <li><i class="fa fa-map-marker"></i> <%= __('Address')%><span><%= eventObj.address %></span></li>
+                        </ul>
+                        <ul class="social">
+                            <li><a href="<%= webSettings&&webSettings.value&&webSettings.value.socialNetwork&&webSettings.value.socialNetwork.facebook ? webSettings.value.socialNetwork.facebook : 'javascript:void(0)'%>"><i class="fa fa-facebook-f"></i></a></li>
+                            <li><a href="<%= webSettings&&webSettings.value&&webSettings.value.socialNetwork&&webSettings.value.socialNetwork.instagram ? webSettings.value.socialNetwork.instagram : 'javascript:void(0)'%>"><i class="fa fa-instagram"></i></a></li>
+                            <li><a href="<%= webSettings&&webSettings.value&&webSettings.value.socialNetwork&&webSettings.value.socialNetwork.google ? webSettings.value.socialNetwork.google : 'javascript:void(0)'%>"><i class="fa fa-google"></i></a></li>
+                            <li><a href="<%= webSettings&&webSettings.value&&webSettings.value.socialNetwork&&webSettings.value.socialNetwork.youtube ? webSettings.value.socialNetwork.youtube : 'javascript:void(0)'%>"><i class="fa fa-youtube-play"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8 order-lg-first">
+                <div class="courses_details_content">
+                    <div class="single_courses_details  mt-40">
+                        <h4 class="courses_details_title"><%= __('Overview')%></h4>
+                        <%- eventObj.motto%>
+                    </div>
+                    <div class="single_courses_details  mt-40">
+                        <h4 class="courses_details_title"><%= __('Specifications')%></h4>
+                        <%- eventObj.description%>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

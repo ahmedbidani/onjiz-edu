@@ -1,0 +1,146 @@
+<!-- Page -->
+<% let BACKEND = sails.config.custom.BACKEND %> 
+
+<div class="card">
+  <div class="card-body">
+    <%- partial('../../partials/filter.ejs') %>
+    <div class="table-responsive">
+      <%- partial('./_list.ejs') %>
+    </div>
+  </div>
+</div>
+<div class="modal fade modal-custom" id="modal-edit" tabindex="-1" role="dialog" aria-labelledby="modal-edit" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-edit"><%= __('Add new') %></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" >
+                <span aria-hidden="true"><i class="mdi mdi-close-circle-outline"></i></span>
+                </button>
+            </div>
+            <div class="modal-body">
+              <form autocomplete="off" id="formClass" class="" data-fv-framework="bootstrap4"
+              data-fv-icon-valid="glyphicon glyphicon-ok" data-fv-icon-invalid="glyphicon glyphicon-remove"
+              data-fv-icon-validating="glyphicon glyphicon-refresh" data-fv-live="enabled" data-manner="add">
+              <input type='hidden' name='_csrf' value='<%= _csrf %>'> 
+
+                <div class="form-group row align-items-md-center">
+                  <label class="col-md-3"><%= __('Class code') %></label>
+                  <div class="col-md-9">
+                    <input type="text" class="form-control" id="code" name="code" data-fv-notempty="true"
+                    data-fv-notempty-message="<%= __('Required field') %>" data-fv-stringlength="true"
+                    data-fv-stringlength-min="2" data-fv-stringlength-max="30"
+                    data-fv-stringlength-message="<%= __('Class code must be at least 2 characters and max 30 characters') %>" />
+                  </div>
+                </div>
+                
+                <div class="form-group row align-items-md-center">
+                  <label class="col-md-3"><%= __('Class name') %></label>
+                  <div class="col-md-9">
+                    <input type="text" class="form-control" id="title" name="title" data-fv-notempty="true"
+                    data-fv-notempty-message="<%= __('Required field') %>" data-fv-stringlength="true"
+                    data-fv-stringlength-min="2" data-fv-stringlength-max="70"
+                    data-fv-stringlength-message="<%= __('Class name must be at least 2 characters and max 70 characters') %>" />
+                  </div>
+                </div>
+
+                <div class="form-group row align-items-md-center">
+                  <label class="col-md-3"><%= __('Course Session') %></label>
+                  <div class="col-md-9">
+                    <select id="courseSession" name="courseSession" class="form-control"
+                    data-placeholder="<%= __('Choose') %>">
+                    <% _.each(listCourseSession, function(courseSession, index) { %>
+                    <option value="<%= courseSession.id %>">
+                      <%= courseSession.title %>
+                    </option>
+                    <% }) %>
+                    </select>
+                  </div>
+                </div>
+                
+                <div class="form-group row align-items-md-center">
+                  <label class="col-md-3"><%= __('Teachers') %></label>
+                  <div class="col-md-9">
+                    <select id="teachers" name="teachers" class="form-control js-process-basic-multiple  select2-multiple"
+                    data-placeholder="<%= __('Choose') %>" multiple="multiple">
+                    <% _.each(listTeacher, function(teacher, index) { %>
+                    <option value="<%= teacher.id %>">
+                      <%= teacher.firstName + ' ' + teacher.lastName %>
+                    </option>
+                    <% }) %>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group row align-items-md-center">
+                    <label class="col-md-3"><%= __('Formations') %></label>
+                    <div class="col-md-9">
+                      <select id="formations" name="formations" multiple="multiple" class="form-control js-process-basic-multiple  select2-multiple"
+                      data-placeholder="<%= __('Choose') %>">
+                      <% _.each(listFormation, function(formation, index) { %>
+                      <option value="<%= formation.id %>">
+                        <%= formation.name %>
+                      </option>
+                      <% }) %>
+                      </select>
+                    </div>
+                </div>
+
+                <div class="form-group row align-items-md-center">
+                  <label class="col-md-3"><%= __('Group of class') %></label>
+                  <div class="col-md-9">
+                    <select id="thumbnail" name="thumbnail" class="form-control">
+                      <option value="1" data-imagesrc="/images/lopmam.png"><%= __('Level 1') %></option>
+                      <option value="2" data-imagesrc="/images/lopchoi.png"><%= __('Level 2') %></option>
+                      <option value="3" data-imagesrc="/images/lopla.png"><%= __('Level 3') %></option>
+                      <!-- <option value="4" data-imagesrc="/images/lopmaugiao.png"><%= __('Level 4') %></option> -->
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group row align-items-md-center">
+                  <label class="col-md-3"><%= __('Status')%></label>
+                  <div class="col-md-9">
+                    <ul class="list-unstyled list-inline">
+                      <li class="list-inline-item">
+                        <div class="form-check">
+                          <label class="form-check-label">
+                            <input id="statusActive" type="radio" class="form-check-input" name="status" checked
+                              value="<%= STATUS.ACTIVE %>">
+                            <i class="input-helper"></i>
+                            <%= __('Active') %>
+                          </label>
+                        </div>
+                      </li>
+                      <li class="list-inline-item">
+                        <div class="form-check">
+                          <label class="form-check-label">
+                            <input id="statusDraft" type="radio" class="form-check-input" name="status" value="<%= STATUS.DRAFT %>">
+                            <i class="input-helper"></i>
+                            <%= __('Draft') %>
+                          </label>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="alert d-none" role="alert">
+                  <i class="mdi mdi-alert-circle"></i>
+                </div>
+                <div class="modal-footer row-button-fluid">
+                  <button type="reset" class="btn btn-light" data-dismiss="modal"><%= __('Cancel') %></button>
+                  <button id="btnFormClass" type="submit" class="btn btn-primary waves-effect waves-classic">
+                    <%= __('Add New') %>
+                    <div hidden>
+                      <%= __('Update')%>
+                    </div>
+                  </button>
+                </div>
+              </form>
+            </div>
+        </div>
+    </div>
+</div> 
+<% block('localScripts', '<script src="/js/jquery.ddslick.min.js"></script>') %>
+<% block('localScripts', '<script src="/js/backend/class/index.js"></script>') %>

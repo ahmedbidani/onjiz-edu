@@ -1,0 +1,170 @@
+<div class="login-register" style="background-image:url(/images/guest.jpeg);">
+  <div class="login-box card">
+    <div class="card-body">
+      <form class="form-horizontal" id="frmLogin" data-toggle="validator" role="form">
+        <input type='hidden' name='_csrf' value='<%= _csrf %>'>
+        <h3 class="text-center m-b-20"><%= __('Sign In') %></h3>
+        <div class="form-group ">
+          <div class="col-xs-12">
+            <input class="form-control" id="txtEmail" name="emailAddress" type="text" placeholder="E-mail"
+              data-email-error="<%= __('Email is not invalid.') %>" data-required-error="<%= __('Required field') %>"
+              required>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-xs-12">
+            <input class="form-control " id="txtPassword" name="password" type="password"
+              placeholder="<%= __('Password') %>" data-required-error="<%= __('Required field') %>" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="g-recaptcha" id="captchaForm" data-sitekey="<%=GOOGLE_PUBLIC_KEY%>">
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-md-12">
+            <div class="d-flex no-block align-items-center">
+              <div class="ml-auto">
+                <a href="#bsw_popup" id="to-recover" class="text-muted"><i class="fas fa-lock m-r-5"></i>
+                  <%= __('Forgot password?') %></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="loginFail" class="alert d-none" role="alert">
+          <i class="mdi mdi-alert-circle"></i>
+          <%= __('Login fail! Please check your email and password!')%>
+        </div>
+        <div id="captchaFail" class="alert d-none" role="alert">
+          <i class="mdi mdi-alert-circle"></i>
+          <%= __('Login fail! Please check captcha box')%>
+        </div>
+        <div id="requiredFeild" class="alert d-none" role="alert">
+          <i class="mdi mdi-alert-circle"></i>
+          <%= __('Username and password are required!')%>
+        </div>
+        <div id="accountNotActive" class="alert d-none" role="alert">
+          <i class="mdi mdi-alert-circle"></i>
+          <%= __('You are not have permission or your account is not active!')%>
+        </div>
+        <div class="form-group text-center">
+          <div class="col-xs-12 p-b-20">
+            <button class="btn btn-block btn-lg btn-info main-btn btn-rounded"
+              type="submit"><%= __('Log In') %></button>
+          </div>
+        </div>
+      </form>
+
+      <!--form forgot password-->
+      <style>
+        #bsw_popup {
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          position: fixed;
+          opacity: 0;
+          visibility: hidden;
+          transition: .5s;
+          transform: scale(1.2)
+        }
+
+        #bsw_popup:target {
+          transform: scale(1);
+          background: rgba(0, 0, 0, .2);
+          opacity: 1;
+          visibility: visible;
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          margin: 0;
+          z-index: 999999999999;
+          transition: .5s
+        }
+
+        .bsw_popup_ {
+          background: #fff;
+          border-radius: 4px;
+          z-index: 999;
+          width: 500px;
+          max-width: 100%;
+          position: fixed;
+          top: 45%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          margin: 0;
+          padding: 20px;
+          box-sizing: border-box;
+          box-shadow: 0 0 100px rgba(0, 0, 0, .1)
+        }
+
+        .bsw_popup_ h2 {
+          margin: 0 0 .75em;
+          padding: 0;
+          text-align: center;
+          font-weight: 700;
+          font-family: Roboto, sans-serif;
+          color: #4267b2
+        }
+
+        .bsw_popup_ h3 {
+          margin: 0 0 .75em;
+          padding: 0;
+          font-weight: 700;
+          font-family: Roboto, sans-serif;
+          color: #000000
+        }
+
+        .bsw_popup_ p {
+          margin: 0 0 20px;
+          padding: 0;
+          font: 400 15px Roboto;
+          color: #555;
+          line-height: 1.5
+        }
+
+        .bsw_popup_ p a {
+          font-weight: 700;
+          color: #000000
+        }
+
+        .bsw_popup_ p a:hover {
+          text-decoration: underline
+        }
+
+      </style>
+      <div id='bsw_popup'>
+        <div class='bsw_popup_'>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <a class='close' href='#close' title='Close'><i aria-hidden='true' />X</a>
+          </button>
+          <h3 class="text-center"><%= __('Forgot password?')%></h3>
+          <br></br>
+          <h6 class="font-weight-light"><%= __('Please enter your e-mail to reset the password')%></h6>
+          <form id="frmForgotPassword" data-toggle="validator" role="form" class="pt-3">
+            <div class="form-group form-material floating">
+              <input type="email" name="emailAddress" class="form-control empty" data-plugin="formMaterial"
+                data-fv-notempty="true" data-fv-notempty-message="<%= __('Required field') %>"
+                data-fv-message="<%= __('E-mail is invalid') %>" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+                autofocus>
+              <div class="invalid-feedback"><%= __('Forgot password?')%></div>
+            </div>
+            <p id="resetPasswordFail" class="text-danger hidden">
+              <small><%= __('Email is not exist.')%></small></p>
+            <p id="resetPasswordSuccessfully" class="text-success hidden">
+              <small><%= __('The new password has been sent to your email. Please check your mail inbox.') %> </small>
+            </p>
+            <div class="form-group">
+              <button type="submit" :syncing="syncing"
+                class="btn btn-primary btn-block btn-lg mt-40"><%= __('Reset password')%></button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

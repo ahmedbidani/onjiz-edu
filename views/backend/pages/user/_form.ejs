@@ -1,0 +1,355 @@
+<form autocomplete="off" id="formUser" class="" enctype="multipart/form-data"
+  data-edit-id="<%= (userObj.id?userObj.id:'') %>" data-fv-message="<%= __('Invalidate') %>"
+  data-fv-icon-valid="glyphicon glyphicon-ok" data-fv-icon-invalid="glyphicon glyphicon-remove"
+  data-fv-icon-validating="glyphicon glyphicon-refresh" data-fv-live="enabled"
+  data-manner="<%= (userObj.id == undefined) ? 'add' : 'edit' %>">
+  <input type='hidden' name='_csrf' value='<%= _csrf %>'>
+
+  <input value="<%= userObj.id %>" id="id" name="id" hidden>
+  <!-- avatar -->
+  <div class="row">
+    <div class="col-10">
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group">
+            <label class="form-control-label">
+              <%= __('User Name') %>
+            </label>
+            <input type="text" class="form-control" name="userName" data-fv-notempty="true"
+              value="<%=userObj.userName%>" data-fv-notempty-message="<%= __('Required field') %>" required
+              data-fv-stringlength="true" data-fv-stringlength-min="2" data-fv-stringlength-max="64"
+              data-fv-stringlength-message="<%= __('Username must be at least 2 characters and max 64 characters') %>">
+          </div>
+        </div>
+        <div class="col-6">
+          <!-- email -->
+          <div class="form-group">
+            <label class="form-control-label">
+              <%= __('E-mail') %>
+            </label>
+            <input type="email" class="form-control" name="emailAddress"
+              value="<%=(userObj.emailAddress) ? userObj.emailAddress : ''%>"
+              email-existence="<%= __('Email is existed') %>">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <!-- firstName -->
+          <div class="form-group">
+            <label class="form-control-label">
+              <%= __('First Name') %>
+            </label>
+            <input type="text" class="form-control" id="firstName"
+              value="<%=(userObj.firstName) ? userObj.firstName : ''%>" name="firstName"
+              placeholder="<%= __('First Name') %>" value="<%= userObj.firstName %>" data-fv-notempty="true"
+              data-fv-notempty-message="<%= __('First name is required.') %>" data-fv-stringlength="true"
+              data-fv-stringlength-min="2" data-fv-stringlength-max="64"
+              data-fv-stringlength-message="<%= __('Min length is 2 and max length is 64 characters.') %>">
+          </div>
+        </div>
+        <div class="col-6">
+          <!-- phone number -->
+          <div class="form-group">
+            <label class="form-control-label">
+              <%= __('Phone') %>
+            </label>
+            <input id="phone" type="tel" class="form-control" name="phone"
+              value="<%=(userObj.phone) ? userObj.phone : ''%>" pattern="[0-9]{9,12}$">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <!-- lastName -->
+          <div class="form-group">
+            <label class="form-control-label">
+              <%= __('Last Name') %>
+            </label>
+            <input type="text" class="form-control" id="lastName"
+              value="<%=(userObj.lastName) ? userObj.lastName : ''%>" name="lastName"
+              placeholder="<%= __('Last Name') %>" value="<%= userObj.lastName %>" data-fv-notempty="true"
+              data-fv-notempty-message="<%= __('Last name is required !') %>" data-fv-stringlength="true"
+              data-fv-stringlength-min="2" data-fv-stringlength-max="128"
+              data-fv-stringlength-message="<%= __('Min length is 2 and max length is 128 characters.') %>">
+          </div>
+        </div>
+        <div class="col-6">
+          <!-- password -->
+          <div class="form-group">
+            <% if (userObj.id==undefined) { %>
+              <label class="form-control-label">
+                <%= __('Password') %>
+              </label>
+              <input type="password" class="form-control" name="password" id="password" data-fv-stringlength="true"
+                data-fv-stringlength-min="4"
+                data-fv-stringlength-message="<%= __('Min length must be at least 4 characters') %>" />
+              <% } else { %>
+                <label class="form-control-label">
+                  <%= __('New password') %>
+                </label>
+                <input type="password" class="form-control" name="password" id="password" data-fv-stringlength="true"
+                  data-fv-stringlength-min="4"
+                  data-fv-stringlength-message="<%= __('Min length must be at least 4 characters') %>" />
+                <% } %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <!-- birthDay -->
+          <div class="form-group">
+            <label for="dateOfBirth">
+              <%= __('Birthday') %>
+            </label>
+            <input type="date" class="form-control" id="dateOfBirth" name="dateOfBirth" placeholder="Birthday"
+              value="<%= userObj.birthday %>">
+          </div>
+        </div>
+        <!-- confirm password -->
+        <div class="col-6">
+          <div class="form-group">
+            <label class="form-control-label">
+              <%= __('Confirm password') %>
+            </label>
+            <% if (userObj.id==undefined) { %>
+              <input type="password" class="form-control" name="passwordConfirm" id="confirm_password"
+                data-fv-notempty="true" data-fv-notempty-message="<%= __('Password is required field.') %>" />
+              <% } else { %>
+                <input type="password" class="form-control" name="passwordConfirm" id="confirm_password" />
+                <% } %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+
+        <div class="col-6">
+          <!-- address -->
+          <div class="form-group">
+            <label for="address">
+              <%= __('Address') %>
+            </label>
+            <input type="text" class="form-control" id="address" name="address" value="<%= userObj.address %>"
+              placeholder="">
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="form-group">
+            <label class="form-control-label">
+              <%= __('Gender') %>
+            </label>
+            <ul class="list-unstyled list-inline">
+              <li class="list-inline-item">
+                <div class="form-check">
+                  <label class="form-check-label">
+                    <input type="radio" id="male" class="form-check-input" name="gender" value="0" <%=(userObj.gender==0
+                      ? 'checked' : '' ) %> checked />
+                    <i class="input-helper"></i>
+                    <%= __('Male') %>
+                  </label>
+                </div>
+              </li>
+              <li class="list-inline-item">
+                <div class="form-check">
+                  <div class="form-check-label">
+                    <input type="radio" id="female" name="gender" class="form-check-input" value="0"
+                      <%=(userObj.gender==1 ? 'checked' : '' ) %> />
+                    <i class="input-helper"></i>
+                    <%= __('Female') %>
+                      </label>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <div class="row">
+            <div class="col-6">
+              <div class="form-group">
+                <label class="form-control-label">
+                  <%= __('Classes') %>
+                </label>
+                <select id="classes" name="classes" class="form-control js-process-basic-multiple select2-multiple"
+                  data-placeholder="<%= __('Choose') %>" multiple="multiple">
+                  <% var classIds=[]; if(userObj.classes){ _.each(userObj.classes, function (cls, ind) {
+                    classIds.push(cls.id); }); } _.each(Lclass, function (classObj, index) { %>
+                    <option value="<%= classObj.id %>" <%=(classIds.indexOf(classObj.id) !=-1 ? 'selected' : '' )%>>
+                      <%= classObj.title %>
+                    </option>
+                    <% }) %>
+                </select><br />
+                <span class="text-help">
+                  <%= __('If have no class, please ') %> <a target="_blank" href="/backend/class"><i
+                      class="fa fa-plus-circle"></i> <%= __(' Add')%></a>
+                </span>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-group">
+                <label class="form-control-label">
+                  <%= __('Subjects') %>
+                </label>
+                <select id="subjects" name="subjects" class="form-control js-process-basic-multiple select2-multiple"
+                  data-placeholder="<%= __('Choose') %>" multiple="multiple">
+                  <% var subjectIds=[]; if(userObj.formations){ _.each(userObj.formations, function (sbj, ind) {
+                    subjectIds.push(sbj.id); }); } _.each(Lsubjects, function (subjectObj, index) { %>
+                    <option value="<%= subjectObj.id %>" <%=(subjectIds.indexOf(subjectObj.id) !=-1 ? 'selected' : '' )%>>
+                      <%= subjectObj.name %>
+                    </option>
+                    <% }) %>
+                </select><br />
+                <span class="text-help">
+                  <%= __('If have no subject, please ') %> <a target="_blank" href="/backend/formation"><i
+                      class="fa fa-plus-circle"></i> <%= __(' Add')%></a>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="form-group">
+            <label class="form-control-label">
+              <%= __('Group') %>
+            </label>
+            <ul class="list-unstyled list-inline">
+              <li class="list-inline-item">
+                <div class="form-check">
+                  <label class="form-check-label">
+                    <input type="radio" id="userTypeTeacher" class="form-check-input" name="userType" value="1"
+                      <%=(userObj.userType==1 ? 'checked' : '' ) %> checked />
+                    <i class="input-helper"></i>
+                    <%= __('Teacher') %>
+                  </label>
+                </div>
+              </li>
+              <li class="list-inline-item">
+                <div class="form-check">
+                  <label class="form-check-label">
+                    <input type="radio" id="userTypeAssistant" class="form-check-input" name="userType" value="5"
+                      <%=(userObj.userType==5 ? 'checked' : '' ) %> />
+                    <i class="input-helper"></i>
+                    <%= __('Assistant') %>
+                  </label>
+                </div>
+              </li>
+              <li class="list-inline-item">
+                <div class="form-check">
+                  <div class="form-check-label">
+                    <input type="radio" id="userTypeDriver" name="userType" class="form-check-input" value="2"
+                      <%=(userObj.userType==2 ? 'checked' : '' ) %> />
+                    <i class="input-helper"></i>
+                    <%= __('Driver') %>
+                      </label>
+                  </div>
+                </div>
+              </li>
+              <li class="list-inline-item">
+                <div class="form-check">
+                  <div class="form-check-label">
+                    <input type="radio" id="userTypeAccountant" name="userType" class="form-check-input" value="4"
+                      <%=(userObj.userType==4 ? 'checked' : '' ) %> />
+                    <i class="input-helper"></i>
+                    <%= __('Accountant') %>
+                      </label>
+                  </div>
+                </div>
+              </li>
+              <li class="list-inline-item">
+                <div class="form-check">
+                  <label class="form-check-label">
+                    <input type="radio" id="userTypeSchoolAdmin" class="form-check-input" name="userType" value="3"
+                      <%=(userObj.userType==3 ? 'checked' : '' ) %> />
+                    <i class="input-helper"></i>
+                    <%= __('School Admin') %>
+                  </label>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group">
+            <label class="form-control-label">
+              <%= __('Description') %>
+            </label>
+            <textarea class="form-control" name="description" id="editorDescription"
+              required><%=(userObj.description) ? userObj.description : ''%></textarea>
+          </div>
+        </div>
+        <div class="col-6">
+
+          <div class="form-group">
+            <label class="form-control-label">
+              <%= __('Role') %>
+            </label>
+            <select id="role" name="role" class="form-control js-process-basic-multiple  select2-multiple"
+              data-placeholder="<%= __('Choose') %>" multiple="multiple">
+
+              <% _.each(listRole, function(role, index) { %>
+                <option value="<%= role.id %>" <%=(userObj.listRoleUser.indexOf(role.id) !=-1 ? 'selected' : '' )%>>
+                  <%= role.name %>
+                </option>
+                <% }) %>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-control-label">
+              <%= __('Status') %>
+            </label>
+            <ul class="list-unstyled list-inline">
+              <li class="list-inline-item">
+                <div class="form-check">
+                  <label class="form-check-label">
+                    <input id="statusPublish" type="radio" class="form-check-input" name="status" value="1" checked
+                      <%=(userObj.status==1)? 'checked' :''%> />
+                    <i class="input-helper"></i>
+                    <%= __('Active') %>
+                  </label>
+                </div>
+              </li>
+              <li class="list-inline-item">
+                <div class="form-check">
+                  <label class="form-check-label">
+                    <input id="statusActive" type="radio" class="form-check-input" name="status" value="0"
+                      <%=(userObj.status==0)? 'checked' :''%> />
+                    <i class="input-helper"></i>
+                    <%= __('Draft') %>
+                  </label>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-2 text-center">
+      <div class="form-group">
+        <input type="file" data-default-file="<%= userObj.avatar? userObj.avatar : '/images/avatar2.png' %>"
+          class="dropify" name="thumbnail" data-field="thumbnail" data-max-file-size="10M" />
+      </div>
+    </div>
+  </div>
+  <!-- btn Submit -->
+  <div class="row">
+    <div class="col-12">
+      <div class="alert alert-dismissible hidden" role="alert" data-alert-update="<%= __('Update successfully') %>">
+        <%= __('Update successfully') %>
+      </div>
+    </div>
+    <div class="col-10">
+      <div class="text-right">
+        <div class="form-group form-material">
+          <button id="btnFormUser" type="submit" class="btn btn-primary">
+            <%= userObj.id ? __('Update') : __('Add New') %>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,28 @@
+<aside class="left-sidebar">
+  <!-- Sidebar scroll-->
+  <div class="scroll-sidebar"> 
+    <!-- Sidebar navigation-->
+    <nav class="sidebar-nav">
+      <ul id="sidebarnav">
+        <li class="nav-item <%= (moduleActive && moduleActive.action == 'backend/superadmin/school') ? 'active' : '' %>">
+          <a class="waves-effect waves-dark" href="/sa/school">
+            <i class="ti-map-alt"></i><span class="hide-menu"><%= __('School') %>
+          </a>
+        </li>
+
+        <li class="nav-item <%= (moduleActive && moduleActive.action == 'backend/superadmin/role') ? 'active' : '' %>">
+          <a class="waves-effect waves-dark" href="/sa/role">
+            <i class="ti-layout-sidebar-left"></i><span class="hide-menu"><%= __('Role') %></span>
+          </a>
+        </li>
+
+        <li class="nav-item <%= (moduleActive && moduleActive.action == 'backend/superadmin/agency') ? 'active' : '' %>">
+          <a class="waves-effect waves-dark" href="/sa/agency">
+            <i class="mdi mdi-hospital-building"></i><span class="hide-menu"><%= __('Agency') %></span>
+          </a>
+        </li>
+
+      </ul>
+    </nav>
+  </div>
+</aside>

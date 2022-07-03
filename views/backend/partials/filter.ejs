@@ -1,0 +1,203 @@
+<%
+let action = moduleActive.action;
+action = action.replace(/\//g, '-'); //replace '/' by '-';
+//console.log(action);
+%>
+<!-- Filter -->
+<div class="row">
+  <% if(action != 'backend-attendent-index' && action != 'backend-pickup-index' && action != 'backend-feeinvoice-statistic' && action != 'backend-class-change') { %>
+    <div class="col-md-1 grid-margin d-flex justify-content-between">
+      <div class="dropdown float-left mr-3">
+        <button type="button" class="btn btn-secondary  dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+          <%= __('Action') %>
+        </button>
+        <div class="dropdown-menu" role="menu">
+          <a class="dropdown-item act-trash-group" href="javascript:void(0)">
+            <%= __('Delete')%>
+          </a>
+        </div>
+      </div>
+    </div>
+  <% } %>
+
+  <% if(webModule && webModule.isFilter){ %>
+    <%if(webModule.filters.search){%>
+      <div class="col-md-2">
+        <input type="text" class="form-control" id="filterKeyword" placeholder="<%= __('Search') %>">
+      </div>
+    <%}%>
+    <%if(webModule.filters.class){%>
+      <div class="col-md-2">
+        <select id="filterClass" name="classes" class="form-control js-select2-class" data-placeholder="<%= __('Choose') %>">
+          <option value="3"><%= __('All Student')%></option>
+          <option value="-1"><%= __('All Class')%></option>
+          <%for(let session of sessionsOfBranchActive){%>
+          <optgroup label="<%=session.title%>">
+              <% for(let i = 0; i < session.classes.length; i++) {%>
+                <option value="<%= session.classes[i].id%>">
+                  <%= session.classes[i].title %>
+                </option>
+              <%}%>
+          </optgroup>
+          <%}%>
+        </select>
+      </div>
+    <%}%>
+    <%if(webModule.filters.detailMedical){%>
+      <div class="col-md-2">
+        <select id="filterDate" name="dateMedical" class="form-control js-select2-dateMedical" data-placeholder="<%= __('Choose') %>">
+          <%for(let date of medicalDate){%>
+              <option value="<%= date.id%>">
+                <%= date.date %>
+              </option>
+          <%}%>
+        </select>
+      </div>
+    <%}%>
+
+
+    <%if(webModule.filters.category){%>
+      <div class="col-md-2">
+        <select id="filterClass" name="classes" class="form-control js-select2-category" data-placeholder="<%= __('Choose') %>">
+          <option value="-1"><%= __('Category')%></option>
+          <%for(let cate of listCategories){%>
+          <!-- <optgroup label="<%=cate.title%>"> -->
+             <option value="<%= cate.id%>">
+                  <%= cate.title %>
+                </option>
+          </optgroup>
+          <%}%>
+        </select>
+      </div>
+    <%}%>
+
+    <% if(webModule.filters.userType){%>
+      <div class="dropdown float-left mr-3">
+        <!-- TYPE USER -->
+        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
+            aria-expanded="false">
+            <%if(type==1){%>
+              <%=__('Teacher')%>
+            <%} else if(type==3){%>
+              <%=__('Admin')%>
+            <%} else if(type==2){%>
+              <%=__('Driver')%>
+            <%}else{%>
+              <%=__('Accountant')%>
+            <%}%>
+        </button>
+        <div class="dropdown-menu" role="menu">
+            <a class="dropdown-item" href="?userType=1&status=1">
+            <%= __('Teacher') %>
+            </a>
+            <a class="dropdown-item" href="?userType=2&status=1">
+            <%= __('Driver') %>
+            </a>
+            <a class="dropdown-item" href="?userType=4&status=1">
+            <%= __('Accountant') %>
+            </a>
+            <a class="dropdown-item" href="?userType=3&status=1">
+            <%= __('Admin') %>
+            </a>
+        </div>
+      </div>
+    <%}%>
+
+    <% if(webModule.filters.userTypeNewVersion){%>
+      <div class="col-md-2">
+        <select id="filterUserType" name="userType" class="form-control js-select2-userType" data-placeholder="<%= __('Choose') %>">
+          <option value="-1"><%= __('All User')%></option>
+          <option value="1"><%= __('Teacher')%></option>
+          <option value="2"><%= __('Driver')%></option>
+          <option value="4"><%= __('Accountant')%></option>
+          <option value="3"><%= __('Admin')%></option>
+        </select>
+      </div>
+    <%}%>
+
+    <%if(webModule.filters.gender){%>
+      <div class="col-md-1">
+        <select id="status" name="status" class="form-control js-select2-gender"
+        data-placeholder="<%= __('Choose') %>">
+          <option value="2"><%= __('Gender')%></option>
+          <option value="1"><%= __('Male')%></option>
+          <option value="0"><%= __('Female')%></option>
+        </select>
+      </div>
+    <%}%>
+
+    <%if(webModule.filters.tag){%>
+      <div class="col-md-1">
+        <select id="filterClass" name="classes" class="form-control js-select2-tag" data-placeholder="<%= __('Choose') %>">
+          <option value="-1"><%= __('Tags')%></option>
+          <%for(let tag of listTags){%>
+             <option value="<%= tag.id%>">
+                  <%= tag.title %>
+                </option>
+          </optgroup>
+          <%}%>
+        </select>
+      </div>
+    <%}%>
+
+    <%if(webModule.filters.status){%>
+      <!-- <%if(action == 'backend-feeinvoice-statistic'){%>
+        <div class="col-md-1">
+          <select id="status" name="status" class="form-control js-select2-status"
+          data-placeholder="<%= __('Choose') %>">
+            <option value="all"><%= __('Payment Status')%></option>
+            <option value="-1"><%= __('Unpaid')%></option>
+            <option value="1"><%= __('Paid')%></option>
+          </select>
+        </div>
+      <%} else {%> -->
+        <div class="col-md-1">
+          <select id="status" name="status" class="form-control js-select2-status"
+          data-placeholder="<%= __('Choose') %>">
+
+            <option value="1"><%= __("Active")%></option>
+            <option value="2"><%= __("Reserve")%></option>
+            <option value="5"><%= __("Inactive")%></option>
+            <option value="6"><%= __("Trash")%></option>
+            <option value="0"><%= __("All Statuses")%></option>
+
+          </select>
+        </div>
+      <%}%>
+    <%}%>
+
+    <%if(webModule.filters.date){%>
+      <div class="col-md-3">
+        <div id="datepicker-popup" class="input-group date datepicker <%= (action == 'backend-report-student') ? 'dateReport' :(action == 'backend-pickup-index') ? 'datePickUp' : (action == 'backend-attendent-index') ? 'dateAttendent' : '' %>" style="padding: 0">
+            <input type="text" class="form-control">
+            <span class="input-group-addon input-group-append border-left">
+                <span class="mdi mdi-calendar input-group-text"></span>
+            </span>
+        </div>
+      </div>
+    <%}%>
+    <%if(webModule.filters.rangeDate){%>
+      <div class="col-md-3">
+        <div class='input-group mb-3'>
+          <input type='text' class="form-control shawCalRanges"/>
+          <div class="input-group-append">
+              <span class="input-group-text">
+                  <span class="ti-calendar"></span>
+              </span>
+          </div>
+        </div>
+      </div>
+    <%}%>
+
+    <div class="col-md-1">
+      <button class="btn waves-effect waves-light btn-block btn-dark" id="filterBtn" type="submit"><i class="fa fa-search"></i></button>
+    </div>
+  <% } %>
+  <% if(action == 'backend-report-student-attendance' || action == 'backend-student-list' || action == 'backend-parent-list'
+   || action == 'backend-medical-detail' ) { %>
+    <div class="col-md-1">
+      <button class="btn waves-effect waves-light btn-block btn-dark" id="exportBtn" type="submit"><%= __('Export')%></button>
+    </div>
+  <% } %>
+  <!-- End -->
+</div>

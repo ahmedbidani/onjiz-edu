@@ -1,0 +1,117 @@
+ <!-- Page -->
+ <% 
+ let BACKEND = sails.config.custom.BACKEND;
+ %>
+ <div class="row">
+  <div class="col-3 grid-margin stretch-card">
+    <div class="card">
+      <nav class="role-nav" id="roleNav">
+        <%if(listRole.length){%>
+          <ul>
+            <%for(let i=0; i < listRole.length; i++){%>
+              <li class="nav-item <%= i == 0 ? 'active' : '' %>">
+                <a class="waves-effect waves-dark change-role-row" data-id="<%=listRole[i].id%>" href="javascript:void(0)">
+                  <span class="hide-menu"><%=listRole[i].name%>
+                </a>
+              </li>
+            <%}%>
+          </ul>
+        <%}else{%>
+          <%= __('No role found')%>
+        <%}%>
+      </nav>
+      <div class="card-body">
+      </div>
+    </div>
+  </div>
+  <div class="col-9 grid-margin stretch-card">
+    <div class="card">
+      <%if(listRole.length){%>
+        <div class="card-body">
+          <form autocomplete="off" id="formEditRole" class="" data-fv-framework="bootstrap4"
+            data-fv-icon-valid="glyphicon glyphicon-ok" data-fv-icon-invalid="glyphicon glyphicon-remove"
+            data-fv-icon-validating="glyphicon glyphicon-refresh" data-fv-live="enabled" data-manner="add">
+            <input type='hidden' name='_csrf' value='<%= _csrf %>'> 
+            <input type='hidden' name='id' value='<%=listRole[0].id%>'> 
+            <div class="row align-items-md-center">
+              <div class="col-md-6 form-group row align-items-md-center">
+                <label class="col-md-3"><%= __('Name') %></label>
+                <div class="col-md-9">
+                  <input type="text" class="form-control" name="name" data-fv-notempty="true" id="name"
+                    data-fv-notempty-message="<%= __('Required field') %>" value="<%=listRole[0].name%>"/>
+                </div>
+              </div>
+              <div class="col-md-6 form-group row align-items-md-center">
+                <label class="col-md-3"><%= __('Description') %></label>
+                <div class="col-md-9">
+                  <textarea class="form-control" rows="2" id="description" name="description"><%=listRole[0].description%></textarea>
+                </div>
+              </div>
+              <div class="table-responsive">
+                  <%- partial('./_table-permissions.ejs') %>
+              </div>
+            </div>
+
+            <div class="alert d-none" role="alert">
+              <i class="mdi mdi-alert-circle"></i>
+            </div>
+
+            <div class="modal-footer row-button-fluid">
+              <button type="button" id="btnDeleteRole" class="btn btn-danger"><%= __('Delete')%></button>
+              <button type="reset" class="btn btn-light" data-dismiss="modal"><%= __('Cancel') %></button>
+              <button id="btnFormEditRole" type="submit" class="btn btn-primary waves-effect waves-classic"> <%= __('Update') %></button>
+            </div>
+          </form>
+        </div>
+      <%}%>
+    </div>
+  </div>
+ </div>
+<div class="modal fade modal-custom" id="modal-add" tabindex="-1" role="dialog" aria-labelledby="modal-add"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"><%= __('Add new') %></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true"><i class="mdi mdi-close-circle-outline"></i></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form autocomplete="off" id="formAddRole" class="" data-fv-framework="bootstrap4"
+          data-fv-icon-valid="glyphicon glyphicon-ok" data-fv-icon-invalid="glyphicon glyphicon-remove"
+          data-fv-icon-validating="glyphicon glyphicon-refresh" data-fv-live="enabled" data-manner="add">
+          <input type='hidden' name='_csrf' value='<%= _csrf %>'> 
+
+          <div class="form-group row align-items-md-center">
+            <label class="col-md-3"><%= __('Name') %></label>
+            <div class="col-md-9">
+              <input type="text" class="form-control" name="name" data-fv-notempty="true" id="name"
+                data-fv-notempty-message="<%= __('Required field') %>"/>
+            </div>
+          </div>
+
+          <div class="form-group row align-items-md-center">
+            <label class="col-md-3"><%= __('Description') %></label>
+            <div class="col-md-9">
+              <textarea class="form-control" rows="2" id="description" name="description"></textarea>
+            </div>
+          </div>
+
+          <div class="alert d-none" role="alert">
+            <i class="mdi mdi-alert-circle"></i>
+          </div>
+
+          <div class="modal-footer row-button-fluid">
+            <button type="reset" class="btn btn-light" data-dismiss="modal"><%= __('Cancel') %></button>
+            <button id="btnFormAddRole" type="submit" class="btn btn-primary waves-effect waves-classic">
+              <%= __('Add New') %>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+ 
+ <% block('localScripts', '<script src="/js/backend/superAdmin/role.js"></script>') %>  

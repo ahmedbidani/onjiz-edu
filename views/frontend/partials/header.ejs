@@ -1,0 +1,82 @@
+<!--====== Header PART START ======-->
+
+<section class="header_area">
+  <div class="header_top">
+      <div class="container">
+          <div class="header_top_wrapper d-flex justify-content-center justify-content-md-between">
+              <div class="header_top_info d-none d-md-block">
+                  <ul>
+                      <li><img src="/images/call.png" alt="call"><a href="tel:<%= webSettings && webSettings.value && webSettings.value.phoneTechnical ? webSettings.value.phoneTechnical : '[YOUR_PHONE]' %>"><%= webSettings && webSettings.value && webSettings.value.phoneTechnical ? webSettings.value.phoneTechnical : '[YOUR_PHONE]' %></a></li>
+                      <li><img src="/images/mail.png" alt="mail"><a href="mailto:<%= webSettings && webSettings.value && webSettings.value.mailTechnical ? webSettings.value.mailTechnical : '[YOUR_EMAIL]' %>"><%= webSettings && webSettings.value && webSettings.value.mailTechnical ? webSettings.value.mailTechnical : '[YOUR_EMAIL]' %></a></li>
+                  </ul>
+              </div>
+              <div class="header_top_login">
+                  <ul>
+                      <!-- <li><a href="#"><%= __('Register')%></a></li> -->
+                      <%if(!userActive){%>
+                      <li><a class="main-btn" href="/login"><i class="fa fa-user-o"></i> <%= __('Log In')%></a></li>
+                      <%}else{%>
+                      <li class="dropdown">
+                        <a class="dropdown-toggle waves-effect waves-dark main-btn" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <%=userActive.firstName + ' ' + userActive.lastName %>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right mailbox animated">
+                          <ul>
+                            <li><a class="dropdown-item" href="/account/profile"><i class="fa fa-user-o"></i>  <%= __('Profile') %></a></li>
+                            <li> <a class="dropdown-item" href="/notice"><i class="fa fa-bell"></i>  <%= __('Notice')%></a> </li>
+                            <li> <a class="dropdown-item" href="/menu"><i class="fa fa-fire"></i>  <%= __('Menu')%></a> </li>
+                            <li> <a class="dropdown-item" href="/subject"><i class="fa fa-book"></i>  <%= __('Subject')%></a></li>
+                            <li> <a class="dropdown-item" href="/health"><i class="fa fa-heartbeat"></i>  <%= __('Health')%></a></li>
+                            <li> <a class="dropdown-item" href="/logout"><i class="fa fa-sign-out"></i>  <%= __('Logout') %></a></li>
+                          </ul>
+                        </div>
+                      </li>
+                      <%}%>
+                  </ul>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <div class="header_menu">
+      <div class="container">
+          <nav class="navbar navbar-expand-lg">
+              <a class="navbar-brand" href="/">
+                  <img src="/images/kindie-logo.png" alt="Kindie">
+              </a>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="toggler-icon"></span>
+                <span class="toggler-icon"></span>
+                <span class="toggler-icon"></span>
+              </button>
+
+              <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
+                  <ul class="navbar-nav m-auto">
+                    <!-- <li> <a class="<%= (moduleActive.action == 'frontend/home/index') ? 'active' : '' %>" href=""><%= __('Home')%></a></li> -->
+                    <li> <a class="<%= (moduleActive.action == 'frontend/teacher/index') ? 'active' : '' %>" href="/teacher"><%= __('Teacher')%></a> </li>
+                    <li> <a class="<%= (moduleActive.action == 'frontend/news/index' || moduleActive.action == 'frontend/news/detail') ? 'active' : '' %>" href="/news"><%= __('News')%></a> </li>
+                    <li> <a class="<%= (moduleActive.action == 'frontend/gallery/index' || moduleActive.action == 'frontend/gallery/detail') ? 'active' : '' %>" href="/gallery"><%= __('Gallery')%></a> </li>
+                    <li> <a class="<%= (moduleActive.action == 'frontend/event/index' || moduleActive.action == 'frontend/event/detail') ? 'active' : '' %>" href="/event"><%= __('Event')%></a> </li>
+                    <li> <a class="<%= (moduleActive.action == 'frontend/aboutus/index') ? 'active' : '' %>" href="/about-us"><%= __('About Us')%></a> </li>
+                    <li> <a class="<%= (moduleActive.action == 'frontend/contact/index') ? 'active' : '' %>" href="/contact"><%= __('Contact')%></a> </li>
+                  </ul>
+              </div>
+
+              <div class="navbar_meta">
+                  <ul>
+                      <li>
+                        <a id="search" href="javascript:void(0)"><img src="/images/search.png" alt="search"></a>
+                        <form action=/search" method="GET">
+                            <div class="search_bar">
+                                <input type="text" name="keyword" placeholder="Search" required>
+                                <button type="submit"><i class="fa fa-search"></i></button>
+                            </div>
+                        </form>
+                      </li>
+                  </ul>
+              </div>
+          </nav>
+      </div>
+  </div>
+</section>
+<!--====== Header PART ENDS ======-->

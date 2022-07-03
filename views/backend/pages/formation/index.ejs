@@ -1,0 +1,82 @@
+<!-- Page -->
+<% let BACKEND = sails.config.custom.BACKEND %> 
+
+
+<div class="card">
+  <div class="card-body">
+    <%- partial('../../partials/filter.ejs') %>
+    <div class="table-responsive">
+      <%- partial('./_list.ejs') %>
+    </div>
+  </div>
+</div>
+<div class="modal fade modal-custom" id="modal-edit" tabindex="-1" role="dialog" aria-labelledby="modal-edit" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-edit"><%= __('Add new') %></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true"><i class="mdi mdi-close-circle-outline"></i></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form autocomplete="off" id="formFormation" class="" data-fv-framework="bootstrap4"
+                data-fv-icon-valid="glyphicon glyphicon-ok" data-fv-icon-invalid="glyphicon glyphicon-remove"
+                data-fv-icon-validating="glyphicon glyphicon-refresh" data-fv-live="enabled" data-manner="add">
+                <input type='hidden' name='_csrf' value='<%= _csrf %>'> 
+                <div class="form-group row align-items-md-center">
+                  <label class="col-md-3"><%= __('Name') %></label>
+                  <div class="col-md-9">
+                    <input type="text" class="form-control" id="name" name="name" data-fv-notempty="true"
+                    data-fv-notempty-message="<%= __('Required field') %>"/>
+                  </div>
+                </div>
+                <div class="form-group row align-items-md-center">
+                  <label class="col-md-3"><%= __('Description') %></label>
+                  <div class="col-md-9">
+                      <textarea class="form-control" rows="2" id="description" name="description"></textarea>
+                  </div>
+                </div>
+                <div class="form-group row align-items-md-center">
+                  <label class="col-md-3"><%= __('Status') %></label>
+                  <div class="col-md-9">
+                    <ul class="list-unstyled list-inline">
+                      <li class="list-inline-item">
+                        <div class="form-check">
+                          <label class="form-check-label">
+                            <input id="statusActive" type="radio" class="form-check-input" name="status" checked value="<%= STATUS.ACTIVE %>">
+                            <i class="input-helper"></i>
+                            <%= __('Active') %>
+                          </label>
+                        </div>
+                      </li>
+                      <li class="list-inline-item">
+                        <div class="form-check">
+                          <label class="form-check-label">
+                            <input id="statusDraft" type="radio" class="form-check-input" name="status" value="<%= STATUS.DRAFT %>">
+                            <i class="input-helper"></i>
+                            <%= __('Draft') %>
+                          </label>
+                        </div>
+                      </li>
+                    </ul>  
+                  </div>
+                </div>
+                <div class="alert d-none" role="alert">
+                    <i class="mdi mdi-alert-circle"></i>
+                </div>
+                <div class="modal-footer row-button-fluid">
+                  <button type="reset" class="btn btn-light" data-dismiss="modal"><%= __('Cancel') %></button>
+                  <button id="btnFormFormation" type="submit" class="btn btn-primary waves-effect waves-classic">
+                    <%= __('Add New') %>
+                    <div hidden>
+                      <%= __('Update')%>
+                    </div>
+                  </button>
+                </div>
+              </form>
+            </div>
+        </div>
+    </div>
+</div> 
+<% block('localScripts', '<script src="/js/backend/formation/index.js"></script>') %> 

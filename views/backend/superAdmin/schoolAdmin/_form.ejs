@@ -1,0 +1,135 @@
+<div class="col-12 grid-margin stretch-card">
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title"><%= (userObj.id == undefined) ? '' : __('Edit School Administrator')%></h4>
+            
+      <%if(userObj.id == undefined){%>
+        <!-- Steps -->
+        <div class="pearls row">
+          <div class="pearl col-6 disabled" aria-expanded="true">
+            <div class="pearl-icon"><i class="mdi mdi-home" aria-hidden="true"></i></div>
+            <span class="pearl-title"><%= __('Add new school') %></span>
+          </div>
+          <div class="pearl current col-6 active" aria-expanded="false">
+            <div class="pearl-icon"><i class="mdi mdi-account" aria-hidden="true"></i></div>
+            <span class="pearl-title"><%= __('Add School Administrator') %></span>
+          </div>
+        </div>
+        <!-- End Steps -->
+      <%}%>
+        
+      <form autocomplete="off" id="formSchoolAdmin" class="" data-fv-framework="bootstrap4" data-fv-message="<%= __('Invalidate') %>"
+          data-fv-icon-valid="glyphicon glyphicon-ok" data-fv-icon-invalid="glyphicon glyphicon-remove" data-fv-icon-validating="glyphicon glyphicon-refresh"
+          data-fv-live="enabled" data-manner="<%= (userObj.id == undefined) ? 'add' : 'edit' %>">
+          <input type='hidden' name='_csrf' value='<%= _csrf %>'>
+        <div class="row">
+          <div class="col-xxl-6 col-xl-6 col-lg-6">
+              <input value="<%= userObj.id%>" name="id" hidden>
+              <input value="<%= schoolId%>" name="schoolId" id="schoolId" hidden>
+              <input type='hidden' name='_csrf' value='<%= _csrf %>'>
+              <div class="form-group">
+                <label class="form-control-label">
+                  <%= __('UserName') %>
+                </label>
+                <input value="<%=userObj.userName%>" type="text" class="form-control" name="userName" value=""
+                data-fv-notempty="true" data-fv-notempty-message="<%= __('Required field') %>"
+                data-fv-message="<%= __('Email format is invalid') %>" required>
+            </div>
+              <div class="form-group">
+                  <label class="form-control-label">
+                    <%= __('E-mail') %>
+                  </label>
+                  <input value="<%=userObj.emailAddress%>" type="text" class="form-control" name="emailAddress" value=""
+                  email-existence="<%= __('Email is existed') %>"
+                  pattern="[A-Za-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+                  data-fv-notempty="true" data-fv-notempty-message="<%= __('Required field') %>"
+                  data-fv-message="<%= __('Email format is invalid') %>" required>
+              </div>
+              <div class="form-group">
+                <label class="form-control-label">
+                  <%= __('Phone') %>
+                </label>
+                <input value="<%= userObj.phone%>" type="tel" class="form-control"
+                    data-fv-notempty="true" data-fv-notempty-message="<%= __('Required field') %>"
+                    data-fv-message="<%= __('Phone must be 9 to 12 number') %>"
+                    name="phone" pattern="[0-9]{9,12}$" required/>
+              </div>
+              <div class="form-group">
+                  <label class="form-control-label">
+                      <%= __('Firstname') %>
+                  </label>
+                  <input value="<%= userObj.firstName%>" type="text" class="form-control"
+                      name="firstName" data-fv-notempty="true"
+                      data-fv-notempty-message="<%= __('Required field') %>" required data-fv-stringlength="true"
+                      data-fv-stringlength-min="2" data-fv-stringlength-max="20" 
+                      data-fv-stringlength-message="<%= __('Firstname must be at least 2 characters and max 20 characters') %>" />
+              </div>
+              <div class="form-group">
+                  <label class="form-control-label">
+                      <%= __('Lastname') %>
+                  </label>
+                  <input value="<%= userObj.lastName%>" type="text" class="form-control"
+                      name="lastName" data-fv-notempty="true"
+                      data-fv-notempty-message="<%= __('Required field') %>" required data-fv-stringlength="true"
+                      data-fv-stringlength-min="2" data-fv-stringlength-max="20" 
+                      data-fv-stringlength-message="<%= __('Firstname must be at least 2 characters and max 20 characters') %>" />
+              </div>
+              <div class="form-group">
+                  <label for="birthday" class="form-control-label"><%= __('Birthday') %></label>
+                  <input value="<%= userObj.birthday%>" type="date" id="birthday" class="form-control" name="birthday">
+              </div>
+              <%if(userObj.id){%>
+                <div class="form-group">
+                    <label class="form-control-label">
+                      <%= __('Current password') %>
+                    </label>
+                    <input type="password" class="form-control" name="password" id="password"
+                      data-fv-message="<%= __('Password must contain number, uppercase and lowercase letter.') %>"
+                      pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}">
+                  </div>
+              <%} else {%>
+              <div class="form-group">
+                <label class="form-control-label">
+                  <%= __('Password') %>
+                </label>
+                <input type="password" class="form-control" name="password" id="password"
+                  data-fv-notempty="true" data-fv-notempty-message="<%= __('Required field') %>"
+                  data-fv-message="<%= __('Password must contain number, uppercase and lowercase letter.') %>"
+                  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" required>
+              </div>
+              <%}%>
+              <div class="form-group">
+                <label class="form-control-label">
+                  <%= __('Confirm Password') %>
+                </label>
+                <input type="password" class="form-control" name="passwordConfirm" id="confirm_password" />
+              </div>
+              
+          </div>
+          <div class="col-xxl-6 col-xl-6 col-lg-6">
+            <div class="form-group">
+              <label class="form-control-label">
+                <%= __("School administrator's avatar") %>
+              </label>
+              <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                <input type="file" data-default-file="<%= userObj.avatar? userObj.avatar : '/images/avatar2.png' %>" class="dropify" name="thumbnail" data-field="thumbnail" data-max-file-size="10M" />
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="alert alert-danger hidden" role="alert">
+              <i class="mdi mdi-alert-circle"></i>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="form-group form-material">
+              <button id="btnFormSchoolAdmin" type="submit" class="btn btn-primary"><%= userObj.id ? __('Update') : __('Add New') %></button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+    
+

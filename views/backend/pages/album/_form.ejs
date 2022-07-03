@@ -1,0 +1,103 @@
+<div class="col-12 grid-margin stretch-card">
+	<div class="card">
+		<div class="card-body">
+			<form autocomplete="off" id="formAlbum" class="" data-edit-id="<%= (albumData.id?albumData.id:'') %>"
+				data-manner="<%= (albumData.id == undefined) ? 'add' : 'edit' %>">
+				<input type='hidden' name='_csrf' value='<%= _csrf %>'> 
+				<div class="row">
+					<div class="col-6">
+						<input name="albumId" value="<%= albumData.id %>" hidden>
+						<input name="photos" value="<%= albumData.photos %>" hidden>
+						<div class="form-group">
+							<label for="title"><%= __('Title') %></label>
+							<input value="<%=(albumData.title) ? albumData.title : ''%>" type="text" class="form-control" id="title"
+								name="title" data-required-error="<%= __('Required field') %>" required>
+						</div>
+						<div class="form-group">
+							<label for="description"><%= __('Description') %></label>
+							<textarea class="form-control" id="description" name="description" rows="2"
+							><%= albumData.description %></textarea>
+						</div>
+						<div class="form-group">
+							<label><%= __('Class') %></label>
+							<select class="classChoose w-100" id="classId" name="classId">
+								<option value=""><%= __('All') %></option>
+								<% if (arrClass) { 
+									let curClass = albumData.classObj ? albumData.classObj.id : ''; %>
+									<% _.each(arrClass, function(item){%>
+									<option value="<%= item.id %>" <%=curClass==item.id?'selected':''%>><%= item.title %></option>
+									<%})%>
+								<% } %>
+							</select>
+						</div>
+						<div class="form-group">
+							<label><%= __('Status') %></label>
+							<ul class="list-unstyled list-inline">
+								<li class="list-inline-item">
+									<div class="form-check">
+									<label class="form-check-label">
+										<input id="statusPublish" type="radio" class="form-check-input" name="status" value="1" checked=
+										<%=(albumData.status == 1)? 'checked' : '' %> />
+										<i class="input-helper"></i>
+										<%= __('Publish') %>
+									</label>
+									</div>
+								</li>
+								<li class="list-inline-item">
+									<div class="form-check">
+									<label class="form-check-label">
+										<input id="statusDraft" type="radio" class="form-check-input" name="status" value="0" <%=(albumData.status == 0)? 'checked' : ''%> />
+										<i class="input-helper"></i>
+										<%= __('Draft') %>
+									</label>
+									</div>
+								</li>
+							</ul>
+						</div>
+						<div class="form-group">
+							<label><%= __('Show on website?') %></label>
+							<ul class="list-unstyled list-inline">
+								<li class="list-inline-item">
+									<div class="form-check">
+									<label class="form-check-label">
+										<input id="isWeb" type="radio" class="form-check-input" name="isWeb" value="true" checked=
+										<%=(albumData.isWeb == true)? 'checked' : '' %> />
+										<i class="input-helper"></i>
+										<%= __('Yes') %>
+									</label>
+									</div>
+								</li>
+								<li class="list-inline-item">
+									<div class="form-check">
+									<label class="form-check-label">
+										<input id="unPublic" type="radio" class="form-check-input" name="isWeb" value="false" <%=(albumData.isWeb == false)? 'checked' : ''%> />
+										<i class="input-helper"></i>
+										<%= __('no') %>
+									</label>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-6"> 
+						<%- partial('./_media-panel.ejs') %>  
+						<%- partial('./_comment-panel.ejs') %> 
+					</div>
+					
+				</div>
+				<div class="row">
+					<div class="col-12">
+						<div class="alert alert-dismissible hidden" role="alert" data-alert-update="<%= __('Update successfully') %>">
+							<%= __('Update successfully') %>
+						</div>
+					</div>
+					<div class="col-12">
+						<button id="btnFormAlbum" type="submit" class="btn btn-primary mr-2">
+							<%=( albumData.id ) ? __('Update') : __('Add new')%></button>
+						<button type="reset" class="btn btn-default btn-xs fl-left fade"></button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

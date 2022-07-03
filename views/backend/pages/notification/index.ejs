@@ -1,0 +1,118 @@
+<!-- Page -->
+<% let BACKEND = sails.config.custom.BACKEND %>
+<!-- summernote Editor -->
+<% block('localCss', '<link rel="stylesheet" href="/vendors/summernote/summernote-bs4.css">') %>
+<div class="row">
+    <div class="col-xxl-12 col-xl-12 col-lg-12">
+        <div class="card">
+            <div class="card-body"> 
+                <%- partial('../../partials/filter.ejs') %>
+                <div class="table-responsive">
+                    <%- partial('./_list.ejs') %>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade modal-custom notification-content" id="modal-edit" tabindex="-1" role="dialog" aria-labelledby="modal-edit" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-edit"><%= __('Add new') %></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true"><i class="mdi mdi-close-circle-outline"></i></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form autocomplete="off" id="formNotification" class="" enctype="multipart/form-data" 
+                    data-fv-message="<%= __('Invalidate') %>" data-fv-icon-valid="glyphicon glyphicon-ok"
+                    data-fv-icon-invalid="glyphicon glyphicon-remove" data-fv-icon-validating="glyphicon glyphicon-refresh"
+                    data-fv-live="enabled">
+                    <input type='hidden' name='_csrf' value='<%= _csrf %>'> 
+                    <div class="form-group row align-items-md-center">
+                        <label class="col-md-3"><%= __('Title') %></label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" id="title" name="title" placeholder="<%= __('Title') %>"
+                            data-fv-notempty="true"
+                            data-fv-notempty-message="<%= __('Required field') %>" data-fv-stringlength="true"
+                            data-fv-stringlength-min="3" data-fv-stringlength-max="200"
+                            data-fv-stringlength-message="<%= __('Title must be at least 3 characters and max 200 characters') %>">
+                        </div>
+                    </div>
+                    <div class="form-group row align-items-md-center">
+                        <label class="col-md-3"><%= __('Apply for') %></label>
+                        <div class="col-md-9">
+                            <select id="classList" name="classList" class="form-control js-process-basic-multiple  select2-multiple"
+                            data-placeholder="<%= __('Tags') %>" multiple="multiple">
+                            <% _.each(arrClass, function (cls, idx) { %>
+                            <option value="<%= cls.id %>">
+                                <%= cls.title %>
+                            </option>
+                            <% }) %>
+                            </select>
+                            <span class="text-help"><%= __('Default to all class if empty') %></span>
+                        </div>
+                    </div>
+                    <div class="form-group row align-items-md-center" id="message-section" >
+                        <label class="col-md-3"><%= __('Description') %></label>
+                        <div class="col-md-9">
+                            <textarea class="form-control" id="message" name="message" rows="2" placeholder="<%= __('Description') %>" data-fv-notempty="true"
+                            data-fv-notempty-message="<%= __('Required field') %>" ></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row align-items-md-center">
+                        <label class="col-md-3"><%= __('Type') %></label>
+                        <div class="col-md-9">
+                            <ul class="list-unstyled list-inline">
+                            <li class="list-inline-item">
+                                <div class="form-check">
+                                <label class="form-check-label">
+                                    <input id="typeAll" type="radio" class="form-check-input" name="type" checked
+                                    value="0">
+                                    <i class="input-helper"></i>
+                                    <%= __('All') %>
+                                </label>
+                                </div>
+                            </li>
+                            <li class="list-inline-item">
+                                <div class="form-check">
+                                <label class="form-check-label">
+                                    <input id="typeParent" type="radio" class="form-check-input" name="type" value="-1">
+                                    <i class="input-helper"></i>
+                                    <%= __('Parent') %>
+                                </label>
+                                </div>
+                            </li>
+                            <li class="list-inline-item">
+                                <div class="form-check">
+                                <label class="form-check-label">
+                                    <input id="typeTeacher" type="radio" class="form-check-input" name="type" value="8">
+                                    <i class="input-helper"></i>
+                                    <%= __('Teacher') %>
+                                </label>
+                                </div>
+                            </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="alert d-none" role="alert">
+                        <i class="mdi mdi-alert-circle"></i>
+                    </div>
+                    <div class="modal-footer row-button-fluid">
+                    <button type="reset" class="btn btn-light" data-dismiss="modal"><%= __('Cancel') %></button>
+                    <button id="btnFormNotification" type="submit" class="btn btn-primary waves-effect waves-classic">
+                        <%= __('Add New') %>
+                        <div hidden>
+                        <%= __('Update')%>
+                        </div>
+                    </button>
+                    </div>
+                </form> 
+            </div>
+        </div>
+    </div>
+</div>
+<% block('localScripts', '<script src="/js/backend/notification/index.js"></script>') %>
+<!-- summernote Editor --> 
+<% block('localScripts', '<script type="text/javascript" src="/vendors/summernote/summernote-bs4.js"></script>') %> 
+<% block('localScripts', '<script src="/vendors/sweetalert/sweetalert.min.js"></script>') %>

@@ -1,0 +1,46 @@
+<!-- Page -->
+<% let BACKEND = sails.config.custom.BACKEND %>
+    <div class="page">
+        <!-- Page Content -->
+        <div class="page-content container-fluid ">
+            <div class="row">
+                <div class="col-xxl-12 col-xl-12 col-lg-12">
+                    <div class="panel">
+                        <div class="page-content-actions">
+                            <p>
+                                <!-- <%= __('1. Your excel file needs to be formatted correctly. The first line of file is the headers.')%><br/>
+                                <%= __('Make sure your file is in UTF-8 format to avoid possible encoding errors.')%><br/>
+                                <%= __('2. If you want to import date format, make sure that you have formatted the column in excel as Text.')%><br/>
+                                <%= __('3. The repetitive work line will still be imported into the system.')%><br/>
+                                <%= __('4. You can refer to the sample file to import.')%><br/> -->
+                                <%= __('You can refer this file sample below to import')%> </br>
+                                <a target="new" href="https://drive.google.com/drive/folders/1Hms-BUvb27zIsNNyvFm6n8DiI2SgeXSv?usp=sharing" class="btn btn-success  mt-20" >
+                                        <%= __('Export sample file') %>
+                                </a>
+                            </p>
+                        </div>
+                        <div class="page-content-actions">
+                            <div class="upload" aria-label="Basic example" role="group">
+                                <label for=""><%= __('Import parent data') %></label>
+                                <form autocomplete="off" id="formImportParent" data-class="<%=classObj.id%>">
+                                    <input type='hidden' name='_csrf' value='<%= _csrf %>'> 
+                                        <input type="file" id="input-file-max-fs">
+                                </form>        
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+
+
+
+
+
+
+<% block('localScripts', '<script src="/vendors/moment/moment.js"></script>') %>  
+<% block('localScripts', '<script src="/js/backend/import/parent.js"></script>') %>  
+<% block('localScripts', '<script src="/vendors/sweetalert/sweetalert.min.js"></script>') %>

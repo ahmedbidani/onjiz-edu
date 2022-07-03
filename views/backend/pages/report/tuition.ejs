@@ -1,0 +1,13 @@
+<!-- Page -->
+<% let BACKEND = sails.config.custom.BACKEND %>
+<div class="row">
+  <div class="col-xxl-12 col-xl-12 col-lg-12">
+    <div class="card">
+      <div class="card-body">
+        <%- partial('../../partials/filter.ejs') %>
+        <%- partial('./_list.ejs') %>
+      </div>
+    </div>
+  </div>
+</div>
+<% block('localScripts', '<script src="/js/backend/tuitionCheck/index.js"></script>') %>

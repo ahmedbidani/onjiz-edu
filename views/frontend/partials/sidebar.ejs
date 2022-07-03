@@ -1,0 +1,13 @@
+
+<div class="sidebar">
+	<div class="sidebar_list">
+		<!-- <h5 class="sidebar_title"><%= __('Menu') %></h5> -->
+		<ul class="archives_list">
+			<li> <a class="<%= (moduleActive.action == 'frontend/account/profile') ? 'active' : '' %>" href="/account/profile"><i class="fa fa-user"></i><%= __('Profile')%></a></li>
+			<li> <a class="<%= (moduleActive.action == 'frontend/notice/index') ? 'active' : '' %>" href="/notice"><i class="fa fa-bell"></i><%= __('Notice')%></a> </li>
+			<li> <a class="<%= (moduleActive.action == 'frontend/menu/index') ? 'active' : '' %>" href="/menu"><i class="fa fa-fire"></i><%= __('Menu')%></a> </li>
+			<li> <a class="<%= (moduleActive.action == 'frontend/subject/index') ? 'active' : '' %>" href="/subject"><i class="fa fa-book"></i><%= __('Subject')%></a></li>
+			<li> <a class="<%= (moduleActive.action == 'frontend/health/index') ? 'active' : '' %>" href="/health"><i class="fa fa-heartbeat"></i><%= __('Health')%></a></li>
+		</ul>
+	</div>
+</div>

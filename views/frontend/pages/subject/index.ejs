@@ -1,0 +1,27 @@
+<!-- Page -->
+<% let BACKEND = sails.config.custom.BACKEND %>
+<% block('localCss', '<link rel="stylesheet" href="/vendors/fullcalendar/lib/main.min.css">') %>
+<section class="pt-80 pb-80">
+  <div class="container">
+    <div class="row">
+      <div class="col-3">
+        <%- partial('../../partials/sidebar.ejs')%>
+      </div>
+      <div class="col-9 grid-margin stretch-card">
+        <div class="zini-select-class pb-15">
+          <ul>
+              <%for(let classObj of listClasses){%>
+                <li><a class="class-item main-btn <%= classObj.id==classSelect?'active':''%>" href="javascript:void(0)" data-classId="<%=classObj.id%>"><%= classObj.title %></a></li>
+              <%}%>
+          </ul>
+        </div> 
+        <div id="calendar" data-classactive="<%= classSelect %>" data-starttime="<%= startTimeCourseSession %>" data-endtime="<%= endTimeCourseSession %>" class="full-calendar"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<% block('localScripts', '<script src="/vendors/moment/moment.min.js"></script>') %>
+<% block('localScripts', '<script src="/vendors/fullcalendar/lib/main.min.js"></script>') %>
+<% block('localScripts', '<script src="/vendors/fullcalendar/lib/locales-all.min.js"></script>') %>
+<% block('localScripts', '<script src="/js/frontend/subject/index.js"></script>') %>

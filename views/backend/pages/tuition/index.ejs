@@ -1,0 +1,126 @@
+<!-- Page -->
+<% let BACKEND = sails.config.custom.BACKEND %>
+
+
+<div class="card">
+  <div class="card-body">
+    <%- partial('../../partials/filter.ejs') %>
+    <div class="table-responsive">
+      <%- partial('./_list.ejs') %>
+    </div>
+  </div>
+</div>
+<div class="modal fade modal-custom" id="modal-edit" tabindex="-1" role="dialog" aria-labelledby="modal-edit" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="modal-edit-tuition"><%= __(Add tuition)%></h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true"><i class="mdi mdi-close-circle-outline"></i></span>
+              </button>
+          </div>
+          <div class="modal-body">
+            <form autocomplete="off" id="formTuition" class="" data-fv-framework="bootstrap4"
+            data-fv-icon-valid="glyphicon glyphicon-ok" data-fv-icon-invalid="glyphicon glyphicon-remove"
+            data-fv-icon-validating="glyphicon glyphicon-refresh" data-fv-live="enabled" data-manner="add">
+            <input type='hidden' name='_csrf' value='<%= _csrf %>'> 
+              
+              <div class="form-group row align-items-md-center">
+                <label class="col-md-3"><%= __(Title)%></label>
+                <div class="col-md-9">
+                  <input type="text" class="form-control" id="title" name="title" data-fv-notempty="true"
+                  data-fv-notempty-message="<%= __('Title is required') %>" data-fv-stringlength="true"
+                  data-fv-stringlength-min="2" data-fv-stringlength-max="30"
+                  data-fv-stringlength-message="<%= __('Min length is 2 and max length is 30.') %>" />
+                </div>
+              </div>
+
+              <div class="form-group row align-items-md-center">
+                <label class="col-md-3"><%= __(Classes)%></label>
+                <div class="col-md-9">
+                  <select id="classes" name="classes" class="form-control js-process-basic-multiple  select2-multiple"
+                  data-placeholder="<%= __('Choose') %>" multiple="multiple">
+                  <% _.each(listClass, function(classes, index) { %>
+                  <option value="<%= classes.id %>">
+                    <%= classes.title %>
+                  </option>
+                  <% }) %>
+                </select>
+                </div>
+              </div>
+
+              <div class="form-group row align-items-md-center">
+                <label class="col-md-3"><%= __(Contain)%></label>
+                <div class="col-md-9">
+                  <div id="rowItemTuition">
+                    <div id="rowContent0" class="row mb-2">
+                      <div class="col-md-6">
+                        <input type="text" class="form-control" name="titleSlotItem0" placeholder="<%= __('Title') %>" data-fv-notempty="true"
+                          data-fv-notempty-message="<%= __('Title is required !') %>" data-fv-stringlength="true"
+                          data-fv-stringlength-min="2" data-fv-stringlength-max="30"
+                          data-fv-stringlength-message="<%= __('Min length is 10') %>" />
+                      </div>
+                      <div class="col-md-4">
+                        <input type="number" class="form-control" name="priceSlotItem0" placeholder="<%= __('Cost') %>" data-fv-notempty="true"
+                          data-fv-notempty-message="<%= __('Cost is required !') %>" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row d-flex justify-content-center">
+                      <button id="addItemTuition" type="button" class="mt-10 btn btn-link"><%= __('Add New') %></button>
+                    </div>
+                </div>
+              </div>
+
+              <div class="form-group row align-items-md-center">
+                <label class="col-md-3"><%= __(Deadline)%></label>
+                <div class="col-md-9">
+                  <input type="date" value="<%= currentDay %>" class="form-control datepicker" id="deadline" name="deadline" rows="2">
+                  <span class="text-help"></span>
+                </div>                  
+              </div>
+              <div class="form-group row align-items-md-center">
+                <label class="col-md-3"><%= __(Status)%></label>
+                <div class="col-md-9">
+                  <ul class="list-unstyled list-inline">
+                    <li class="list-inline-item">
+                      <div class="form-check">
+                        <label class="form-check-label">
+                          <input id="statusActive" type="radio" class="form-check-input" name="status" checked
+                            value="<%= STATUS.ACTIVE %>">
+                          <i class="input-helper"></i>
+                          <%= __('Active') %>
+                        </label>
+                      </div>
+                    </li>
+                    <li class="list-inline-item">
+                      <div class="form-check">
+                        <label class="form-check-label">
+                          <input id="statusDraft" type="radio" class="form-check-input" name="status" value="<%= STATUS.DRAFT %>">
+                          <i class="input-helper"></i>
+                          <%= __('Draft') %>
+                        </label>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="alert d-none" role="alert">
+                <i class="mdi mdi-alert-circle"></i>
+              </div>
+              <div class="modal-footer row-button-fluid">
+                <button type="reset" class="btn btn-light" data-dismiss="modal"><%= __(Cancel)%></button>
+                <button id="btnFormTuition" type="submit" class="btn btn-primary waves-effect waves-classic">
+                  <%= __('Add New') %>
+                  <div hidden>
+                    <%= __('Update')%>
+                  </div>
+                </button>
+              </div>
+            </form>
+          </div>
+      </div>
+  </div>
+</div>
+
+<% block('localScripts', '<script src="/js/backend/tuition/index.js"></script>') %>

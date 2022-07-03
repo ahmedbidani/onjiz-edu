@@ -1,0 +1,120 @@
+<header class="topbar">
+  <nav class="navbar top-navbar navbar-expand-md navbar-dark">
+    <!-- ============================================================== -->
+    <!-- Logo -->
+    <!-- ============================================================== -->
+    <div class="navbar-header">
+      <a class="navbar-brand" href="<%= (userActive.userType == 3) ? '/backend' : '/'%>">
+        <b>
+          <img src="/images/logo-main.png" alt="Onjiz Education" class="light-logo" width="50" />
+        </b>
+        <!-- Logo text -->
+        <!-- <span> -->
+          <!-- Light Logo text -->
+          <!-- <img src="/images/logo-light-text.png" class="light-logo" alt="homepage" /> -->
+        <!-- </span> -->
+      </a>
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Logo -->
+    <!-- ============================================================== -->
+    <div class="navbar-collapse">
+      <!-- ============================================================== -->
+      <ul class="navbar-nav mr-auto">
+        <!-- This is  -->
+        <li class="nav-item"> <a class="nav-link nav-toggler d-block d-md-none waves-effect waves-dark" href="javascript:void(0)"><i class="ti-menu"></i></a> </li>
+        <li class="nav-item"> <a class="nav-link sidebartoggler d-none waves-effect waves-dark" href="javascript:void(0)"><i class="icon-menu"></i></a> </li>
+        <li class="nav-item p-t-15">
+          <select id="headerBranches" name="headerBranches" class="form-control js-select2-branches" data-placeholder="<%= __('Select branch') %>">
+            <%for(let branch of listBranches){%>
+                  <option value="<%= branch.id%>" <%=(branch.id == branchActive)?'selected':''%>>
+                    <%= branch.title %>
+                  </option>
+            <%}%>
+          </select>
+        </li>
+        <li class="nav-item"><p class="text-white p-t-25 p-l-20 d-none d-md-block d-lg-block"><%=userActive.schoolObj.name%></p></li>
+      </ul>
+      <!-- User profile and search -->
+      <!-- ============================================================== -->
+      <ul class="navbar-nav my-lg-0">
+        <!-- ============================================================== -->
+        <!-- Profile -->
+        <!-- ============================================================== -->
+        <li class="nav-item dropdown u-pro">
+          <a class="nav-link dropdown-toggle waves-effect waves-dark" href="#" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+
+            <i class="fa fa-user-circle"></i>&nbsp;
+            <span class="nav-profile-name"><%=userActive.firstName %></span>
+
+          </a>
+          <div class="dropdown-menu dropdown-menu-right">
+            <a class="dropdown-item" href="/backend/account/profile">
+              <i class="fa fa-cog"></i>
+              <%= __('Profile') %>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="/backend/logout">
+              <i class="fa fa-power-off"></i>
+              <%= __('Logout') %>
+            </a>
+          </div>
+        </li>
+        <!-- ============================================================== -->
+        <!-- End Profile -->
+        <!-- ============================================================== -->
+
+        <!-- ============================================================== -->
+        <!-- General management -->
+        <!-- ============================================================== -->
+        <%if(userActive.isMainSchoolAdmin || (userActive.role&&userActive.role.permissions&&(userActive.role.permissions.branch&&userActive.role.permissions.branch.view) || (userActive.role.permissions.class&&userActive.role.permissions.class.view) || (userActive.role.permissions.user&&userActive.role.permissions.user.view) || (userActive.role.permissions.food&&userActive.role.permissions.food.view) || (userActive.role.permissions.subject&&userActive.role.permissions.subject.view) || (userActive.role.permissions.courseSession&&userActive.role.permissions.courseSession.view) )){%>
+        <li class="nav-item dropdown u-pro">
+          <a class="nav-link dropdown-toggle waves-effect waves-dark" href="javascript:;" id="2" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false"> <i class="ti-settings"></i>
+            <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="2">
+            <%if(userActive.isMainSchoolAdmin || (userActive.role&&userActive.role.permissions&&userActive.role.permissions.student&&userActive.role.permissions.student.view)){%>
+              <a class="dropdown-item" href="/backend/feedback">
+                <i class="ti-arrow-circle-right"></i>
+                <%= ('Feedback') %>
+              </a>
+              <div class="dropdown-divider"></div>
+            <%}%>
+            <%if(userActive.isMainSchoolAdmin || (userActive.role&&userActive.role.permissions&&userActive.role.permissions.branch&&userActive.role.permissions.branch.view)){%>
+                <a class="dropdown-item" href="/backend/branch">
+                  <i class="ti-arrow-circle-right"></i>
+                  <%= __('Branches') %>
+                </a>
+                <div class="dropdown-divider"></div>
+            <%}%>
+            <%if(userActive.isMainSchoolAdmin || (userActive.role&&userActive.role.permissions&&userActive.role.permissions.student&&userActive.role.permissions.student.view)){%>
+                <a class="dropdown-item" href="/backend/studentMaster">
+                  <i class="ti-arrow-circle-right"></i>
+                  <%= __('StudentMasterData') %>
+                </a>
+                <div class="dropdown-divider"></div>
+              <%}%>
+            <%if(userActive.isMainSchoolAdmin || (userActive.role&&userActive.role.permissions&&userActive.role.permissions.user&&userActive.role.permissions.user.view)){%>
+              <a class="dropdown-item" href="/backend/user">
+                <i class="ti-arrow-circle-right"></i>
+                <%= __('Staff') %>
+              </a>
+              <div class="dropdown-divider"></div>
+            <%}%>
+            <%if(userActive.isMainSchoolAdmin){%>
+              <a class="dropdown-item" href="/backend/setting">
+                <i class="ti-arrow-circle-right"></i>
+                <%= __('Settings') %>
+              </a>
+            <%}%>
+          </div>
+        </li>
+        <%}%>
+        <!-- ============================================================== -->
+        <!-- End General management -->
+      </ul>
+    </div>
+  </nav>
+</header>

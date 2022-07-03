@@ -1,0 +1,33 @@
+<section class="pt-80 pb-120 clearfix">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 margin-bottom"> <img src="<%=webSettings && webSettings.value && webSettings.value.homeSettings && webSettings.value.homeSettings.aboutThumb ? webSettings.value.homeSettings.aboutThumb : '/frontend/images/about-us-thumb.png'%>" alt=""
+          class="img-responsive" /> </div>
+      <!--end item-->
+
+      <div class="col-md-6 margin-bottom">
+        <div class="col-sm-12 nopadding">
+          <div class="sec-title-container less-padding-4 text-left">
+            <h5 class="font-weight-4 less-mar-1 line-height-4 ce-title-top-text"><%=webSettings && webSettings.value && webSettings.value.homeSettings &&webSettings.value.homeSettings.aboutHeadline ? webSettings.value.homeSettings.aboutHeadline: 'About Us'%></h5>
+            <h2 class="font-weight-6 less-mar-1 line-height-5"><%=webSettings.value.homeSettings && webSettings.value.homeSettings.aboutTitle ? webSettings.value.homeSettings.aboutTitle: 'Welcome to Kindie'%></h2>
+            <div class="ce-title-line align-left"></div>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <!--end title-->
+
+        <br />
+        <%- webSettings && webSettings.value && webSettings.value.homeSettings && webSettings.value.homeSettings.aboutMotto ? webSettings.value.homeSettings.aboutMotto: 'Motto Kindie'%>
+        <div class="clearfix"></div>
+      </div>
+      <!--end item-->
+    </div>
+  </div>
+</section>
+<div class="clearfix"></div>
+
+<section class="sec-bpadding-2 section-light">
+  <div class="container">
+    <%- webSettings && webSettings.value && webSettings.value.homeSettings && webSettings.value.homeSettings.aboutDescription ? webSettings.value.homeSettings.aboutDescription: 'Description of About Kindie'%>
+  </div>
+</section>

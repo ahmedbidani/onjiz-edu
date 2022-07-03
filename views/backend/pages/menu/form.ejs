@@ -1,0 +1,119 @@
+<!-- Page -->
+<% let BACKEND = sails.config.custom.BACKEND %>
+<% block('localCss', '<link rel="stylesheet" href="/vendors/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.css">') %>
+<% block('localCss', '<link rel="stylesheet" href="/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css">') %>
+
+<div class="row">
+  <!-- CONTENT -->
+  <div class="col-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="menuFormContent card-body" data-manner="<%= manner %>"
+        data-coursesession="<%= currCourseSession.id %>" data-menuId="<%= menuId %>">
+        <h4 class="card-title"><%= manner == 'add' ? ' __('Add new') :  __('Update')%></h4>
+        <form class="repeater">
+          <input type='hidden' name='_csrf' value='<%= _csrf %>'> 
+          <div class="row">
+            <div class="col-6">
+              <div class="form-group">
+                <label for="dateMenu"><%= __('Date') %></label>
+                <div id="datepicker-popup" class="input-group date datepicker dateAddMenu">
+                  <input type="text" id="dateMenu" name="dateMenu" class="form-control"
+                    value="<%=  manner != 'add' && dateUse ? dateUse : '' %>">
+                  <span class="input-group-addon input-group-append border-left">
+                    <span class="mdi mdi-calendar input-group-text"></span>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-group">
+                <label class="form-control-label"><%= __('Class') %></label>
+                <select id="classes" name="classes" class="form-control js-process-basic-multiple  select2-multiple"
+                  data-placeholder="<%= __('Choose') %>" multiple="multiple">
+                  <%  
+                    var clsId = [];
+                    if(classesApply.length > 0){
+                      _.each(classesApply, function (id, idx) {
+                        clsId.push(id);
+                      });
+                    }
+                    _.each(listClasses, function (cls, idx) {
+                  %>
+                  <option value="<%= cls.id %>" <%= clsId.indexOf(cls.id) != -1 ? 'selected' : ''%>>
+                    <%= cls.title %>
+                  </option>
+                  <% }) %>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="slotFeedings" data-repeater-list="slotFeedings">
+            <div data-repeater-item class="row">
+              <div class="col-6">
+                <div class="form-group">
+                  <label><%= __('Time') %></label>
+                  <div class="input-group date timeSlotFeedings" data-target-input="nearest">
+                    <div class="input-group timeSlotFeedings" data-target="#timeSlotFeedings"
+                      data-toggle="datetimepicker">
+                      <input type="text" name="time" class="form-control datetimepicker-input" />
+                      <div class="input-group-addon input-group-append">
+                        <i class="mdi mdi-clock input-group-text"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="row">
+                  <div class="col-11">
+                    <div class="form-group">
+                      <label class="form-control-label"><%= __('Feeding') %></label>
+                      <select id="food0" name="foods" class="form-control js-process-basic-multiple  select2-multiple"
+                        data-placeholder="<%= __('Choose') %>" multiple="multiple">
+                        <%  
+                          var foodIds = []; 
+                          if(listFoods.length > 0){
+                            _.each(listFoods, function (food, ind) {
+                              foodIds.push(food.id);
+                            });
+                          }
+                          _.each(listFoods, function (food, index) {
+                        %>
+                        <option value="<%= food.id %>" <% (foodIds.indexOf(food.id) != -1 ? 'selected' : '')%>>
+                          <%= food.title %>
+                        </option>
+                        <% }) %> </select>
+                    </div>
+                  </div>
+                  <div class="col-1 d-flex align-items-center">
+                    <button data-repeater-delete type="button" class="btn btn-danger btn-sm icon-btn ml-2">
+                      <i class="mdi mdi-delete"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button data-repeater-create type="button" class="btn btn-info btn-sm icon-btn">
+            <i class="mdi mdi-plus"></i>
+          </button>
+        </form>
+        <div class="row">
+          <div class="col-12 d-flex justify-content-end">
+            <button type="button" class="btn btn-light"><%= __('Go back')%></button>
+            <button type="button" id="submitFormMenu" class="btn btn-primary ml-3">
+              <span><%= manner == 'add' ?  __('Add new') :  __('Update') %></span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<% block('localScripts', '<script src="/vendors/moment/moment.min.js"></script>') %>
+<% block('localScripts', '<script src="/vendors/sweetalert/sweetalert.min.js"></script>') %>
+<% block('localScripts', '<script src="/vendors/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.js"></script>') %>
+<% block('localScripts', '<script src="/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>') %>
+<% block('localScripts', '<script src="/vendors/fullcalendar/locales-all.min.js"></script>') %>
+<% block('localScripts', '<script src="/vendors/jquery.repeater/jquery.repeater.min.js"></script>') %>
+<% block('localScripts', '<script src="/js/backend/menu/form.js"></script>') %>

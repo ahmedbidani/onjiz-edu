@@ -1,0 +1,144 @@
+<% block('localCss', '<link rel="stylesheet" href="/vendors/dropify/dropify.min.css">') %>
+<% block('localCss', '<link rel="stylesheet" href="/vendors/formvalidation/formValidation.css">') %>
+<section class="section-user-profile pt-80 pb-120">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3">
+          <%- partial('../../partials/sidebar.ejs')%>
+        </div>
+        <div class="col-md-9">
+            <form autocomplete="off" id="formAccount" class="" enctype="multipart/form-data" data-edit-id="<%= (userActive.id?userActive.id:'') %>"
+              data-fv-message="<%= __('Invalidate') %>" data-fv-icon-valid="glyphicon glyphicon-ok"
+              data-fv-icon-invalid="glyphicon glyphicon-remove" data-fv-icon-validating="glyphicon glyphicon-refresh"
+              data-fv-live="enabled" data-manner="edit">
+              <input type='hidden' name='_csrf' value='<%= _csrf %>'>
+
+              <input value="<%= userActive.id %>" id="id" name="id" hidden>
+              <div class="row">
+                <div class="col-md-6 col-sm-12 col-xs-12 mx-auto">
+                  <!-- firstName -->
+                  <div class="form-group">
+                    <label class="form-control-label">
+                      <%= __('First Name') %>
+                    </label>
+                    <input type="text" class="form-control" id="firstName" value="<%=(userActive.firstName) ? userActive.firstName : ''%>" name="firstName" placeholder="<%= __('First Name') %>"
+                      value="<%= userActive.firstName %>" data-fv-notempty="true"
+                      data-fv-notempty-message="<%= __('First name is required !') %>" data-fv-stringlength="true"
+                      data-fv-stringlength-min="2" data-fv-stringlength-max="20"
+                      data-fv-stringlength-message="<%= __('Min length is 2 and max length is 20.') %>">
+                  </div>
+                </div>
+                <div class="col-md-6 col-sm-12 col-xs-12 mx-auto">
+                  <!-- lastName -->
+                  <div class="form-group">
+                    <label class="form-control-label">
+                      <%= __('Last Name') %>
+                    </label>
+                    <input type="text" class="form-control" id="lastName" value="<%=(userActive.lastName) ? userActive.lastName : ''%>" name="lastName" placeholder="<%= __('Last Name') %>"
+                      value="<%= userActive.lastName %>" data-fv-notempty="true"
+                      data-fv-notempty-message="<%= __('Last name is required !') %>" data-fv-stringlength="true"
+                      data-fv-stringlength-min="2" data-fv-stringlength-max="20"
+                      data-fv-stringlength-message="<%= __('Min length is 2 and max length is 20.') %>">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 col-sm-12 col-xs-12 mx-auto">
+                  <!-- email -->
+                  <div class="form-group">
+                    <label class="form-control-label">
+                      <%= __('E-mail') %>
+                    </label>
+                    <input class="form-control" name="emailAddress" readonly value="<%=(userActive.emailAddress) ? userActive.emailAddress : ''%>">
+                  </div>
+                </div>
+                <div class="col-md-6 col-sm-12 col-xs-12 mx-auto">
+                  <!-- phone number -->
+                  <div class="form-group">
+                    <label class="form-control-label">
+                      <%= __('Phone') %>
+                    </label>
+                    <input id="phone" type="tel" class="form-control" name="phone" value="<%=(userActive.phone) ? userActive.phone : ''%>"
+                      pattern="[0-9]{9,12}$" data-fv-notempty="true" data-fv-notempty-message="<%= __('Phone is required') %>"
+                      data-fv-message="<%= __('Phone is 9 or 12 number') %>" data-fv-stringlength="true"
+                      data-fv-stringlength-max="11" required>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 col-sm-12 col-xs-12 mx-auto">
+                  <!-- birthDay -->
+                  <div class="form-group">
+                    <label for="birthDay"><%= __('Birthday') %></label>
+                    <input type="date" class="form-control" id="birthDay" name="birthDay" placeholder="Birthday"
+                      value="<%= userActive.birthday %>" data-fv-notempty="true"
+                      data-fv-notempty-message="<%= __('Birthday is required !') %>"
+                      data-fv-date___format="<%= __('DD/MM/YYYY') %>"
+                      data-fv-date___message="<%= __('Birthday format is invalid') %>">
+                  </div>
+                </div>
+                <div class="col-md-6 col-sm-12 col-xs-12 mx-auto">
+                  <!-- address -->
+                  <div class="form-group">
+                    <label for="address"><%= __('Address') %></label>
+                    <input type="text" class="form-control" id="address" name="address" value="<%= userActive.address ? userActive.address : userActive.currentAddress %>" placeholder=""
+                      data-fv-notempty="true"
+                      data-fv-notempty-message="<%= __('Required field') %>" data-fv-stringlength="true"
+                      data-fv-stringlength-min="2" data-fv-stringlength-max="120"
+                      data-fv-stringlength-message="<%= __('Address must be at least 2 characters') %>">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 col-sm-12 col-xs-12 mx-auto">
+                  <!-- password -->
+                  <div class="form-group">
+                    <% if (userActive.id == undefined) { %>
+                    <label class="form-control-label"><%= __('Password') %></label>
+                    <input type="password" class="form-control" name="password" id="password"
+                    data-fv-notempty="true" data-fv-notempty-message="<%= __('Password is required!') %>"
+                    data-fv-message="<%= __('Password must be 6 number!') %>"
+                    pattern="(?=.*).{6,}" />
+                    <% } else { %>
+                    <label class="form-control-label"><%= __('New password') %></label>
+                    <input type="password" class="form-control" name="password" id="password" data-fv-notempty-message="<%= __('Password is required!') %>"
+                    data-fv-message="<%= __('Password must be 6 number!') %>"
+                    pattern="(?=.*).{6,}" />
+                    <% } %>
+                  </div>
+                </div>
+                <div class="col-md-6 col-sm-12 col-xs-12 mx-auto">
+                  <!-- enter the password -->
+                  <div class="form-group">
+                    <label class="form-control-label"><%= __('Confirm password') %></label>
+                    <% if (userActive.id == undefined) { %>
+                    <input type="password" class="form-control" name="passwordConfirm" id="confirm_password"
+                      data-fv-notempty="true" data-fv-notempty-message="<%= __('Password is required!') %>"/>
+                    <% } else { %>
+                    <input type="password" class="form-control" name="passwordConfirm" id="confirm_password" />
+                    <% } %>
+                  </div>
+                </div>
+              </div> 
+              <div class="row">
+                <div class="col-12">
+                  <div class="alert alert-dismissible hidden" role="alert" data-alert-update="<%= __('Update successfully') %>">
+                    <%= __('Update successfully') %>
+                  </div>
+                </div>
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                  <div class="form-group text-center">
+
+                    <button id="btnFormAccount" class="btn btn-block main-btn" type="submit"><%= __('Update') %></button>
+                  </div>
+                </div>
+              </div>
+          </form>
+        </div> 
+      </div>
+    </div>
+</section>
+<% block('localScripts', '<script src="/vendors/formvalidation/formValidation.min.js"></script>') %>
+<% block('localScripts', '<script src="/vendors/formvalidation/framework/bootstrap4.min.js"></script>') %>
+<% block('localScripts', '<script src="/vendors/dropify/dropify.min.js"></script>') %>
+<% block('localScripts', '<script src="/js/frontend/account/index.js"></script>') %>

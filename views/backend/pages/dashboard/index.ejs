@@ -1,0 +1,291 @@
+<% let BACKEND = sails.config.custom.BACKEND %> 
+<% if (session.messages  && session.messages['error'].length > 0) { %>
+  <div class="alert alert-danger">
+    <%= session.messages['error'] %>
+    <br>
+  </div>
+  <br>
+<% session.messages['error'] = '' } %>
+<!--Row 1-->
+<div class="row">
+	<div class="col-md-4">
+		<div class="card">
+			<div class="card-body">
+				<h4 class="card-title"><%= __('Notification')%> (<%= notifications.length%>)</h4>
+				<div class="row">
+					<div class="col-lg-12 js-height-scrollbar" style="height: 350px;">
+						<div class="message-box">
+							<div class="message-widget message-scroll">
+								<%if(notifications.length > 0){%>
+									<%for(let i = 0; i < notifications.length; i++){%> 
+									<a href="javascript:void(0)">
+										<div class="user-img"><span class="round"><i class="mdi mdi-comment-check-outline"></i></span></div>
+										<div class="mail-contnet">
+											<h5><%= notifications[i].title%></h5>
+											<!-- <span class="mail-desc"><%= notifications[i].message%></span> -->
+											<span class="time"><%= moment(notifications[i].createdAt).format(webSettings.value.dateFormat)%></span>
+										</div>
+									</a>
+									<%}%>
+								<%} else{%>
+									<div class="mail-contnet">
+										<h5><%= __('No data')%></h5>
+									</div>
+								<%}%>
+							</div>
+						</div> 
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-4 grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">
+				<h4 class="card-title"><%= __('Number of people today') %></h4>
+				<div class="row">
+					<div class="col-lg-12 js-height-scrollbar" style="height: 350px;">
+						<div class="table-responsive">
+							<table class="table table-hover dataTable" id="tblClass">
+								<thead>
+										<tr class="table-header">
+										<th width="35%"><%= __('Class') %></th>
+										<th width="15%"><%= __('Total') %></th>
+										<th width="20%"><%= __('Attendance') %></th>
+										<th width="15%"><%= __('Absence') %></th>
+										<th width="15%"><%= __('Picked Up') %></th>
+									</tr>
+								</thead>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-4 grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">
+				<h4 class="card-title"><%= __('Parent account') %></h4>
+					<div class="row">
+						<div class="col-lg-12 js-height-scrollbar" style="height: 350px;">
+							<canvas id="chart3" height="150"></canvas>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- End Row 1-->
+
+<!--Row 2-->
+<div class="row">
+	<div class="col-md-4 grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">
+				<div class="row">
+					<div class="col-md-6 col-lg-6">
+						<h4 class="card-title"><%= __('Daily schedule')%></h2>
+					</div>
+					<div class="col-md-6 col-lg-6 col-select">
+						<select id="scheduleSelect" name="classes" class="form-control custom-select" data-placeholder="<%= __('Select class') %>">
+							<!-- <option value=""><%= __('Select class') %></option> -->
+							<% _.each(arrClass, function (classObj, index) {%>
+								<option value="<%= classObj.id %>" <%=index==0?'selected':''%> >
+									<%= classObj.title %>
+								</option>
+							<%})%>
+						</select>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12 js-height-scrollbar" style="height: 350px;">
+						<div class="table-responsive">
+							<table class="table table-hover dataTable" id="tblSchedule">
+								<thead>
+									<tr class="table-header">
+										<th width="30%"><%= __('Time') %></th>
+										<th width="70%"><%= __('Activity') %></th>
+									</tr>
+								</thead>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-4 grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">
+				<div class="row">
+					<div class="col-md-6 col-lg-6">
+						<h4 class="card-title"><%= __('Daily menu') %></h2>
+					</div>
+					<div class="col-md-6 col-lg-6 col-select">
+						<select id="menuSelect" name="classes" class="form-control custom-select" data-placeholder="<%= __('Select class') %>">
+							<!-- <option value=""><%= __('Select class') %></option> -->
+							<% _.each(arrClass, function (classObj, index) {%>
+								<option value="<%= classObj.id %>" <%=index==0?'selected':''%> >
+									<%= classObj.title %>
+								</option>
+							<%})%>
+						</select>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12 js-height-scrollbar" style="height: 350px;">
+						<div class="table-responsive">
+							<table class="table table-hover dataTable" id="tblMenu">
+								<thead>
+										<tr class="table-header">
+										<th width="20%"><%= __('Time') %></th>
+										<th width="80%"><%= __('Feeding') %></th>
+									</tr>
+								</thead>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-4 grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">
+				<h4 class="card-title"><%= __('Monthly birthday') %></h4>
+				<div class="row">
+					<div class="col-lg-12 js-height-scrollbar" style="height: 350px;">
+						<div class="table-responsive">
+							<table id="tblBirthday" class="table m-t-30 table-hover">
+						 		<thead>
+									<tr class="table-header">
+									<th width= "20%"><%= __('Class') %></th>
+									<th width= "50%"><%= __('Student') %></th>
+									<th width= "30%"><%= __('DOB') %></th>
+								</tr>
+								</thead> 
+								<tbody> 
+										<%if(listStudent.length > 0){%>
+											<%for(let i = 0; i < listStudent.length; i++){%>
+												<%if(listStudent[i].students.length > 0){%>
+													<tr>
+														<td><%= listStudent[i].title %><br/></td>
+														<td>
+															<%
+															if(listStudent[i].students !=undefined) {
+																for(let y = 0; y < listStudent[i].students.length; y++){%>
+																	<% if (webSettings.value.displayName == 'firstlast') {%> <%= listStudent[i].students[y].firstName + " " + listStudent[i].students[y].lastName; %><br/>
+																	<% } else if (webSettings.value.displayName == 'lastfirst') {%> <%= listStudent[i].students[y].lastName + " " + listStudent[i].students[y].firstName; %><br/>
+																	<% } }
+															}
+															%>
+														</td>
+														<td><%
+															if(listStudent[i].students !=undefined) {
+																for(let y = 0; y < listStudent[i].students.length; y++){%>
+																<%= moment(listStudent[i].students[y].dateOfBirth).format(webSettings.value.dateFormat) %> <br/>
+															<%}
+															}
+														%></td>
+													</tr>
+												<%}%>
+											<%}%>
+										<% } else {%>
+											<tr>
+												<td></td>
+												<td><%= __('No data') %></td>
+												<td></td>
+											</tr>
+										<%}%> 
+								</tbody> 
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!--End Row 2-->
+
+<!--Row 3-->
+<div class="row">
+	<div class="col-md-6">
+		<div class="card">
+			<div class="card-body">
+				<h4 class="card-title"><%= __('News')%></h4>
+				<div class="row">
+					<div class="col-lg-12 js-height-scrollbar" style="height: 350px;">
+						<%if(posts.length > 0){%>
+							<div class="message-box">
+								<div class="message-widget message-scroll"> 
+								<%for(let i = 0; i < posts.length; i++){
+									let src = "../../../../images/no-thumb.png";
+									if (posts[i].media && posts[i].media.thumbnail && posts[i].media.thumbnail.sizes && posts[i].media.thumbnail.sizes.thumbnail) src = posts[i].media.thumbnail.sizes.thumbnail.path	
+								%>
+									<a href="/backend/post/edit/<%=posts[i].id%>">
+										<div class="news-img">
+											<img src="<%=src%>" alt="<%= posts[i].title %>"> 
+										</div>
+										<div class="mail-contnet">
+											<h5><%= posts[i].title %></h5>
+											<span class="mail-desc"><%= posts[i].motto %></span>
+											<span class="time"><%= moment(posts[i].createdAt).format(webSettings.value.dateFormat)%></span>
+										</div>
+									</a> 
+								<%}%>
+								</div>
+							</div>
+						<%} else{%>
+							<div class="mail-contnet">
+								<h5><%= __('No data')%></h5>
+							</div>
+						<%}%>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div> 
+	<div class="col-md-6 grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">
+					<h4 class="card-title"><%= __('Album') %></h4>
+					<div class="row">
+						<div class="col-lg-12 js-height-scrollbar" style="height: 350px;">
+							<div class="message-box ">
+								<div class="message-widget message-scroll list-album-block"> 
+								<%if(listAlbum.length > 0){%>
+									<%for(let i = 0; i < listAlbum.length; i++){%>
+									<a href="/backend/album/view/<%=listAlbum[i].id%>">
+										<div class="news-img">
+											<img src="<%= listAlbum[i].firstPhoto != '' ? listAlbum[i].firstPhoto : '../../../../images/no-thumb.png' %>" alt="<%= listAlbum[i].title %>"> 
+											<%if (listAlbum[i].numberOfPhoto > 1) {%>
+												<span class="badge badge-pill badge-danger badge-inside-image">+<%=listAlbum[i].numberOfPhoto - 1 %></span>
+											<%}%>
+										</div>
+										<div class="mail-contnet">
+											<h5><%= listAlbum[i].title %></h5>
+											<span class="mail-desc"><%=listAlbum[i].description%></span>
+											<small class="text-muted"><%= moment(listAlbum[i].createdAt).format(webSettings.value.dateFormat) %></small>
+										</div>
+									</a> 
+								<%} 
+								} else { %>
+									<div class="mail-contnet">
+										<h5><%= __('No data')%></h5>
+									</div>
+								<%}%>
+								</div>
+							</div> 
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- End Row 3-->  
+
+<% block('localScripts', '<script src="/vendors/Chart.js/Chart.min.js"></script>') %>
+<% block('localScripts', '<script src="/js/backend/dashboard/index.js"></script>') %>

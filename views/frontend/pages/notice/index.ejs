@@ -1,0 +1,30 @@
+<section class="pt-80 pb-80">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <%- partial('../../partials/sidebar.ejs')%>
+            </div>
+            <div class="col-md-9 row">
+                <% if(listNotification.length > 0){ %>
+                    <%for(let i = 0; i < listNotification.length; i++){%>
+                        <div class="col-4">
+                            <div class="single_sidebar_post d-flex mb-30">
+                                <div class="post_content media-body">
+                                    <h6 class="title"><a href="javascript:void(0)" class="item-notification" data-notificationId="<%=listNotification[i].id%>" style="<%=listNotification[i].isRead?'font-weight:500':''%>"><%= listNotification[i].title%></a></h6>
+                                    <!-- <p><%= listNotification[i].message%></p> -->
+                                    <p class="date"><%= moment(listNotification[i].createdAt).format('HH:mm:ss DD MMM YYYY') %></p>
+                                </div>
+                            </div>
+                        </div>
+                    <%}%>
+                    <%- partial ('../../partials/paging.ejs') %>
+                <%}else{%>
+                    <div class="ce-feature-box-52 margin-bottom">
+                        <%= __('Data empty') %>
+                    </div>
+                <%}%>
+            </div>
+        </div>
+    </div>
+</section>
+<% block('localScripts', '<script src="/js/frontend/notification/index.js"></script>') %>

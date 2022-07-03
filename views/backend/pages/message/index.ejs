@@ -1,0 +1,157 @@
+<!-- Page -->
+<% let BACKEND = sails.config.custom.BACKEND %>
+<% block('localCss', '<link rel="stylesheet" href="/styles/pages/chat-app-page.css">') %>
+<% block('localCss', '<link rel="stylesheet" href="/styles/style.min.css">') %>
+<% block('localCss', '<link rel="stylesheet" href="/styles/custom.css">') %>
+
+<div class="row">
+	<input id="classId" value="<%= classObj.id %>" hidden>
+	<input id="userId" value="<%= userActive.id %>" hidden>
+	<input id="messageId" value="<%= message.id %>" hidden>
+	<input type='hidden' name='_csrf' value='<%= _csrf %>'> 
+	<div class="col-12">
+		<div class="card m-b-0">
+			<!-- .chat-row -->
+			<div class="chat-main-box">
+				<!-- .chat-left-panel -->
+				<div class="chat-left-aside">
+					<div class="open-panel"><i class="ti-angle-right"></i></div>
+					<div class="chat-left-inner" style="height: 666px;">
+						<div class="row">
+							<div class="col-lg-12 js-height-scrollbar mb-2" style="height: 666px;">
+								<ul class="chatonline style-none ps">
+									<% for (let i = 0; i < listClasses.length; i++) {
+										let thumbPath = "/images/logo-mini.png";
+										if (listClasses[i].thumbnail == 1) thumbPath = "/images/lopmam.png"
+										else if (listClasses[i].thumbnail == 2) thumbPath = "/images/lopchoi.png"
+										else if (listClasses[i].thumbnail == 3) thumbPath = "/images/lopla.png"
+										else if (listClasses[i].thumbnail == 4) thumbPath = "/images/lopmaugiao.png"
+										%>
+									<li class="class-chat" data-classId="<%= listClasses[i].id %>" data-classTitle="<%= listClasses[i].title %>" >
+										<a href="/backend/message/class-<%= listClasses[i].id %>"><img src="<%= thumbPath %>" alt="user-img" class=""> <span><%= listClasses[i].title %><small class="text-success"><%= countMember[i] + __(' parent')%></small></span></a>
+									</li>
+									<% } %>
+									<li class="p-20"></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- .chat-left-panel -->
+				<!-- .chat-right-panel -->
+				<div class="chat-right-aside">
+					<div class="chat-main-header">
+						<div class="p-3 b-b">
+							<h4 class="box-title"><%= classObj.title %></h4>
+						</div>
+					</div>
+					<div class="chat-rbox">
+						<ul class="chat-list p-3" style="height: 486px;" id='message-content'>
+							<div class="load-more-content" ></div>
+							<%if (dataLogs.length > 0) {
+								let prevUser = {id:''};
+								let diff = moment().diff(moment(dataLogs[0].createdAt), 'days');%>
+								<div class="text-center load-more-button">
+										<a id="load-more" href="javascript:void(0)"><%= __("Load more") %></a>
+								</div>
+								<% if (diff == 0){ %>
+									<div class='text-center'><%= __("Today") %></div>
+								<% } else { %>
+									<div class='text-center'><%= moment(dataLogs[0].createdAt).format(webSettings.value.dateFormat) %></div>
+								<% } %>
+								<%for (let i = 0; i < dataLogs.length; i++) {
+									if (dataLogs[i]) {
+										if (userActive.id != dataLogs[i].user.id) {
+											if (prevUser.id != dataLogs[i].user.id) { %>
+												<!--chat Row -->
+												<li>
+													<div class="chat-img"><img src="<%= (dataLogs[i].user.avatar != '') ? dataLogs[i].user.avatar : '/images/avatar2.png' %>" alt="<%= (dataLogs[i].user.firstName ? dataLogs[i].user.firstName + ' ' + dataLogs[i].user.lastName : '') %>"></div>
+													<div class="chat-content">
+														<div class="chat-name-time"><%= dataLogs[i].user.firstName ? dataLogs[i].user.firstName + ' ' + dataLogs[i].user.lastName : '' %>, <%= moment(dataLogs[i].createdAt).format('hh:mm A')%></div>
+														<div class="box bg-light-info"><%= dataLogs[i].txtMessage %></div>
+														<% if (dataLogs[i].file) { %>
+															<h2><%= 'ahmed' %></h2>
+														  <% } %>
+													</div>
+												</li>
+												<!--chat Row -->
+											<% } else { %>
+												<!--chat Row -->
+												<li>
+													<div class="chat-img"><img src="<%= (dataLogs[i].user.avatar != '') ? dataLogs[i].user.avatar : '/images/avatar2.png' %>" alt="<%= (dataLogs[i].user.firstName ? dataLogs[i].user.firstName + ' ' + dataLogs[i].user.lastName : '') %>"></div>
+													<div class="chat-content">
+														<div class="chat-name-time"><%= dataLogs[i].user.firstName ? dataLogs[i].user.firstName + ' ' + dataLogs[i].user.lastName : '' %>, <%= moment(dataLogs[i].createdAt).format('hh:mm A')%></div>
+														<div class="box bg-light-info"><%= dataLogs[i].txtMessage %></div>
+														<% if (dataLogs[i].file) { %>
+															<h2><%= 'ahmed' %></h2>
+														  <% } %>
+													</div>
+												</li>
+												<!--chat Row -->
+											<%}
+										} else {
+											if (prevUser.id != dataLogs[i].user.id) {%>
+												<!--chat Row -->
+												<li class="reverse">
+													<div class="chat-content">
+														<div class="chat-name-time"><%= dataLogs[i].user.firstName ? dataLogs[i].user.firstName + ' ' + dataLogs[i].user.lastName : '' %>, <%= moment(dataLogs[i].createdAt).format('hh:mm A')%></div>
+														<div class="box bg-light-info"><%= dataLogs[i].txtMessage %></div>
+														<% if (dataLogs[i].file) { %>
+															<h2><%= 'ahmed' %></h2>
+														  <% } %>
+													</div>
+													<div class="chat-img"><img src="<%= (dataLogs[i].user.avatar != '') ? dataLogs[i].user.avatar : '/images/avatar2.png' %>" alt="<%= (dataLogs[i].user.firstName ? dataLogs[i].user.firstName + ' ' + dataLogs[i].user.lastName : '') %>"></div>
+												</li>
+												<!--chat Row -->
+											<% } else { %>
+												<!--chat Row -->
+												<li class="reverse">
+													<div class="chat-content">
+														<div class="chat-name-time"><%= dataLogs[i].user.firstName ? dataLogs[i].user.firstName + ' ' + dataLogs[i].user.lastName : '' %>, <%= moment(dataLogs[i].createdAt).format('hh:mm A')%></div>
+														<div class="box bg-light-info"><%= dataLogs[i].txtMessage %></div>
+														<% if (dataLogs[i].file) { %>
+															<h2><%= 'ahmed' %></h2>
+														  <% } %>
+													</div>
+													<div class="chat-img"><img src="<%= (dataLogs[i].user.avatar != '') ? dataLogs[i].user.avatar : '/images/avatar2.png' %>" alt="<%= (dataLogs[i].user.firstName ? dataLogs[i].user.firstName + ' ' + dataLogs[i].user.lastName : '') %>"></div>
+												</li>
+												<!--chat Row -->
+										<% }
+									}
+										prevUser = dataLogs[i].user
+									}
+								}
+							} else { %>
+								<div class='no-chat-content'><h4><%= __('Start conversation') %></h4></div>
+							<% } %>
+						</ul>
+						<!-- <div class="ps__scrollbar-x-rail" style="left: 0px; bottom: 0px;">
+							<div class="ps__scrollbar-x" tabindex="0" style="left: 0px; width: 0px;"></div>
+						</div>
+						<div class="ps__scrollbar-y-rail" style="top: 0px; right: 0px; height: 486px;">
+							<div class="ps__scrollbar-y" tabindex="0" style="top: 0px; height: 336px;"></div>
+						</div> -->
+					</div>
+					<div class="card-body border-top">
+						<div class="row">
+							<div class="col-9">
+                <input type='hidden' name='_csrf' value='<%= _csrf %>'>
+								<textarea placeholder="<%= __('Type your message here') %>" id="txtMessage" class="form-control border-0"></textarea>
+							</div>
+							<div class="col-3 text-right">
+								<button type="button" id="add-message" class="btn btn-info btn-circle btn-lg"><i class="fas fa-paper-plane"></i> </button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- .chat-right-panel -->
+			</div>
+			<!-- /.chat-row -->
+		</div>
+	</div>
+</div>
+<% block('localScripts', '<script src="/dependencies/sails.io.js"></script>') %>
+<% block('localScripts', '<script src="/vendors/sweetalert/sweetalert.min.js"></script>') %>
+<% block('localScripts', '<script src="/js/pages/chat.js"></script>') %>
+<% block('localScripts', '<script src="/js/perfect-scrollbar.jquery.min.js"></script>') %>
+<% block('localScripts', '<script src="/js/backend/message/index.js"></script>') %>

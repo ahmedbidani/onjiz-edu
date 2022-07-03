@@ -1,0 +1,17 @@
+{
+    "sProcessing":   "Processing...",
+    "sLengthMenu":   "View _MENU_ item",
+    "sZeroRecords":  "No matching lines found",
+    "sInfo":         "Viewing _START_ to _END_ of total _TOTAL_ entries",
+    "sInfoEmpty":    "Viewing 0 to 0 out of 0 items",
+    "sInfoFiltered": "(filtered from _MAX_ entries)",
+    "sInfoPostFix":  "",
+    "sSearch":       "Find:",
+    "sUrl":          "",
+    "oPaginate": {
+        "sFirst":    "Frist",
+        "sPrevious": "Before",
+        "sNext":     "Next",
+        "sLast":     "Last"
+    }
+}

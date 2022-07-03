@@ -1,0 +1,74 @@
+<div class="card">
+  <div class="row">
+      <div class="col-lg-2 col-md-4">
+        <%- partial('_left-column.ejs') %>
+      </div>
+      <div class="col-lg-10 col-md-8 border-left"> 
+        <div class="card-body">
+          <h3 class="card-title m-b-0"><%=(feedbackData.title) ? feedbackData.title : ''%></h3>
+        </div>
+        <div>
+            <hr class="m-t-0">
+        </div>
+        <div class="card-body">
+          <div class="d-flex m-b-40">
+              <div>
+                  <a href="javascript:void(0)"><img src="<%= feedbackData.createdBy.avatar ? feedbackData.createdBy.avatar : '/images/avatar2.png' %>" alt="user" width="40" class="img-circle" /></a>
+              </div>
+              <div class="p-l-10">
+                  <% if(feedbackData.me){ %>
+                    <h4 class="m-b-0"><%= ("From") %><%= ': Me'%>  </h4>
+                    <a href="<%= feedbackData.createdBy.emailAddress %>"><small class="text-muted"><%= feedbackData.createdBy.emailAddress %></small></a>
+                  <% } else { %>  
+                    <h4 class="m-b-0"><%= ("From") %><%= ': ' + feedbackData._tmpFullname %></h4>
+                    <a href="<%= feedbackData.createdBy.emailAddress %>"><small class="text-muted"><%= feedbackData.createdBy.emailAddress %></small></a>
+                  <% } %>
+              </div>
+          </div>
+          <p><%= feedbackData.messageFeedback %></p>
+
+          <% for(let description of feedbackData.des){ %>
+            <div class="col-12">
+              <br>
+              <div class="form-group">
+                  <small class="text-muted">
+                    <% if(description.me){ %>
+                      <label for="title"><%= ("From") %><%= ': Me'%>  </label>
+                    <% } else if(description.user.userType ==3){ %>
+                      <label for="title"><%= ("From") %><%= ': Admin ' + description.user.fullName + ' (' %></label>
+                      <a href="<%= description.user.emailAddress %>"></a><label><%= description.user.emailAddress %></label></a>
+                      <label><%= ')' %>  </label>
+                    <% } else { %>
+                      <label for="title"><%= ("From") %><%= ': ' + description.user.fullName + ' ('%>  </label>
+                      <a href="<%= description.user.emailAddress %>"><label><%= description.user.emailAddress %></label></a> 
+                      <label><%= ')' %>  </label>
+                    <% } %>
+                  <%= description.createdAt %></small>
+                  <blockquote class="m-t-10">
+                    <%= description.message %>
+                  </blockquote> 
+              </div>
+                <% } %>  
+          </div>
+        </div> 
+        <div>
+            <hr class="m-t-0">
+        </div>
+        <div class="card-body">
+            <form autocomplete="off" id="formFeedback" class="">
+              <input type='hidden' name='_csrf' value='<%= _csrf %>'>
+              <input type='hidden' name='idFeedback' value='<%= feedbackData.id %>'>
+              <div class="row">
+                <div class="col-12"> 
+                    <label><%= __('Reply') %></label>
+                    <textarea style="width: 100%;" class="form-control" id="replyFeedback" name="replyFeedback" rows="2"></textarea>
+                </div>
+              </div>
+              <button id="btnFeedback" type="submit" class="btn btn-info d-none d-lg-block m-t-10">
+                <%= ('Send') %></button>
+            </form>
+        
+      </div>
+  </div>
+</div>
+<% block('localScripts', '<script src="/js/backend/feedback/form.js"></script>') %>

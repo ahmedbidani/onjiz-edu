@@ -1,0 +1,51 @@
+<div class="wrapper pt-135">
+  <div class="row w-100 mx-0">
+    <div class="col-lg-4 mx-auto auth">
+      <div class="auth-form-light text-left py-5 px-4 px-sm-5">
+        <h4 class="text-center mb-20"><%= __('Sign In')%></h4>
+        <form class="form-horizontal pt-3" id="frmLogin" data-toggle="validator" role="form">
+          <input type='hidden' name='_csrf' value='<%= _csrf %>'>
+            <div class="form-group ">
+              <input class="form-control" id="txtEmail" name="emailAddress" type="email" placeholder="E-mail"
+            data-email-error="<%= __('Email is not invalid.') %>"
+            data-required-error="<%= __('Required field') %>" required>
+                <div class="col-xs-12">
+              </div>
+            </div>
+            <div class="form-group">
+              <input class="form-control " id="txtPassword" name="password" type="password" placeholder="<%= __('Password') %>"
+              data-required-error="<%= __('Required field') %>" required>    
+                <div class="col-xs-12">
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-12">
+                    <div class="d-flex no-block align-items-center">
+                        <div class="ml-auto">
+                            <a href="/password/forgot" class="text-muted"><%= __('Forgot password?') %></a> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="loginFail" class="alert d-none" role="alert">
+                <i class="mdi mdi-alert-circle"></i>
+                <%= __('Login fail! Please check your email and password!')%>
+            </div>
+            <div id="requiredFeild" class="alert d-none" role="alert">
+              <i class="mdi mdi-alert-circle"></i>
+                <%= __('Email and password are required!')%>
+            </div>
+            <div id="accountNotActive" class="alert d-none" role="alert">
+                <i class="mdi mdi-alert-circle"></i>
+                <%= __('You are not have permission or your account is not active!')%>
+            </div>
+            <div class="form-group text-center">
+                <div class="col-xs-12 pb-20">
+                    <button class="btn btn-block main-btn" type="submit"><%= __('Log In') %></button>
+                </div>
+            </div> 
+        </form> 
+      </div>
+    </div>
+  </div>
+</div>

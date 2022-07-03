@@ -1,0 +1,22 @@
+<!-- Page -->
+<% let BACKEND = sails.config.custom.BACKEND %>
+<% block('localCss', '<link rel="stylesheet" href="/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css">') %>
+<% block('localCss', '<link rel="stylesheet" href="/vendors/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.css">') %>
+
+<div class="card">
+    <div class="card-body">
+            <%- partial('../../partials/filter.ejs') %>
+        <div class="table-responsive">
+            <%- partial('./_list.ejs') %>
+        </div>
+        
+    </div>
+</div>
+<% block('localScripts', '<script src="/vendors/export-from-json/index.min.js"></script>') %>
+
+<% block('localScripts', '<script src="/vendors/sweetalert/sweetalert.min.js"></script>') %>
+
+<% block('localScripts', '<script src="/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>') %>        
+
+<% block('localScripts', '<script src="/js/backend/report/student-attendance.js"></script>') %>
+

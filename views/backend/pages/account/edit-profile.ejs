@@ -1,0 +1,12 @@
+<!-- Page -->
+<% let BACKEND = sails.config.custom.BACKEND %>
+<div class="card">
+  <!-- Page Content -->
+  <div class="card-body"> 
+    <%- partial('./form-profile.ejs') %>
+  </div>
+</div>
+<% block('localScripts', '<script src="/vendors/sweetalert/sweetalert.min.js"></script>') %>
+<% block('localScripts', '<script src="/js/backend/account/index.js"></script>') %>
+<% block('localScripts', '<script src="/js/initDropify.js"></script>') %> 
+

@@ -1,0 +1,101 @@
+<!-- Page -->
+<% let BACKEND = sails.config.custom.BACKEND %>
+<% block('localCss', '<link rel="stylesheet" href="/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css">') %>
+<% block('localCss', '<link rel="stylesheet" href="/vendors/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.css">') %>
+
+<!-- Modal Update attendent -->
+<div class="modal fade modal-fade-in-scale-up" id="updateAttendent" aria-hidden="true" aria-labelledby="updateAttendent"
+    role="dialog" tabindex="-1">
+    <div class="modal-dialog attendentModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title font-weight-bold text-uppercase"><%= __('Attendance information') %></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row grid-margin">
+                    <div class="col-12 d-flex">
+                        <input type='hidden' name='_csrf' value='<%= _csrf %>'> 
+                        <div class="media">
+                            <img src="/images/male-kid.png" id='studentAvatar' class="mr-3 img-lg rounded-circle">
+                            <div class="media-body">
+                                <h4 class="mt-0 font-weight-bold"><span id="studentName"></span></span></h4>
+                                <ul>
+                                    <li><span id="classTitle"></span></li>
+                                    <li>#: <span id='studentCode'></span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row grid-margin">
+                    <div class="col-12">
+                        <div class="card ">
+                            <h4 class="card-title"><%= __('Who pickup?') %></h4>
+                            <div class="listParent row"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card ">
+                            <h4 class="card-title"><%= __('Time') %></h4>
+                            <div class="example-wrap m-sm-0">
+                                <div class="input-group date" id="timepicker-example" data-target-input="nearest">
+                                    <div class="input-group" data-target="#timepicker-example"
+                                        data-toggle="datetimepicker">
+                                        <input type="text" id="timeAttendent" name="time"
+                                            class="form-control datetimepicker-input" data-fv-notempty="true"
+                                            data-fv-notempty-message="<%= __('Required field') %>"
+                                            data-target="#timepicker-example" value='06:00' />
+                                        <div class="input-group-addon input-group-append">
+                                            <i class="mdi mdi-clock input-group-text"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="noteContainer" class="hidden row">
+                    <div class="col-12">
+                        <div class="card">
+                            <h4 class="card-title"><%= __('Note') %></h4>
+                            <div class="example-wrap m-sm-0">
+                                <textarea class="form-control" id="note" name="note" rows="2"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="alert d-none" role="alert">
+                  <i class="mdi mdi-alert-circle"></i>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" id="btnUpdateAttendent"><%= __('Update') %></button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Content -->
+<div class="row">
+    <div class="col-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <%- partial('../../partials/filter.ejs') %>
+                <div class="table-responsive">
+                    <%- partial('./_list.ejs') %>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<% block('localScripts', '<script src="/vendors/moment/moment.min.js"></script>') %>
+<% block('localScripts', '<script src="/vendors/sweetalert/sweetalert.min.js"></script>') %>
+<% block('localScripts', '<script src="/vendors/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.js"></script>') %>
+<% block('localScripts', '<script src="/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>') %>        
+<% block('localScripts', '<script src="/js/backend/attendent/index.js"></script>') %>  

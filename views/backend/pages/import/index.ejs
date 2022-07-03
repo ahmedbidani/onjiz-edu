@@ -1,0 +1,31 @@
+<!-- Page -->
+<% let BACKEND = sails.config.custom.BACKEND %>
+
+<div class="row">
+    <div class="col-xxl-12 col-xl-12 col-lg-12">
+        <div class="alert alert-info">
+            <h4 class="text-info">
+                <i class="fa fa-exclamation-circle"></i> <%= __('Note')%> </br>
+            </h3> 
+            <p>
+                <%= __('You can refer this file sample below to import')%> </br>
+                <a target="new" href="https://drive.google.com/drive/folders/1Hms-BUvb27zIsNNyvFm6n8DiI2SgeXSv?usp=sharing" class="btn btn-success mt-20" >
+                    <%= __('Download sample') %>
+                </a>
+            </p>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <div class="upload" aria-label="Basic example" role="group">
+                    <form autocomplete="off" id="formImport" data-class="<%=classObj.id%>">
+                        <input type='hidden' name='_csrf' value='<%= _csrf %>'> 
+                        <input type="file" id="input-file-max-fs">
+                    </form>
+                </div>
+            </div> 
+        </div>
+    </div>
+</div>
+<% block('localScripts', '<script src="/vendors/moment/moment.js"></script>') %>  
+<% block('localScripts', '<script src="/js/backend/import/index.js"></script>') %>  
+<% block('localScripts', '<script src="/vendors/sweetalert/sweetalert.min.js"></script>') %>

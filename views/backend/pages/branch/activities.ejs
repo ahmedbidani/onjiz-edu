@@ -1,0 +1,74 @@
+<div class="row">
+  <div class="col-md-2">
+    <div class="card">
+      <div class="card-body">
+        <h3 class="card-title"><%= __('Sessions')%></h3>
+        <ul class="list-style-none">  
+        <%if(listSessions.length > 0){%>
+          <%for(let session of listSessions){%>
+            <li class="<%= session.id == sessionActive ? 'active' : ''%>">
+              <a href="/backend/branch-<%=branchActive%>/activities?sessionId=<%=session.id%>" class="<%= session.id == sessionActive ? 'active' : ''%>"><%= session.title%></a> 
+            </li>
+            <li class="divider"></li>
+          <%}%>
+          <%}else{%>
+            <%= __('No session found')%>
+          <%}%> 
+        </ul>
+      </div>
+    </div>
+  </div> 
+  <div class="col-md-10"> 
+      <%if(listClassOfSession.length > 0){%>
+      <div class="row">
+        <%for(let classObj of listClassOfSession){%>
+        <!-- .col -->
+        <div class="col-md-3 col-lg-3 col-xl-3">
+          <div class="card card-body">
+            <div class="align-items-center">
+              <%if(userActive.isMainSchoolAdmin || userActive.role.permissions.student && userActive.role.permissions.student.view){%>
+                <h4 class="box-title m-b-10"><a class="font-medium"  href="/backend/student/filter?branchId=<%= branchActive%>&classId=<%= classObj.id %>"><%= classObj.title%> (<%= classObj.code%>)</a> (<%= classObj.totalStudent%>)</h4>
+              <%} else if(userActive.isMainSchoolAdmin || userActive.role.permissions.parent && userActive.role.permissions.parent.view){%>
+                <h4 class="box-title m-b-10"><a class="font-medium"  href="/backend/parent/filter?branchId=<%= branchActive%>&classId=<%= classObj.id %>"><%= classObj.title%> (<%= classObj.code%>)</a> (<%= classObj.totalStudent%>)</h4>
+              <%} else if(userActive.isMainSchoolAdmin || userActive.role.permissions.attendent && userActive.role.permissions.attendent.view){%>
+                <h4 class="box-title m-b-10"><a class="font-medium"  href="/backend/attendent/filter?branchId=<%= branchActive%>&classId=<%= classObj.id %>"><%= classObj.title%> (<%= classObj.code%>)</a> (<%= classObj.totalStudent%>)</h4>
+              <%} else if(userActive.isMainSchoolAdmin || userActive.role.permissions.pickUp && userActive.role.permissions.pickUp.view){%>
+                <h4 class="box-title m-b-10"><a class="font-medium"  href="/backend/pickup/filter?branchId=<%= branchActive%>&classId=<%= classObj.id %>"><%= classObj.title%> (<%= classObj.code%>)</a> (<%= classObj.totalStudent%>)</h4>
+              <%} else if(userActive.isMainSchoolAdmin || userActive.role.permissions.pickUp && userActive.role.permissions.schedule.view){%>
+                <h4 class="box-title m-b-10"><a class="font-medium"  href="/backend/class-<%= classObj.id %>/schedule"><%= classObj.title%> (<%= classObj.code%>)</a> (<%= classObj.totalStudent%>)</h4>
+              <%} else if(userActive.isMainSchoolAdmin || userActive.role.permissions.pickUp && userActive.role.permissions.menu.view){%>
+                <h4 class="box-title m-b-10"><a class="font-medium"  href="/backend/class-<%= classObj.id %>/menu"><%= classObj.title%> (<%= classObj.code%>)</a> (<%= classObj.totalStudent%>)</h4>
+              <%} else {%>
+                <h4 class="box-title m-b-10"><a class="font-medium" href="/backend/dashboard"><%= classObj.title%> (<%= classObj.code%>)</a> (<%= classObj.totalStudent%>)</h4>
+              <%}%>
+              <h5 class="label label-info"><%= (classObj.formation)? classObj.formation.name : "-"%></h5>
+              <div class="d-flex flex-row">
+                <div class="align-self-center">
+                  <h5 class="m-b-0">
+                    <%if(classObj.teachers.length > 0){%>
+                      <ul class="m-0 p-l-20">
+                      <%for(let teacher of classObj.teachers){%>
+                        <li><%= teacher.firstName + ' ' + teacher.lastName%> | <b><%= teacher.userType == '1' ? 'Teacher': teacher.userType == '5' ? 'Assistant': null %></b></li>
+                      <%}%>
+                      </ul>
+                    <%}else{%>
+                      <%= __('No homeroom teacher')%>
+                      <a target="_blank" href="/backend/user/add"><i class="fa fa-plus-circle"></i> <%= __('Add')%></a>
+                    <%}%> 
+                  </h5>
+                  
+                </div>
+              </div> 
+                
+            </div>
+          </div>
+        </div>
+        <!-- /.col -->
+        <%}%>
+      </div>
+      <%}else{%>
+        <%= __('No class found')%>
+      <%}%>
+    
+  </div> 
+</div>

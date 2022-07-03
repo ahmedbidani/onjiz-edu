@@ -1,0 +1,98 @@
+<% block('localCss', '<link rel="stylesheet" href="/vendors/bootstrap-daterangepicker/daterangepicker.css">') %>
+
+<table class="table table-hover dataTable" id="tblStudent" data-branchActive="<%= branchActive %>" data-classActive="<%= classActive %>" data-classActiveTitle="<%=classActiveObj? classActiveObj.title:'' %>">
+  <thead>
+    <tr class="bg-custom-primary">
+      <!-- <th width="3%">
+        <input id="js-check-all" class="js-checkbox-all" type="checkbox">
+      </th> -->
+      <th width="3%">
+        <%= __('#') %>
+      </th>
+      <th width="20%">
+        <%= __('Fullname') %>
+      </th>
+      <% 
+      if(parseInt(dateEnd.split("-")[1]) > parseInt(date.split("-")[1])) {
+        var day1 = new Date(date.split("-").reverse().join("-"));
+        var day2 = new Date(dateEnd.split("-").reverse().join("-"));
+
+        var firstday = new Date(dateEnd.split("-")[2] + '-' + dateEnd.split("-")[1] + '-' + '01');
+        var diffTime = parseInt((firstday - day1) / (1000 * 60 * 60 * 24), 10);
+        
+        let i = 0;
+        while(i < diffTime){ 
+          dataDay = day1.getDate() + i; %>
+          <th >
+            <%= dataDay %>
+          </th>
+          <%
+          i++;
+        }
+        
+        diffTime = parseInt((day2 - firstday) / (1000 * 60 * 60 * 24), 10);
+        i=0;
+        while(i <= diffTime){
+          i++; %>
+          <th >
+            <%= i %>
+          </th>
+          <%
+          
+        }
+      } else {
+        var day1 = new Date(date.split("-").reverse().join("-"));
+        var day2 = new Date(dateEnd.split("-").reverse().join("-"));
+
+        var diffTime = parseInt((day2 - day1) / (1000 * 60 * 60 * 24), 10);
+
+        let i = 0;
+        while(i <= diffTime){ 
+          dataDay = day1.getDate() + i; %>
+          <th >
+            <%= dataDay %>
+          </th>
+          <%
+          i++;
+        }
+      }
+       %>
+
+      <th width="3%">
+        <%= __('Total') %>
+      </th>
+    </tr>
+  </thead>
+    <% arrStudent = dataListStudent;
+    for(let i=0; i < arrStudent.length; i++)
+    { %>
+      <tr>
+        <td>
+          <%= arrStudent[i][0] %>
+        </td>
+        <td>
+            <div class="d-flex align-items-center">
+                   <img src="<%=arrStudent[i][1] %>" alt="profile" class="img-sm rounded-circle">
+                   <span><%= arrStudent[i][2]%></span>
+                   </div>
+        </td>
+        <% 
+        for(let j=3; j< arrStudent[i].length -1; j++ )
+        {%>
+          <td>
+            <%= arrStudent[i][j] %>
+          </td>
+        <% } %>
+        <td>
+          <%= arrStudent[i][arrStudent[i].length -1] %>
+        </td>
+      </tr>
+
+    <% } %>
+
+  
+</table>
+<%- paginator.render(); %>
+
+<% block('localScripts', '<script src="/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>') %>
+

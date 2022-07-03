@@ -1,0 +1,115 @@
+<% let BACKEND = sails.config.custom.BACKEND %>
+<% block('localCss', '<link rel="stylesheet" href="/vendors/owl-carousel/owl.carousel.css">') %>
+<% block('localCss', '<link rel="stylesheet" href="/vendors/owl-carousel/owl.theme.css">') %>
+
+<!-- START ABOUT US SECTION -->
+<%if (webSettings && webSettings.value && webSettings.value.homeSettings && webSettings.value.homeSettings.isDisplayAbout) {%>
+<section class="section-about-us pt-80">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 margin-bottom"> <img src="<%=webSettings.value.homeSettings.aboutThumb ? webSettings.value.homeSettings.aboutThumb : '/frontend/images/about-us-thumb.png'%>" alt=""
+          class="img-responsive" /> </div>
+      <!--end item-->
+
+      <div class="col-md-6 margin-bottom"> 
+          <div class="sec-title-container less-padding-4 text-left">
+            <h5 class="font-weight-4 less-mar-1 line-height-4 ce-title-top-text"><%=webSettings.value.homeSettings.aboutHeadline ? webSettings.value.homeSettings.aboutHeadline: 'About Us'%></h5>
+            <h2 class="font-weight-6 less-mar-1 line-height-5"><%=webSettings.value.homeSettings.aboutTitle ? webSettings.value.homeSettings.aboutTitle: 'Welcome to Kindie'%></h2>
+            <div class="ce-title-line align-left"></div> 
+        </div>
+        <div class="clearfix"></div>
+        <!--end title-->
+
+        <br />
+        <%- webSettings.value.homeSettings.aboutMotto ? webSettings.value.homeSettings.aboutMotto: 'Motto Kindie'%>
+        <div class="clearfix"></div>
+        <br />
+        <br />
+        <a class="btn main-btn uppercase" href="<%=webSettings.value.homeSettings.aboutReadMoreLink ? webSettings.value.homeSettings.aboutReadMoreLink: 'javascript:void(0)'%>"><i class="fa fa-play-circle" aria-hidden="true"></i> <%= __('Read More')%></a>
+      </div>
+      <!--end item-->
+    </div>
+  </div>
+</section>
+<div class="clearfix"></div>
+<%}%>
+<!-- END ABOUT US SECTION -->
+
+<!-- START TEACHER SECTION -->
+<%if (webSettings && webSettings.value && webSettings.value.homeSettings && webSettings.value.homeSettings.isDisplayTeacher) {%>
+<section id="section-teacher" class="pt-80 clearfix">
+  <div class="container">
+    <div class="row slide-controls-4">
+      <div class="col-sm-12">
+        <div class="section_title text-center pb-50">
+          <h2 class="main_title"><%= webSettings.value.homeSettings.teacherTitle ? webSettings.value.homeSettings.teacherTitle : 'Our Teachers' %></h2>
+          <p><%= webSettings.value.homeSettings.teacherHeadline ? webSettings.value.homeSettings.teacherHeadline : 'Teachers' %></p>
+        </div>
+      </div>
+      <!--end title-->
+
+      <div id="owl-demo5" class="owl-carousel owl-theme">
+        <% if(teachers && teachers.length) {
+          for(let teacher of teachers) {
+        %> 
+          <div class="zini-item-inner zini-teacher-home-inner">
+            <div class="teacher-img-box">
+              <img src="<%=teacher.avatar?teacher.avatar:'http://placehold.it/740x555'%>" alt="" class="img-responsive"/>
+            </div>
+            <div class="zini-teacher-text-box">
+              <h5 class="zini-title"><%=teacher.firstName+' '+teacher.lastName%></h5>
+              <p class="zini-subtext"><%= teacher.classes.length ? teacher.classes.join(', ') : __('No Class')%></p>
+              <p class="zini-excerpt"><%- teacher.description ? teacher.description : '[TEACHER_DESCRIPTION]'%></p>
+            </div>
+          </div>  
+        <% }
+      } %>
+      </div>
+      <!--end carousel main-->
+    </div>
+  </div>
+</section>
+<%}%>
+  <!--end section-->
+<!-- END TEACHER SECTION -->
+
+<!-- END NEWS SECTION -->
+<%if (webSettings && webSettings.value && webSettings.value.homeSettings && webSettings.value.homeSettings.isDisplayNews) {%>
+<section id="section-news" class="section-side-image section-light pt-80 pb-80 clearfix">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="section_title text-center pb-50">
+            <h3 class="main_title"><%= webSettings.value.homeSettings.newsHeadline ? webSettings.value.homeSettings.newsHeadline : 'News' %></h3>
+            <p><%= webSettings.value.homeSettings.newsTitle ? webSettings.value.homeSettings.newsTitle : 'Sample' %></p>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+      <!--end title-->
+
+    <% if(news && news.length){
+        for(let newsObj of news) {
+      %>
+      <div class="col-md-4 col-sm-12 col-xs-12">
+          <div class="img-box"> <img src="<%=newsObj.media && newsObj.media.thumbnail && newsObj.media.thumbnail.sizes && newsObj.media.thumbnail.sizes.medium_large ? newsObj.media.thumbnail.sizes.medium_large.path : 'http://via.placeholder.com/1000x800'%>" alt="" class="img-responsive" /></div>
+          <br/>
+          <p><%= newsObj.author ? newsObj.author.firstName +' '+newsObj.author.lastName : ''%> | <%= moment(newsObj.createAt).format('MMM Do YYYY')%></p>
+          <h5 class="blog_title"><a href="/news/<%=newsObj.alias%>/<%=newsObj.id%>"><%= newsObj.title%></a></h5>
+          <p class="content"><%= newsObj.motto%></p>
+          
+      </div>
+      <!--end item-->
+      <% }
+    }
+    %>
+    </div>
+
+  </div>
+</section>
+<div class=" clearfix"></div>
+<%}%>
+<!-- END NEWS SECTION -->
+
+<% block('localScripts', '<script src="/vendors/owl-carousel/owl.carousel.js"></script>') %>
+<% block('localScripts', '<script src="/vendors/owl-carousel/custom.js"></script>') %>
+<% block('localScripts', '<script src="/js/frontend/home/index.js"></script>') %>

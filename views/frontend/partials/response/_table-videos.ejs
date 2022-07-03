@@ -1,0 +1,55 @@
+<table class="table table-hover table-bordered display dataTable mb-10">
+    <thead>
+      <tr>
+        <th class="col-chk">          
+        </th>
+        <th width="10%">Image</th>
+        <th >Title</th>
+        <th width="10%">Category</th>
+        <th width="10%">Status</th>        
+      </tr>
+    </thead>
+    <tbody>
+    <%
+      if(allVideos.length == 0) {
+    %>
+    <tr>
+      <td colspan="5"><%= __('No Data') %></td>
+    </tr>
+    <%
+      } else {
+        _.each(allVideos, function (video) {
+  
+    %>
+      <tr>
+        <td class="col-chk">
+          <div class="radio">
+            <input type="radio" name="radVideo" class="ekp-chk" value="<%= video.id %>">
+            <label></label>
+          </div>
+        </td>
+        <td>
+          <% if(video.image){ %>
+            <img src="<%= video.image.thumb %>" alt="thumbnail">
+          <% } %>
+        </td>
+        <td><%= video.title %></td>
+        <td><%= _.pluck(video.categories, 'title').join(', ') %></td>
+        <td class="text-center">
+          <% if (video.status == STATUS.DRAFT) { %>
+          <span class="label label-default ma-5"><%= video.status %></span>
+          <% } else if (video.status == STATUS.ACTIVE) { %>
+          <span class="label label-success ma-5"><%= video.status %></span>
+          <% } else { %>
+          <span class="label label-warning ma-5"><%= video.status %></span>
+          <% } %>
+        </td>
+      </tr>
+    <%
+        })
+      }
+    %>
+    </tbody>
+  </table>
+  
+  

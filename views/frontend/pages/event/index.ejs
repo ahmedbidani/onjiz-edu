@@ -1,0 +1,17 @@
+<!-- Page -->
+<% let BACKEND = sails.config.custom.BACKEND %>
+<% block('localCss', '<link rel="stylesheet" href="/vendors/fullcalendar/lib/main.min.css">') %>
+<section class="pt-80 pb-80">
+  <div class="container">
+    <div class="row">
+      <div class="col-12"> 
+          <div id="calendar" data-starttime="<%= startTimeCourseSession %>" data-endtime="<%= endTimeCourseSession %>" data-school-id="<%=school.id%>" data-school-code="<%=school.code%>" class="full-calendar"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<% block('localScripts', '<script src="/vendors/moment/moment.min.js"></script>') %>
+<% block('localScripts', '<script src="/vendors/fullcalendar/lib/main.min.js"></script>') %>
+<% block('localScripts', '<script src="/vendors/fullcalendar/lib/locales-all.min.js"></script>') %>
+<% block('localScripts', '<script src="/js/frontend/event/index.js"></script>') %>

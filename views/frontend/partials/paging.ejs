@@ -1,0 +1,125 @@
+<%if(numberOfPages >1){%>
+    <div class="col-12">
+        <ul class="pagination justify-content-center mx-auto">
+            <li><a href="<%= (pageActive > 1 ) ? '?page='+(pageActive - 1) : 'javascript:void(0)' %>"><span aria-hidden="true"><i class="fa fa-angle-left"></i></span></a></li>
+            <!-- change style of paging if numberOfPages is big -->
+            <% if(numberOfPages >= 7){
+                let pages = [];
+                for (let i = 1; i <= numberOfPages; i++) {
+                    pages.push(i);
+                }
+                let threeFirstItems = pages.slice(0, 3);
+                let threeLastItems = pages.slice(pages.length - 3, pages.length);
+                let middleItems = pages.slice(3, pages.length - 3);
+            %>
+                <% if(!locals.categoryActive && !locals.keyword){%>
+                    <!-- if current page is in 3 first items -->
+                    <%if(threeFirstItems.includes(pageActive)){%>
+                        <%threeFirstItems.map((page) => {%>
+                            <li><a class="<%= (pageActive == page ) ? 'active': ''%> " href="?page=<%= page%>"><%= page%></a></li>
+                        <%})%>
+                        <li><a href="javascript:void(0)">...</a></li>
+                        <li><a href="?page=<%= pages.length%>"><%= pages.length%></a></li>
+                    <%}%>
+                    <!-- if current page is in 3 last items -->
+                    <%if(threeLastItems.includes(pageActive)){%>
+                        <li><a href="?page=1">1</a></li>
+                        <li><a href="javascript:void(0)">...</a></li>
+                        <%threeLastItems.map((page) => {%>
+                            <li><a class="<%= (pageActive == page ) ? 'active': ''%> " href="?page=<%= page%>"><%= page%></a></li>
+                        <%})%>
+                    <%}%>
+                    <!-- if current page is in middle items -->
+                    <%if(middleItems.includes(pageActive)){%>
+                        <li><a href="?page=1">1</a></li>
+                        <li><a href="javascript:void(0)">...</a></li>
+                        <li><a href="?page=<%= pageActive-1%>"><%= pageActive-1%></a></li>
+                        <li><a class="active" href="?page=<%= pageActive%>"><%= pageActive%></a></li>
+                        <li><a href="?page=<%= pageActive+1%>"><%= pageActive+1%></a></li>
+                        <li><a href="javascript:void(0)">...</a></li>
+                        <li><a href="?page=<%= pages.length%>"><%= pages.length%></a></li>
+                            
+                    <%}%>
+                    <!-- <%for(let i = 1; i <= numberOfPages; i++ ){%>
+                    <li><a class="<%= (pageActive == i ) ? 'active': ''%>" href="?page=<%= i%>"><%= i%></a></li>
+                    <%}%> -->
+                <%}else if(!locals.keyword){%> <!-- if it is page news with categoryActive -->
+                    <!-- if current page is in 3 first items -->
+                    <%if(threeFirstItems.includes(pageActive)){%>
+                        <%threeFirstItems.map((page) => {%>
+                            <li><a class="<%= (pageActive == page ) ? 'active': ''%> " href="?category=<%=categoryActive%>&page=<%= page%>"><%= page%></a></li>
+                        <%})%>
+                        <li><a href="javascript:void(0)">...</a></li>
+                        <li><a href="?category=<%=categoryActive%>&page=<%= pages.length%>"><%= pages.length%></a></li>
+                    <%}%><!-- if current page is in 3 last items -->
+                    <%if(threeLastItems.includes(pageActive)){%>
+                        <li><a href="?category=<%=categoryActive%>&page=1">1</a></li>
+                        <li><a href="javascript:void(0)">...</a></li>
+                        <%threeLastItems.map((page) => {%>
+                            <li><a class="<%= (pageActive == page ) ? 'active': ''%> " href="?category=<%=categoryActive%>&page=<%= page%>"><%= page%></a></li>
+                        <%})%>
+                    <%}%><!-- if current page is in middle items -->
+                    <%if(middleItems.includes(pageActive)){%>
+                        <li><a href="?category=<%=categoryActive%>&page=1">1</a></li>
+                        <li><a href="javascript:void(0)">...</a></li>
+                        <li><a href="?category=<%=categoryActive%>&page=<%= pageActive-1%>"><%= pageActive-1%></a></li>
+                        <li><a class="active" href="?category=<%=categoryActive%>&page=<%= pageActive%>"><%= pageActive%></a></li>
+                        <li><a href="?category=<%=categoryActive%>&page=<%= pageActive+1%>"><%= pageActive+1%></a></li>
+                        <li><a href="javascript:void(0)">...</a></li>
+                        <li><a href="?category=<%=categoryActive%>&page=<%= pages.length%>"><%= pages.length%></a></li>
+                            
+                    <%}%>
+                    <!-- <%for(let i = 1; i <= numberOfPages; i++ ){%>
+                    <li><a class="<%= (pageActive == i ) ? 'active': ''%>" href="?category=<%=categoryActive%>&page=<%= i%>"><%= i%></a></li>
+                    <%}%> -->
+                <%} else{%><!-- if it is page search -->
+                    <!-- if current page is in 3 first items -->
+                    <%if(threeFirstItems.includes(pageActive)){%>
+                        <%threeFirstItems.map((page) => {%>
+                            <li><a class="<%= (pageActive == page ) ? 'active': ''%> " href="?keyword=<%=keyword%>&page=<%= page%>"><%= page%></a></li>
+                        <%})%>
+                        <li><a href="javascript:void(0)">...</a></li>
+                        <li><a href="?keyword=<%=keyword%>&page=<%= pages.length%>"><%= pages.length%></a></li>
+                    <%}%>
+                    <!-- if current page is in 3 last items -->
+                    <%if(threeLastItems.includes(pageActive)){%>
+                        <li><a href="?keyword=<%=keyword%>&page=1">1</a></li>
+                        <li><a href="javascript:void(0)">...</a></li>
+                        <%threeLastItems.map((page) => {%>
+                            <li><a class="<%= (pageActive == page ) ? 'active': ''%> " href="?keyword=<%=keyword%>&page=<%= page%>"><%= page%></a></li>
+                        <%})%>
+                    <%}%>
+                    <!-- if current page is in middle items -->
+                    <%if(middleItems.includes(pageActive)){%>
+                        <li><a href="?keyword=<%=keyword%>&page=1">1</a></li>
+                        <li><a href="javascript:void(0)">...</a></li>
+                        <li><a href="?keyword=<%=keyword%>&page=<%= pageActive-1%>"><%= pageActive-1%></a></li>
+                        <li><a class="active" href="?keyword=<%=keyword%>&page=<%= pageActive%>"><%= pageActive%></a></li>
+                        <li><a href="?keyword=<%=keyword%>&page=<%= pageActive+1%>"><%= pageActive+1%></a></li>
+                        <li><a href="javascript:void(0)">...</a></li>
+                        <li><a href="?keyword=<%=keyword%>&page=<%= pages.length%>"><%= pages.length%></a></li>
+                            
+                    <%}%>
+                    <!-- <%for(let i = 1; i <= numberOfPages; i++ ){%>
+                    <li><a class="<%= (pageActive == i ) ? 'active': ''%>" href="?keyword=<%=keyword%>&page=<%= i%>"><%= i%></a></li>
+                    <%}%> -->
+                <%}%>
+            <%}else{%>
+                <% if(!locals.categoryActive && !locals.keyword){%>
+                    <%for(let i = 1; i <= numberOfPages; i++ ){%>
+                    <li><a class="<%= (pageActive == i ) ? 'active': ''%> " href="?page=<%= i%>"><%= i%></a></li>
+                    <%}%>
+                <%}else if(!locals.keyword){%><!-- if it is page news with categoryActive -->
+                    <%for(let i = 1; i <= numberOfPages; i++ ){%>
+                    <li><a class="<%= (pageActive == i ) ? 'active': ''%>" href="?category=<%=categoryActive%>&page=<%= i%>"><%= i%></a></li>
+                    <%}%>
+                <%} else{%><!-- if it is page search -->
+                    <%for(let i = 1; i <= numberOfPages; i++ ){%>
+                    <li><a class="<%= (pageActive == i ) ? 'active': ''%>" href="?keyword=<%=keyword%>&page=<%= i%>"><%= i%></a></li>
+                    <%}%>
+                <%}%>
+            <%}%>
+            <li><a href="<%= (pageActive < numberOfPages ) ? '?page='+(pageActive + 1) : 'javascript:void(0)' %>"><span aria-hidden="true"><i class="fa fa-angle-right"></i></span></a></li>
+        </ul>
+    </div>
+<%}%>

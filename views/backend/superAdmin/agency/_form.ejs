@@ -1,0 +1,123 @@
+<div class="col-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title"><%= (agencyData.id == undefined) ? __('Add agency') : __('Edit agency')%></h4>  
+        <form autocomplete="off" id="formAgency" class="" data-fv-framework="bootstrap4" data-fv-message="<%= __('Invalidate') %>"
+            data-fv-icon-valid="glyphicon glyphicon-ok" data-fv-icon-invalid="glyphicon glyphicon-remove" data-fv-icon-validating="glyphicon glyphicon-refresh"
+            data-fv-live="enabled" data-manner="<%= (agencyData.id == undefined) ? 'add' : 'edit' %>">
+            <input type='hidden' name='_csrf' value='<%= _csrf %>'>
+            <div class="row">
+                <div class="col-xxl-12 col-xl-12 col-lg-12">
+                    <input value="<%= agencyData.id%>" name="id" id="agencyId" hidden>
+                    <div class="row">
+                        <div class="col-xxl-6 col-xl-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="form-control-label">
+                                  <%= __('Code') %>
+                                </label>
+                                <input type="text" class="form-control" name="code" data-fv-notempty="true"
+                                  data-fv-notempty-message="<%= __('Required field') %>" value="<%= agencyData.code%>" required>
+                            </div>
+                        </div>
+                        <div class="col-xxl-6 col-xl-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="form-control-label">
+                                  <%= __('Name') %>
+                                </label>
+                                <input type="text" class="form-control" name="name" 
+                                  data-fv-notempty="true" data-fv-notempty-message="<%= __('Required field') %>"
+                                  value="<%= agencyData.name%>" required>
+                            </div>
+                        </div>
+                    </div> 
+                </div>
+                <div class="col-xxl-12 col-xl-12 col-lg-12">
+                    <div class="row">
+                        <div class="col-xxl-6 col-xl-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="form-control-label">
+                                  <%= __('E-mail') %>
+                                </label>
+                                <% if(manner == 'add'){%>
+                                <input type="text" class="form-control" name="emailAddress" value="<%=(agencyData.emailAddress) ? agencyData.emailAddress : ''%>"
+                                  email-existence="<%= __('Email is existed') %>"
+                                  pattern="[A-Za-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+                                  data-fv-notempty="true" data-fv-notempty-message="<%= __('Email is required') %>"
+                                  data-fv-message="<%= __('Email format is invalid') %>" required>
+                                <%}else{%>
+                                  <input class="form-control" name="emailAddress" readonly value="<%=(agencyData.emailAddress) ? agencyData.emailAddress : ''%> ">
+                                <%}%>
+                            </div>
+                        </div>
+                        <div class="col-xxl-6 col-xl-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="form-control-label">
+                                  <%= __('Phone') %>
+                                </label>
+                                <input type="number" class="form-control" name="phone" pattern="[0-9]{9,12}$"
+                                  data-fv-notempty="true" data-fv-notempty-message="<%= __('Phone is required') %>"
+                                  data-fv-message="<%= __('Phone is 9 or 12 number') %>" data-fv-stringlength="true"
+                                  data-fv-stringlength-max="12" value="<%= agencyData.phone%>" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xxl-12 col-xl-12 col-lg-12">
+                    <div class="row">
+                      <div class="col-xxl-6 col-xl-6 col-lg-6">
+                        <div class="form-group">
+                          <label class="form-control-label"><%= __('Password') %></label>
+                          <% if(manner == 'add'){%>
+                            <input type="password" class="form-control" name="password" id="password" data-fv-stringlength="true"
+                            data-fv-stringlength-min="4"data-fv-notempty="true" data-fv-notempty-message="<%= __('Password is required field.') %>"
+                            data-fv-stringlength-message="<%= __('Min length must be at least 4 characters') %>" required/>
+                          <%}else{%>
+                            <input type="password" class="form-control" name="password" id="password" data-fv-stringlength="true"
+                              data-fv-stringlength-min="4"
+                              data-fv-stringlength-message="<%= __('Min length must be at least 4 characters') %>"/>
+                          <%}%>
+                        </div>
+                      </div>
+                      <div class="col-xxl-6 col-xl-6 col-lg-6">
+                        <div class="form-group">
+                          <label class="form-control-label"><%= __('Confirm password') %></label>
+                          <% if(manner == 'add'){%>
+                            <input type="password" class="form-control" name="passwordConfirm" id="confirm_password"
+                            data-fv-notempty="true" data-fv-notempty-message="<%= __('Password is required field.') %>" />
+                          <%}else{%>
+                            <input type="password" class="form-control" name="passwordConfirm" id="confirm_password"/>
+                          <%}%>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+                <div class="col-xxl-12 col-xl-12 col-lg-12">
+                  <div class="row">
+                    <div class="col-xxl-6 col-xl-6 col-lg-6">
+                      <div class="form-group">
+                        <label class="form-control-label">
+                            <%= __('Address') %>
+                        </label>
+                        <input type="text" class="form-control" name="address" value="<%= agencyData.address%>">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xxl-12 col-xl-12 col-lg-12">
+                  <div class="alert alert-danger hidden" role="alert">
+                    <i class="mdi mdi-alert-circle"></i>
+                  </div>
+                </div>
+                <div class="col-xxl-12 col-xl-12 col-lg-12">
+                  <div class="form-group form-material">
+                    <button id="btnFormAgency" type="submit" class="btn btn-primary"><%= agencyData.id ? __('Update') : __('Add New') %></button>
+                  </div>
+                </div>
+            </div>
+        </form>
+      </div>
+    </div>
+</div>
+      
+  
+  

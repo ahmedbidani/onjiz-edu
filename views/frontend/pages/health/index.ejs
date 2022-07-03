@@ -1,0 +1,268 @@
+<!-- <% block('localCss', '<link rel="stylesheet" href="/vendors/formvalidation/formValidation.css">') %> -->
+<section class="pt-80 pb-80">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <%- partial('../../partials/sidebar.ejs')%>
+      </div>
+      <div class="col-md-9">
+        <div class="row mb-4">
+          <%if(listClass.length){%>
+          <div class="col-md-6 form-group row align-items-md-center">
+            <label class="col-md-3"><%= __('Class') %></label>
+            <div class="col-md-9">
+              <select id="selectClass" class="form-control js-process-basic-multiple w-100">
+                <option value="">---</option>
+                <% for (let classObj of listClass) { %>
+                <option value="<%= classObj.id %>">
+                  <%= classObj.title %>
+                </option>
+                <% } %>
+              </select>
+            </div>
+          </div>
+          <%}%>
+          <div class="col-md-6 form-group row align-items-md-center">
+            <label class="col-md-3"><%= __('Student') %></label>
+            <div class="col-md-9">
+              <select id="selectStudent" class="form-control js-process-basic-multiple w-100">
+                <%if(childrens.length){%>
+                  <%for(let i = 0; i < childrens.length; i++){%>
+                  <option value="<%=childrens[i].id%>"><%= childrens[i].firstName%> <%= childrens[i].lastName%></option>
+                  <%}%>
+                <%}%>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- if current user is teacher or school admin => can edit health info of student-->
+        <%if(listClass.length){%>
+          <form autocomplete="off" id="formStudent" class="" data-fv-framework="bootstrap4"
+            data-fv-message="<%= __('Invalidate') %>" data-fv-icon-valid="glyphicon glyphicon-ok"
+            data-fv-icon-invalid="glyphicon glyphicon-remove" data-fv-icon-validating="glyphicon glyphicon-refresh"
+            data-fv-live="enabled" data-manner="edit">
+            <input type='hidden' name='_csrf' value='<%= _csrf %>'>
+            <input value="" id="studentId" name="studentId" hidden required>
+            <div class="row">
+              <div class="col-6">
+                <!-- height -->
+                <div class="form-group">
+                  <label for="height"><%= __('Height (cm)') %></label>
+                  <input type="number" step="0.1" class="form-control" id="height" name="height"
+                    placeholder="<%= __('Height') %>" value="">
+                </div>
+              </div>
+              <div class="col-6">
+                <!-- weight -->
+                <div class="form-group">
+                  <label for="weight"><%= __('Weight (kg)') %></label>
+                  <input type="number" step="0.1" class="form-control" id="weight" name="weight"
+                    placeholder="<%= __('Weight') %>" value="">
+                </div>
+              </div>
+              <div class="col-6">
+                <!-- bloodGroup -->
+                <div class="form-group">
+                  <label for="bloodGroup"><%= __('Blood Group') %></label>
+                  <select id="bloodGroup" name="bloodGroup" class="js-process-basic-multiple w-100" data-placeholder="<%= __('Choose') %>">
+                    <option value=""><%= __('Unknown') %></option>
+                    <option value="O-">O-</option>
+                    <option value="O+">O+</option>
+                    <option value="A-">A-</option>
+                    <option value="A+">A+</option>
+                    <option value="B-">B-</option>
+                    <option value="B+">B+</option>
+                    <option value="AB-">AB-</option>
+                    <option value="AB+">AB+</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-6">
+                <!-- allergy -->
+                <div class="form-group">
+                  <label for="allergy"><%= __('Allergy') %></label>
+                  <input type="text" class="form-control" id="allergy" name="allergy" placeholder="<%= __('Allergy') %>"
+                    value="">
+                </div>
+              </div>
+              <div class="col-6">
+                <!-- heartRate -->
+                <div class="form-group">
+                  <label for="heartRate"><%= __('Heart rate (per minute)') %></label>
+                  <input type="number" class="form-control" id="heartRate" name="heartRate"
+                    placeholder="<%= __('Heart rate') %>" value="">
+                </div>
+              </div>
+              <div class="col-6">
+                <!-- eyes -->
+                <div class="form-group">
+                  <label for="eyes"><%= __('Eye') %></label>
+                  <input type="text" class="form-control" id="eyes" name="eyes" placeholder="<%= __('Eye') %>"
+                    value="">
+                </div>
+              </div>
+              <div class="col-6">
+                <!-- ear -->
+                <div class="form-group">
+                  <label for="ear"><%= __('Ear') %></label>
+                  <input type="text" class="form-control" id="ear" name="ear" placeholder="<%= __('Ear') %>"
+                    value="">
+                </div>
+              </div>
+              <div class="col-6">
+                <!-- note -->
+                <div class="form-group">
+                  <label for="notes"><%= __('Note') %></label>
+                  <input type="text-area" class="form-control" id="notes" name="notes" placeholder="<%= __('Note') %>"
+                    value="">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <div class="alert alert-dismissible hidden" role="alert" data-alert-update="<%= __('Update successfully') %>">
+                  <%= __('Update successfully') %>
+                </div>
+              </div>
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="form-group text-center">
+                  <button id="btnFormStudent" class="btn btn-block main-btn" type="submit"><%= __('Update') %></button>
+                </div>
+              </div>
+            </div>
+          </form>
+
+        <%}else if(childrens.length){%>
+          <!-- if current user is parent => just show health info of student-->
+          <div class="row">
+            <div class="col-6">
+              <!-- height -->
+              <div class="form-group">
+                <label for="height"><%= __('Height (cm)') %></label>
+                <input type="number" step="0.1" class="form-control" id="height" name="height"
+                  placeholder="<%= __('Height') %>" value="<%= childrens[0].height %>" readonly>
+              </div>
+            </div>
+            <div class="col-6">
+              <!-- weight -->
+              <div class="form-group">
+                <label for="weight"><%= __('Weight (kg)') %></label>
+                <input type="number" step="0.1" class="form-control" id="weight" name="weight"
+                  placeholder="<%= __('Weight') %>" value="<%= childrens[0].weight %>" readonly>
+              </div>
+            </div>
+            <div class="col-6">
+              <!-- bloodGroup -->
+              <div class="form-group">
+                <label for="bloodGroup"><%= __('Blood Group') %></label>
+                <input type="text" class="form-control" id="bloodGroup" name="bloodGroup" placeholder="Blood group"
+                  value="<%= childrens[0].bloodGroup %>" readonly>
+                <!-- <select id="bloodGroup" name="bloodGroup" data-placeholder="<%= __('Choose') %>">
+                  <option value="" <%= (childrens[0].bloodGroup == "" ? 'selected' : '') %>><%= __('Unknown') %></option>
+                  <option value="O-" <%= (childrens[0].bloodGroup == "O-" ? 'selected' : '') %>>O-</option>
+                  <option value="O+" <%= (childrens[0].bloodGroup == "O+" ? 'selected' : '') %>>O+</option>
+                  <option value="A-" <%= (childrens[0].bloodGroup == "A-" ? 'selected' : '') %>>A-</option>
+                  <option value="A+" <%= (childrens[0].bloodGroup == "A+" ? 'selected' : '') %>>A+</option>
+                  <option value="B-" <%= (childrens[0].bloodGroup == "B-" ? 'selected' : '') %>>B-</option>
+                  <option value="B+" <%= (childrens[0].bloodGroup == "B+" ? 'selected' : '') %>>B+</option>
+                  <option value="AB-" <%= (childrens[0].bloodGroup == "AB-" ? 'selected' : '') %>>AB-</option>
+                  <option value="AB+" <%= (childrens[0].bloodGroup == "AB+" ? 'selected' : '') %>>AB+</option>
+                </select> -->
+              </div>
+            </div>
+            <div class="col-6">
+              <!-- allergy -->
+              <div class="form-group">
+                <label for="allergy"><%= __('Allergy') %></label>
+                <input type="text" class="form-control" id="allergy" name="allergy" placeholder="<%= __('Allergy') %>"
+                  value="<%= childrens[0].allergy %>" readonly>
+              </div>
+            </div>
+            <div class="col-6">
+              <!-- heartRate -->
+              <div class="form-group">
+                <label for="heartRate"><%= __('Heart rate (per minute)') %></label>
+                <input type="number" class="form-control" id="heartRate" name="heartRate"
+                  placeholder="<%= __('Heart rate') %>" value="<%= childrens[0].heartRate %>" readonly>
+              </div>
+            </div>
+            <div class="col-6">
+              <!-- eyes -->
+              <div class="form-group">
+                <label for="eyes"><%= __('Eye') %></label>
+                <input type="text" class="form-control" id="eyes" name="eyes" placeholder="<%= __('Eye') %>"
+                  value="<%= childrens[0].eyes %>" readonly>
+              </div>
+            </div>
+            <div class="col-6">
+              <!-- ear -->
+              <div class="form-group">
+                <label for="ear"><%= __('Ear') %></label>
+                <input type="text" class="form-control" id="ear" name="ear" placeholder="<%= __('Ear') %>"
+                  value="<%= childrens[0].ear %>" readonly>
+              </div>
+            </div>
+            <div class="col-6">
+              <!-- note -->
+              <div class="form-group">
+                <label for="notes"><%= __('Note') %></label>
+                <input type="text-area" class="form-control" id="notes" name="notes" placeholder="<%= __('Note') %>"
+                  value="<%= childrens[0].notes %>" readonly>
+              </div>
+            </div>
+            <div class="col-12">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <table class="table bg-white table-hover" id="">
+                        <thead>
+                          <tr>
+                            <th width="20%"><%= __('Date') %></th>
+                            <th width="20%"><%= __('Height (cm)') %></th>
+                            <th width="20%"><%= __('Weight (kg)') %></th>
+                            <th width="15%"><%= __('Blood Group') %></th>
+                            <th width="15%"><%= __('Allergy') %></th>
+                            <th width="25%"><%= __('Heart rate (per minute)') %></th>
+                            <th width="5%"><%= __('Eye') %></th>
+                            <th width="5%"><%= __('Ear') %></th>
+                            <th width="5%"><%= __('Note') %></th>
+                          </tr>
+                        </thead>
+
+                        <tbody>
+                        <%for (let i = 0; i < childrens.length; i++){%>
+                          <tr>
+                            <td><%=childrens[0].w_h_History[i].date%></td>
+                            <td><%= childrens[i].height %></td>
+                            <td><%= childrens[i].weight %></td>
+                            <td><%= childrens[i].bloodGroup %></td>
+                            <td><%= childrens[i].allergy %></td>
+                            <td><%= childrens[i].heartRate %></td>
+                            <td><%= childrens[i].eyes %></td>
+                            <td><%= childrens[i].ear %></td>
+                            <td><%= childrens[i].notes %></td>
+                          </tr>
+                        <%}%>
+                        </tbody>
+
+                      </table>
+                    </div>
+                  </div>
+                </div>
+
+            </div>
+          </div>
+        <%} else {%>
+          <div><%= __('No students found')%></div>
+        <%}%>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<% block('localScripts', '<script src="/vendors/formvalidation/formValidation.min.js"></script>') %>
+<% block('localScripts', '<script src="/vendors/formvalidation/framework/bootstrap4.min.js"></script>') %>
+<% block('localScripts', '<script src="/vendors/select2/dist/js/select2.full.min.js"></script>') %>
+<% block('localScripts', '<script src="/js/frontend/health/index.js"></script>') %>

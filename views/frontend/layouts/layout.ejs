@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html class="no-js css-menubar" lang="<%= lang%>">
+  <head>
+    <title><%=webSettings.value.name%> | <%=webModule.headline%></title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta name="description" content="<%=webSettings.value.description%>">
+    <meta name="author" content="ZiniSoft.NET">
+    <% /* Viewport tag for sensible mobile support */ %>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <link rel="icon" href="/images/logo-light.png">
+    <!-- build:css -->
+    <!--====== Bootstrap css ======-->
+    <link rel="stylesheet" href="/styles/frontend/bootstrap.min.css">
+    <!--====== Animate css ======-->
+    <link rel="stylesheet" href="/styles/frontend/animate.css">
+    <!--====== Fontawesome css ======-->
+    <link rel="stylesheet" href="/styles/frontend/font-awesome.min.css">
+    <!--====== Magnific Popup css ======-->
+    <link rel="stylesheet" href="/styles/frontend/magnific-popup.css">
+    <!--====== Nice Select css ======-->
+    <link rel="stylesheet" href="/styles/frontend/nice-select.css">
+    <!--====== Select2 css ======-->
+    <link rel="stylesheet" href="/vendors/select2/dist/css/select2.min.css">
+    <!--====== Slick css ======-->
+    <link rel="stylesheet" href="/styles/frontend/slick.css">
+    <!--====== Default css ======-->
+    <link rel="stylesheet" href="/styles/frontend/default.css">
+    <!--====== Style css ======-->
+    <link rel="stylesheet" href="/styles/frontend/style.css">
+    <!--====== Responsive css ======-->
+    <link rel="stylesheet" href="/styles/frontend/responsive.css">
+    <!-- endbuild -->
+    <%- blocks.localCss %>
+  </head>
+
+  <body>
+  <!--====== PRELOADER PART START ======-->
+
+  <div id="preloader">
+      <div class="preloader">
+          <span></span>
+          <span></span>
+      </div>
+  </div>
+  <!--====== PRELOADER PART ENDS ======-->
+
+  <!--====== Header PART START ======-->
+  <%- partial('../partials/header.ejs') %>
+  <!--====== Header PART END ======-->
+
+    <%if(moduleActive.action == 'frontend/home/index'){%>
+      <%- partial('../partials/home-slider.ejs') %>
+    <%}else if(moduleActive.action != 'frontend/event/detail' && moduleActive.action != 'frontend/gallery/detail') {%>
+      <%- partial('../partials/sub-banner.ejs') %>
+    <%}%>
+    <%- body %>
+    <%- partial('../partials/footer.ejs') %> 
+
+    <script>delete window.self;</script>
+    <!-- build:js -->
+    <!--====== jquery js ======-->
+    <script src="/js/frontend/vendor/modernizr-3.6.0.min.js"></script>
+    <script src="/js/frontend/vendor/jquery-1.12.4.min.js"></script>
+
+    <!--====== Bootstrap js ======-->
+    <script src="/js/frontend/vendor/popper.min.js"></script>
+    <script src="/js/frontend/vendor/bootstrap.min.js"></script>
+
+     <!--====== validator-js ======-->
+     <script src="/vendors/validate/validator.min.js"></script>
+    <!--====== Slick js ======-->
+    <script src="/js/frontend/vendor/slick.min.js"></script>
+    <!--====== Magnific Popup js ======-->
+    <script src="/js/frontend/vendor/jquery.magnific-popup.min.js"></script>
+    <!--====== Counter Up js ======-->
+    <script src="/js/frontend/vendor/waypoints.min.js"></script>
+    <script src="/js/frontend/vendor/jquery.counterup.min.js"></script>
+    <!--====== Nice Select js ======-->
+    <script src="/js/frontend/vendor/jquery.nice-select.min.js"></script>
+    <!--====== Count Down js ======-->
+    <script src="/js/frontend/vendor/jquery.countdown.min.js"></script>
+    <!--====== Appear js ======-->
+    <script src="/js/frontend/vendor/jquery.appear.min.js"></script>
+    
+    <script src="/dependencies/lodash.js"></script>
+    <script src="/dependencies/cloud.js"></script>
+    <script src="/js/frontend/cloud.setup.js"></script>
+    <script src="/js/frontend/base.js"></script>
+    <script src="/js/i18n.js"></script>
+    <!-- endbuild -->  
+    <!--Custom JavaScript -->
+    <%- blocks.localScripts %>
+    <script src="/js/frontend/main.js"></script>
+    <script>
+      var EKPAction = '<%=moduleActive.action%>';
+      var layout = 'layout';
+      var UPLOAD = {
+        EXTENSION: ['.png', '.jpg', '.jpeg', '.gif', '.heic']
+      };
+    </script>
+  </body>
+</html>

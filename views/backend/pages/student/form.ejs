@@ -1,0 +1,347 @@
+<div class="row">
+  <div class="col-12 grid-margin stretch-card">
+    <form autocomplete="off" id="formStudent" class="" data-fv-framework="bootstrap4"
+      data-fv-message="<%= __('Invalidate') %>" data-fv-icon-valid="glyphicon glyphicon-ok"
+      data-fv-icon-invalid="glyphicon glyphicon-remove" data-fv-icon-validating="glyphicon glyphicon-refresh"
+      data-fv-live="enabled" data-manner="<%= (studentData.id == undefined) ? 'add' : 'edit' %>">
+      <input type='hidden' name='_csrf' value='<%= _csrf %>'>
+
+      <input value="<%= studentData.id %>" id="id" name="id" hidden>
+      <!-- avatar -->
+      <div class="row">
+        <div class="col-md-10 col-lg-9 col-xlg-8 ">
+          <div class="card">
+            <ul class="nav nav-tabs profile-tab" role="tablist">
+              <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#profile" role="tab"
+                  aria-selected="false"><%= __('Profile')%></a> </li>
+              <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#healthyInfo" role="tab"
+                  aria-selected="true"><%= __('Healthy Info')%></a> </li>
+            </ul>
+            <div class="tab-content">
+              <div class="tab-pane active" id="profile" role="tabpanel">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <!-- code -->
+                      <div class="form-group">
+                        <label for="code"><%= __('Student code') %></label>
+                        <input type="text" class="form-control" id="code" name="code"
+                          placeholder="<%= __('Eg: HM001') %>" value="<%= studentData.code %>" data-fv-notempty="true"
+                          data-fv-notempty-message="<%= __('Required field') %>" data-fv-stringlength="true"
+                          data-fv-stringlength-min="3" data-fv-stringlength-max="20"
+                          data-fv-stringlength-message="<%= __('Student code must be at least 3 characters and max 20 characters') %>">
+                      </div>
+
+                      <!-- firstName -->
+                      <div class="form-group">
+                        <label for="firstName"><%= __('First name') %></label>
+                        <input type="text" class="form-control" id="firstName" name="firstName"
+                          placeholder="Eg: John Tran" value="<%= studentData.firstName %>" data-fv-notempty="true"
+                          data-fv-notempty-message="<%= __('Required field') %>" data-fv-stringlength="true"
+                          data-fv-stringlength-min="2" data-fv-stringlength-max="120"
+                          data-fv-stringlength-message="<%= __('Firstname must be at least 2 characters') %>">
+                      </div>
+
+                      <!-- lastName -->
+                      <div class="form-group">
+                        <label for="lastName"><%= __('Last name') %></label>
+                        <input type="text" class="form-control" id="lastName" name="lastName"
+                          placeholder="Eg: John Tran" value="<%= studentData.lastName %>" data-fv-notempty="true"
+                          data-fv-notempty-message="<%= __('Required field') %>" data-fv-stringlength="true"
+                          data-fv-stringlength-min="2" data-fv-stringlength-max="120"
+                          data-fv-stringlength-message="<%= __('Lastname must be at least 2 characters') %>">
+                      </div>
+
+                      <!-- gender -->
+                      <div class="form-group">
+                        <label class="form-control-label">
+                          <%= __('Gender') %>
+                        </label>
+                        <ul class="list-unstyled list-inline">
+                          <li class="list-inline-item">
+                            <div class="form-check">
+                              <label class="form-check-label">
+                                <input id="genderMale" type="radio" class="form-check-input" name="gender" value="1"
+                                  checked <%=studentData.gender ==1? 'checked':''%> />
+                                <i class="input-helper"></i>
+                                <%= __('Male') %>
+                              </label>
+                            </div>
+                          </li>
+                          <li class="list-inline-item">
+                            <div class="form-check">
+                              <label class="form-check-label">
+                                <input id="genderFemale" type="radio" class="form-check-input" name="gender" value="0"
+                                  <%=studentData.gender ==0? 'checked':''%> />
+                                <i class="input-helper"></i>
+                                <%= __('Female') %>
+                              </label>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+
+                      <!-- birthDay -->
+                      <div class="form-group">
+                        <label for="dateOfBirth"><%= __('Date of birth') %></label>
+                        <input type="date" class="form-control" id="dateOfBirth" name="dateOfBirth" placeholder="DOB"
+                          value="<%= studentData.dateOfBirth %>" data-fv-notempty="true"
+                          data-fv-notempty-message="<%= __('Required field') %>"
+                          data-fv-date___format="<%= __('MM/DD/YYYY') %>"
+                          data-fv-date___message="<%= __('Date format is not valid') %>">
+                      </div>
+
+                      <!-- address -->
+                      <div class="form-group">
+                        <label for="currentAddress"><%= __('Address') %></label>
+                        <input type="text" class="form-control" id="currentAddress" name="currentAddress" placeholder=""
+                          value="<%= studentData.currentAddress %>">
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <!-- classes -->
+                      <div class="form-group">
+                        <label class="form-control-label">
+                          <%= __('Select class') %>
+                        </label>
+                        <select id="classes" name="classes" class="form-control multiChoose"
+                          data-placeholder="<%= __('Choose') %>">
+                          <%
+                            var classIds = [];
+                            if(studentData.classes){
+                              _.each(studentData.classes, function (tx, ind) {
+                                classIds.push(tx.id);
+                              });
+                            }
+                            _.each(listClass, function (classObj, index) {
+                          %>
+                          <option value="<%= classObj.id %>"
+                            <%= (classIds.indexOf(classObj.id) != -1 ? 'selected' : '')%>>
+                            <%= classObj.title %>
+                          </option>
+                          <% }) %>
+                        </select>
+                      </div>
+                      <!-- mother -->
+                      <div class="form-group">
+                        <label class="form-control-label">
+                          <%= __('Mother') %>
+                        </label>
+                        <select id="mother" name="mother" class="form-control multiChoose"
+                          data-placeholder="<%= __('Choose') %>">
+                          <option value=""><%= __('Unknown') %></option>
+                          <%
+                                    _.each(listMother, function (motherObj, index) {
+                                  %>
+                          <option value="<%= motherObj.id %>"
+                            <%= (studentData.mother == motherObj.id ? 'selected' : '') %>>
+                            <%= motherObj.firstName + ' ' + motherObj.lastName + ' (' + motherObj.emailAddress + ')' %>
+                          </option>
+                          <% }) %>
+                        </select>
+                      </div>
+
+                      <!-- father -->
+                      <div class="form-group">
+                        <label class="form-control-label">
+                          <%= __('Father') %>
+                        </label>
+                        <select id="father" name="father" class="form-control multiChoose"
+                          data-placeholder="<%= __('Choose') %>">
+                          <option value=""><%= __('Unknown') %></option>
+                          <%
+                                              _.each(listFather, function (fatherObj, index) {
+                                            %>
+                          <option value="<%= fatherObj.id %>"
+                            <%= (studentData.father == fatherObj.id ? 'selected' : '') %>>
+                            <%= fatherObj.firstName + ' ' + fatherObj.lastName + ' (' + fatherObj.emailAddress + ')' %>
+                          </option>
+                          <% }) %>
+                        </select>
+                      </div>
+                      <!-- guardian -->
+                      <div class="form-group">
+                        <label class="form-control-label">
+                          <%= __('Guardians') %>
+                        </label>
+                        <select id="guardian" name="guardians"
+                          class="form-control js-process-basic-multiple  select2-multiple"
+                          data-placeholder="<%= __('Choose') %>" multiple="multiple">
+                          <option value=""><%= __('Unknown') %></option>
+                          <%
+                                    _.each(listOthers, function (otherObj, index) {
+                                  %>
+                          <option value="<%= otherObj.id %>"
+                            <%= (studentData.guardians.indexOf(otherObj.id) != -1 ? 'selected' : '') %>>
+                            <%= otherObj.firstName + ' ' + otherObj.lastName + ' (' + otherObj.emailAddress + ')' %>
+                          </option>
+                          <% }) %>
+                        </select>
+                      </div>
+                      <!-- status -->
+                      <div class="form-group">
+                        <label class="form-control-label">
+                          <%= __('Status') %>
+                        </label>
+                        <ul class="list-unstyled list-inline">
+                          <li class="list-inline-item">
+                            <div class="form-check">
+                              <label class="form-check-label">
+                                <input id="statusPublish" type="radio" class="form-check-input" name="status" value="1"
+                                  checked <%=(studentData.status == 1)? 'checked':''%> />
+                                <i class="input-helper"></i>
+                                <%= __('Active') %>
+                              </label>
+                            </div>
+                          </li>
+                          <li class="list-inline-item">
+                            <div class="form-check">
+                              <label class="form-check-label">
+                                <input id="statusReserve" type="radio" class="form-check-input" name="status" value="2"
+                                  <%=(studentData.status == 2)? 'checked':''%> />
+                                <i class="input-helper"></i>
+                                <%= __('Reserve') %>
+                              </label>
+                            </div>
+                          </li>
+                          <li class="list-inline-item">
+                            <div class="form-check">
+                              <label class="form-check-label">
+                                <input id="statusActive" type="radio" class="form-check-input" name="status" value="5"
+                                  <%=(studentData.status == 5)? 'checked':''%> />
+                                <i class="input-helper"></i>
+                                <%= __('Inactive') %>
+                              </label>
+                            </div>
+                          </li>
+                          <li class="list-inline-item">
+                            <div class="form-check">
+                              <label class="form-check-label">
+                                <input id="statusTrash" type="radio" class="form-check-input" name="status" value="6"
+                                  <%=(studentData.status == 6)? 'checked':''%> />
+                                <i class="input-helper"></i>
+                                <%= __('Trash') %>
+                              </label>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-pane" id="healthyInfo" role="tabpanel">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-6">
+                      <!-- height -->
+                      <div class="form-group">
+                        <label for="height"><%= __('Height (cm)') %></label>
+                        <input type="number" step="0.1" class="form-control" id="height" name="height"
+                          placeholder="<%= __('Height') %>" value="<%= studentData.height %>">
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <!-- weight -->
+                      <div class="form-group">
+                        <label for="weight"><%= __('Weight (kg)') %></label>
+                        <input type="number" step="0.1" class="form-control" id="weight" name="weight"
+                          placeholder="<%= __('Weight') %>" value="<%= studentData.weight %>">
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <!-- bloodGroup -->
+                      <div class="form-group">
+                        <label for="bloodGroup"><%= __('Blood Group') %></label>
+                        <!-- <input type="text" class="form-control" id="bloodGroup" name="bloodGroup" placeholder="Nhóm máu"
+                          value="<%= studentData.bloodGroup %>"> -->
+                        <select id="bloodGroup" name="bloodGroup" class="form-control"
+                          data-placeholder="<%= __('Choose') %>">
+                          <option value="" <%= (studentData.bloodGroup == "" ? 'selected' : '') %>><%= __('Unknown') %>
+                          </option>
+                          <option value="O-" <%= (studentData.bloodGroup == "O-" ? 'selected' : '') %>>O-</option>
+                          <option value="O+" <%= (studentData.bloodGroup == "O+" ? 'selected' : '') %>>O+</option>
+                          <option value="A-" <%= (studentData.bloodGroup == "A-" ? 'selected' : '') %>>A-</option>
+                          <option value="A+" <%= (studentData.bloodGroup == "A+" ? 'selected' : '') %>>A+</option>
+                          <option value="B-" <%= (studentData.bloodGroup == "B-" ? 'selected' : '') %>>B-</option>
+                          <option value="B+" <%= (studentData.bloodGroup == "B+" ? 'selected' : '') %>>B+</option>
+                          <option value="AB-" <%= (studentData.bloodGroup == "AB-" ? 'selected' : '') %>>AB-</option>
+                          <option value="AB+" <%= (studentData.bloodGroup == "AB+" ? 'selected' : '') %>>AB+</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <!-- allergy -->
+                      <div class="form-group">
+                        <label for="allergy"><%= __('Allergy') %></label>
+                        <input type="text" class="form-control" id="allergy" name="allergy"
+                          placeholder="<%= __('Allergy') %>" value="<%= studentData.allergy %>">
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <!-- heartRate -->
+                      <div class="form-group">
+                        <label for="heartRate"><%= __('Heart rate (per minute)') %></label>
+                        <input type="number" class="form-control" id="heartRate" name="heartRate"
+                          placeholder="<%= __('Heart rate') %>" value="<%= studentData.heartRate %>">
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <!-- eyes -->
+                      <div class="form-group">
+                        <label for="eyes"><%= __('Eye') %></label>
+                        <input type="text" class="form-control" id="eyes" name="eyes" placeholder="<%= __('Eye') %>"
+                          value="<%= studentData.eyes %>">
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <!-- ear -->
+                      <div class="form-group">
+                        <label for="ear"><%= __('Ear') %></label>
+                        <input type="text" class="form-control" id="ear" name="ear" placeholder="<%= __('Ear') %>"
+                          value="<%= studentData.ears %>">
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <!-- note -->
+                      <div class="form-group">
+                        <label for="notes"><%= __('Note') %></label>
+                        <input type="text-area" class="form-control" id="notes" name="notes"
+                          placeholder="<%= __('Note') %>" value="<%= studentData.notes %>">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-12">
+                  <div class="text-right">
+                    <div class="form-group form-material">
+                      <button id="btnFormStudent" type="submit" class="btn btn-primary waves-effect
+                        waves-classic"><%= studentData.id ? __('Update') : __('Add new') %></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2 col-lg-3 col-xlg-4 ">
+          <div class="card">
+            <div class="card-body">
+              <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                <input type="file"
+                  data-default-file="<%= studentData.avatar? studentData.avatar : '/images/avatar2.png' %>"
+                  class="dropify" name="thumbnail" data-field="thumbnail" data-max-file-size="10M" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<% block('localScripts', '<script src="/vendors/sweetalert/sweetalert.min.js"></script>') %>
+<% block('localScripts', '<script src="/js/backend/student/form.js"></script>') %>

@@ -1,0 +1,13 @@
+<!-- Page -->
+<% let BACKEND = sails.config.custom.BACKEND %>
+
+<div class="card">
+    <div class="card-body">
+        <%- partial('../../partials/filter.ejs') %>
+        <div class="table-responsive">
+            <%- partial('./_list.ejs') %>
+        </div>
+    </div>
+</div>
+<% block('localScripts', '<script src="/vendors/sweetalert/sweetalert.min.js"></script>') %>
+<% block('localScripts', '<script src="/js/backend/studentMaster/list.js"></script>') %>

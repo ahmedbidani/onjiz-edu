@@ -1,0 +1,10 @@
+<% let BACKEND = sails.config.custom.BACKEND %>
+<div class="installation" style="background-image:url(/images/guest.jpg);">
+  <div class="installation-box card">
+      <div class="card-body">
+          <%- partial('./form-account.ejs') %>
+      </div>
+  </div>
+</div>
+<% block('localScripts', '<script src="/vendors/sweetalert/sweetalert.min.js"></script>') %>
+<% block('localScripts', '<script src="/js/backend/installation/account.js"></script>') %>

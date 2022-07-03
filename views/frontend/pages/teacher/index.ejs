@@ -1,0 +1,32 @@
+<section class="pt-80 pb-120 clearfix">
+  <div class="container">
+    <div class="row">
+      <% if(teachers && teachers.length) { %> 
+        <% for(let teacher of teachers){ %>
+          <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="zini-item-inner">
+              <div class="teacher-img-box">
+                <img src="<%=teacher.avatar?teacher.avatar:'http://placehold.it/740x555'%>" alt="" class="img-responsive"/>
+              </div>
+              <div class="zini-teacher-text-box">
+                <h5 class="zini-title"><%=teacher.firstName+' '+teacher.lastName%></h5>
+                <p class="zini-subtext"><%= teacher.classes.length ? teacher.classes.join(', ') : __('No Class')%></p>
+                <p class="zini-excerpt"><%- teacher.description ? teacher.description : '[TEACHER_DESCRIPTION]'%></p>
+              </div>
+            </div> 
+          </div>
+          <!--end item--> 
+        <%}
+      } else{%>
+        <div class="ce-feature-box-52 margin-bottom">
+            <%= __('Data empty') %>
+        </div>
+    <%}%>
+
+    </div>
+  </div>
+</section>
+<div class="clearfix"></div>
+<!-- end section -->
+
+<%- partial('../../partials/paging.ejs') %>

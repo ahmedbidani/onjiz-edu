@@ -1,0 +1,224 @@
+<!-- Page -->
+<% let BACKEND = sails.config.custom.BACKEND %>
+<% block('localCss', '<link rel="stylesheet" href="/vendors/fullcalendar/lib/main.min.css">') %>
+<!-- <% block('localCss', '<link rel="stylesheet" href="/vendors/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.css">') %> -->
+<!-- <% block('localCss', '<link rel="stylesheet" href="/vendors/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css"></script>') %> -->
+<% block('localCss', '<link rel="stylesheet" href="/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css">') %>
+<% block('localCss', '<link rel="stylesheet" href="/vendors/bootstrap-daterangepicker/daterangepicker.css"></script>') %>
+
+<!-- Modal Add Schedule -->
+<div class="modal fade" id="modalSchedule" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true"
+  data-classactive="<%= classSelect %>" data-coursesession="<%= currCourseSession.id %>" data-manner="add"
+  data-starttime="<%= startOfMonth %>" data-endtime="<%= endOfMonth %>" data-scheduleId=''>
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title font-weight-bold text-uppercase">
+          <span class="txtAdd"><%= __('Create schedule')%></span>
+          <span class="txtUpdate"><%= __('Update schedule')%></span>
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form class="repeater">
+          <input type='hidden' name='_csrf' value='<%= _csrf %>'>
+          <div class="form-group" id="singleDay" hidden>
+            <label for="dateSchedule"><%= __('Date')%></label>
+            <div id="datepicker-popup" class="input-group date datepicker dateAddSchedule">
+              <input type="text" id="dateSchedule" name="dateSchedule" class="form-control">
+              <span class="input-group-addon input-group-append border-left">
+                <span class="mdi mdi-calendar input-group-text"></span>
+              </span>
+            </div>
+          </div>
+          <div class="row" id="sectionForCreate">
+            <div class="col-6">
+              <div class="form-group">
+                <label for="daysOnWeek"><%= __('Apply for') %></label>
+                <select id="daysOnWeek" name="daysOnWeek" class="form-control js-process-basic-multiple  select2-multiple"
+                  data-placeholder="<%= __('Choose') %>" multiple="multiple">
+                  <% if (!weekend.includes('1')) { %>
+                    <option value="1">
+                      <%= __('Monday') %>
+                    </option>
+                  <% } %>
+                  <% if (!weekend.includes('2')) { %>
+                    <option value="2">
+                      <%= __('Tuesday') %>
+                    </option>
+                  <% } %>
+                  <% if (!weekend.includes('3')) { %>
+                    <option value="3">
+                      <%= __('Wednesday') %>
+                    </option>
+                  <% } %>
+                  <% if (!weekend.includes('4')) { %>
+                    <option value="4">
+                      <%= __('Thursday') %>
+                    </option>
+                  <% } %>
+                  <% if (!weekend.includes('5')) { %>
+                    <option value="5">
+                      <%= __('Friday') %>
+                    </option>
+                  <% } %>
+                  <% if (!weekend.includes('6')) { %>
+                    <option value="6">
+                      <%= __('Saturday') %>
+                    </option>
+                  <% } %>
+                  <% if (!weekend.includes('7')) { %>
+                    <option value="7">
+                      <%= __('Sunday') %>
+                    </option>
+                  <% } %>
+                  </select>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-group">
+                <label for="duration"><%= __('Duration') %></label>
+                <div id="datepicker-popup" class="input-group date datepicker">
+                  <input type="text" id="duration" name="duration" class="form-control">
+                  <span class="input-group-addon input-group-append border-left">
+                    <span class="mdi mdi-calendar input-group-text"></span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="slotSubjects col-lg-12 js-height-scrollbar mb-2" style="max-height: 350px;" data-repeater-list="slotSubjects">
+              <div data-repeater-item class="row">
+                <div class="col-2">
+                  <div class="form-group">
+                    <label><%= __('Time Start')%></label>
+                    <div class="input-group date timeShedule" data-target-input="nearest">
+                      <div class="input-group timeShedule" data-target="#timeStartSchedule" data-toggle="datetimepicker">
+                        <input type="text" name="timeStart" class="form-control bootstrap-datetimepicker-input" />
+                        <div class="input-group-addon input-group-append">
+                          <i class="mdi mdi-clock input-group-text"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-2">
+                  <div class="form-group">
+                    <label><%= __('Time End')%></label>
+                    <div class="input-group date timeShedule" data-target-input="nearest">
+                      <div class="input-group timeShedule" data-target="#timeStartSchedule" data-toggle="datetimepicker">
+                        <input type="text" name="timeEnd" class="form-control bootstrap-datetimepicker-input" />
+                        <div class="input-group-addon input-group-append">
+                          <i class="mdi mdi-clock input-group-text"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-2">
+                  <div class="form-group">
+                    <label class="form-control-label"><%= __('Subject') %></label>
+                    <select class="form-control" id="subject" name="subject">
+                      <option value="0" selected><%= __('Choose')%></option>
+                      <%
+                        var sujeId = [];
+                        if(listSubject.length > 0){
+                          _.each(listSubject, function (suje, idx) {
+                            sujeId.push(suje.id);
+                          });
+                        }
+                        _.each(listSubject, function (suje, idx) {
+                      %>
+                      <option value="<%= suje.id %>">
+                        <%= suje.name %>
+                      </option>
+                      <% }) %>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-3">
+                  <div class="form-group">
+                    <label class="form-control-label"><%= __('Teacher') %></label>
+                    <select class="form-control" id="teacher" name="teacher">
+                      <option value="0" selected><%= __('Choose')%></option>
+                      <%
+                        var teacherId = [];
+                        if(listTeacher.length > 0){
+                          _.each(listTeacher, function (teacher, idx) {
+                            teacherId.push(teacher.id);
+                          });
+                        }
+                        _.each(listTeacher, function (teacher, idx) {
+                      %>
+                      <option value="<%= teacher.id %>">
+                        <%= teacher.firstName %> <%= teacher.lastName %>
+                      </option>
+                      <% }) %>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-2">
+                  <div class="form-group">
+                    <label class="form-control-label"><%= __('Topics') %></label>
+                    <input type='text' id="topic" name="topic" class="form-control" />
+                  </div>
+                </div>
+                <div class="col-1 d-flex align-items-center">
+                  <button data-repeater-delete type="button" class="btn btn-danger btn-sm icon-btn ml-2">
+                    <i class="mdi mdi-delete"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button data-repeater-create type="button" class="btn btn-info btn-sm icon-btn">
+            <i class="mdi mdi-plus"></i>
+          </button>
+
+        </form>
+      </div>
+      <div class="row">
+        <div class="col-12" style="padding: 0px 31px">
+            <div class="alert alert-dismissible hidden" role="alert" data-alert-update="<%= __('Update successfully') %>">
+              <%= __('Update successfully') %>
+            </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+
+        <button type="button" class="btn btn-secondary" data-dismiss="modal"><%= __('Cancel')%></button>
+        <button type="button" id="submitFormShedule" class="btn btn-info">
+          <span class="btnAdd"><%= __('Create')%></span>
+          <span class="btnUpdate"><%= __('Update')%></span>
+        </button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div id="calendar" data-classactive="<%= classSelect %>" class="full-calendar"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% block('localScripts', '<script src="/vendors/moment/moment.min.js"></script>') %>
+<% block('localScripts', '<script src="/vendors/moment/moment-timezone.min.js"></script>') %>
+<% block('localScripts', '<script src="/vendors/sweetalert/sweetalert.min.js"></script>') %>
+<!-- <% block('localScripts', '<script src="/vendors/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.js"></script>') %> -->
+<% block('localScripts', '<script src="/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>') %>
+<% block('localScripts', '<script src="/vendors/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>') %>
+<% block('localScripts', '<script src="/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>') %>
+<% block('localScripts', '<script src="/vendors/fullcalendar/lib/main.min.js"></script>') %>
+<% block('localScripts', '<script src="/vendors/fullcalendar/lib/locales-all.min.js"></script>') %>
+<% block('localScripts', '<script src="/vendors/jquery.repeater/jquery.repeater.min.js"></script>') %>
+<% block('localScripts', '<script src="/js/backend/schedule/index.js"></script>') %>

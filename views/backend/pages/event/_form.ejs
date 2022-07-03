@@ -1,0 +1,252 @@
+<form autocomplete="off" id="formEvent" data-edit-id="<%= (eventData != undefined) ? eventData.id : '' %>" class="" data-fv-framework="bootstrap4"
+  data-fv-message="<%= __('Invalidate') %>" data-fv-icon-valid="glyphicon glyphicon-ok"
+  data-fv-icon-invalid="glyphicon glyphicon-remove" data-fv-icon-validating="glyphicon glyphicon-refresh"
+  data-fv-live="enabled" data-manner="<%= (eventData.id == undefined) ? 'add' : 'edit' %>" data-dateStart="<%= (eventData.dateStart) ? moment(eventData.dateStart, 'YYYY-MM-DD').format('DD/MM/YYYY') : ''%>"
+  data-dateEnd="<%= (eventData.dateEnd) ? moment(eventData.dateEnd, 'YYYY-MM-DD').format('DD/MM/YYYY') : ''%>" data-timeStart="<%= (eventData.timeStart) ? eventData.timeStart : ''%>" 
+  data-timeEnd="<%= (eventData.timeEnd) ? eventData.timeEnd : ''%>">
+  <input type='hidden' name='_csrf' value='<%= _csrf %>'> 
+  <div class="row">
+    <div class="col-md-8 col-lg-8">
+      <input name="id" value="<%=(eventData) ? eventData.id : ''%>" hidden>
+      <div class="form-group">
+        <label class="form-control-label"><%= __('Title') %></label>
+        <input value="<%=(eventData.title) ? eventData.title : ''%>" type="text" class="form-control" id="title"
+          name="title" data-required-error="<%= __('Required field') %>" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-control-label"><%= __('Motto') %></label>
+        <textarea class="form-control" id="editorMotto" name="motto" rows="2" data-required-error="<%= __('Required field') %>" required><%= (eventData.motto) ? eventData.motto : ''%></textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="form-control-label"><%= __('Description') %></label>
+        <textarea class="form-control" name="description" id="editorDescription" data-required-error="<%= __('Required field') %>" required><%= (eventData.description) ? eventData.description : ''%></textarea>
+      </div>
+      
+      <div class="form-group form-material">
+        <label class="form-control-label"><%= __('Type') %></label>
+        <ul class="list-unstyled list-inline">
+          <li class="list-inline-item">
+            <div class="form-check">
+              <label class="form-check-label">
+                <input type="radio" class="form-check-input" id="typeSingle" name="type" value="<%= TYPE.SINGLE %>" checked
+                <%=(eventData.type == 0)? 'checked':''%> />
+                <i class="input-helper"></i>
+                <%= __('Single') %>
+              </label>
+            </div>
+          </li>
+          <li class="list-inline-item">
+            <div class="form-check">
+              <label class="form-check-label">
+                <input type="radio" class="form-check-input" id="typeRecurring" name="type" value="<%= TYPE.RECURRING %>"
+                <%=(eventData.type == 1)? 'checked':''%> />
+                <i class="input-helper"></i>
+                <%= __('Recurring') %>
+              </label>
+            </div>
+          </li>
+        </ul>  
+      </div>
+      
+      <div id="singleTimeContainer">
+        <div class="form-group">
+          <label for="duration"><%= __('Duration') %></label>
+          <div id="datepicker-popup" class="input-group date datepicker">
+            <input type="text" id="singleDuration" name="singleDuration" class="form-control">
+            <span class="input-group-addon input-group-append border-left">
+              <span class="mdi mdi-calendar input-group-text"></span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div id="recurringTimeContainer">
+        <div class="form-group">
+          <label for="duration"><%= __('Duration') %></label>
+          <div id="datepicker-popup" class="input-group date datepicker">
+            <input type="text" id="recurringDuration" name="recurringDuration" class="form-control">
+            <span class="input-group-addon input-group-append border-left">
+              <span class="mdi mdi-calendar input-group-text"></span>
+            </span>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-6 col-md-6">
+            <div class="form-group">
+              <label><%= __('Time start')%></label>
+              <div class="input-group date timeStart" data-target-input="nearest">
+                <div class="input-group timeStart" data-target="#timeStart" data-toggle="datetimepicker">
+                  <input type="text" name="timeStart" class="form-control bootstrap-datetimepicker-input" value="<%= (eventData.timeStart) ? eventData.timeStart : '08:00'%>" />
+                  <div class="input-group-addon input-group-append">
+                    <i class="mdi mdi-clock input-group-text"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-md-6">
+            <div class="form-group">
+              <label><%= __('Time end')%></label>
+              <div class="input-group date timeEnd" data-target-input="nearest">
+                <div class="input-group timeEnd" data-target="#timeEnd" data-toggle="datetimepicker">
+                  <input type="text" name="timeEnd" class="form-control bootstrap-datetimepicker-input" value="<%= (eventData.timeEnd) ? eventData.timeEnd : '12:00'%>" />
+                  <div class="input-group-addon input-group-append">
+                    <i class="mdi mdi-clock input-group-text"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="duration"><%= __('Recurring day') %></label>
+          <ul class="list-unstyled list-inline">
+            <li class="list-inline-item">
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input type="checkbox" class="form-check-input" name="recurringDay" value="1"
+                  <%=(eventData.recurringDay && eventData.recurringDay.includes('1'))? 'checked':''%> />
+                  <i class="input-helper"></i>
+                  <%= __('Monday') %>
+                </label>
+              </div>
+            </li>
+            <li class="list-inline-item">
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input type="checkbox" class="form-check-input" name="recurringDay" value="2"
+                  <%=(eventData.recurringDay && eventData.recurringDay.includes('2'))? 'checked':''%> />
+                  <i class="input-helper"></i>
+                  <%= __('Tuesday') %>
+                </label>
+              </div>
+            </li>
+            <li class="list-inline-item">
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input type="checkbox" class="form-check-input" name="recurringDay" value="3"
+                  <%=(eventData.recurringDay && eventData.recurringDay.includes('3'))? 'checked':''%> />
+                  <i class="input-helper"></i>
+                  <%= __('Wednesday') %>
+                </label>
+              </div>
+            </li>
+            <li class="list-inline-item">
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input type="checkbox" class="form-check-input" name="recurringDay" value="4"
+                  <%=(eventData.recurringDay && eventData.recurringDay.includes('4'))? 'checked':''%> />
+                  <i class="input-helper"></i>
+                  <%= __('Thursday') %>
+                </label>
+              </div>
+            </li>
+            <li class="list-inline-item">
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input type="checkbox" class="form-check-input" name="recurringDay" value="5"
+                  <%=(eventData.recurringDay && eventData.recurringDay.includes('5'))? 'checked':''%> />
+                  <i class="input-helper"></i>
+                  <%= __('Friday') %>
+                </label>
+              </div>
+            </li>
+            <li class="list-inline-item">
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input type="checkbox" class="form-check-input" name="recurringDay" value="6"
+                  <%=(eventData.recurringDay && eventData.recurringDay.includes('6'))? 'checked':''%> />
+                  <i class="input-helper"></i>
+                  <%= __('Saturday') %>
+                </label>
+              </div>
+            </li>
+            <li class="list-inline-item">
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input type="checkbox" class="form-check-input" name="recurringDay" value="7" checked
+                  <%=(eventData.recurringDay && eventData.recurringDay.includes('7'))? 'checked':''%> />
+                  <i class="input-helper"></i>
+                  <%= __('Sunday') %>
+                </label>
+              </div>
+            </li>
+          </ul> 
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 col-lg-4">
+      <div class="upload-wrap">
+        <label class="form-control-label"><%= __('Featured Image') %></label>
+        <div class="upload">
+          <input type="file" data-default-file="<%= eventData.media ? eventData.media.thumbnail.path : '/images/no-thumb.png' %>" class="dropify" name="thumbnail" data-field="thumbnail" data-max-file-size="10M" />
+        </div>
+      </div>
+      <!-- End upload max file size -->
+
+      <div class="form-group mt-3">
+        <label class="form-control-label"><%= __('Amount') %></label>
+        <input value="<%=(eventData.amount) ? eventData.amount : '0'%>" type="number" class="form-control" id="amount"
+          name="amount">
+      </div>
+
+      <div class="form-group">
+        <label class="form-control-label"><%= __('Venue') %></label>
+        <input value="<%=(eventData.venue) ? eventData.venue : ''%>" type="text" class="form-control" id="venue"
+          name="venue">
+      </div>
+
+      <div class="form-group">
+        <label class="form-control-label"><%= __('Address') %></label>
+        <input value="<%=(eventData.address) ? eventData.address : ''%>" type="text" class="form-control" id="address"
+          name="address" data-required-error="<%= __('Required field') %>" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-control-label"><%= __('Map Iframe') %></label>
+        <input value="<%=(eventData.mapIframe) ? eventData.mapIframe : ''%>" type="text" class="form-control" id="mapIframe"
+          name="mapIframe">
+      </div>
+
+      <div class="form-group form-material">
+        <label class="form-control-label"><%= __('Status') %></label>
+        <ul class="list-unstyled list-inline">
+          <li class="list-inline-item">
+            <div class="form-check">
+              <label class="form-check-label">
+                <input id="statusPublish" type="radio" class="form-check-input" name="status" value="<%= STATUS.ACTIVE %>" checked
+                <%=(eventData.status == 1)? 'checked':''%> />
+                <i class="input-helper"></i>
+                <%= __('Publish') %>
+              </label>
+            </div>
+          </li>
+          <li class="list-inline-item">
+            <div class="form-check">
+              <label class="form-check-label">
+                <input id="statusDraft" type="radio" class="form-check-input" name="status" value="<%= STATUS.DRAFT %>"
+                <%=(eventData.status == 0)? 'checked':''%> />
+                <i class="input-helper"></i>
+                <%= __('Draft') %>
+              </label>
+            </div>
+          </li>
+        </ul>  
+      </div>
+    </div>
+
+    <div class="col-12">
+      <div class="alert alert-danger hidden"></div>
+  
+      <div class="form-group form-material">
+        <button id="btnFormEvent" type="submit"
+          class="btn btn-primary"><%= eventData.id ? __('Update') : __('Add New') %></button>
+      </div>
+    </div>
+  </div>
+</form>

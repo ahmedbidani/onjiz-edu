@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<%- exposeLocalsToBrowser() %>
+<html lang="<%= lang%>">
+
+<head>
+  <title></title>
+  <% /* Viewport tag for sensible mobile support */ %>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="ZiniSoft.NET">
+  <link rel="icon" href="">
+  <link rel="stylesheet" href="/vendors/select2/dist/css/select2.min.css">
+  <link rel="stylesheet" href="/styles/style.min.css">
+  <%- blocks.localCss %>
+  <link rel="stylesheet" href="/styles/custom.css">
+</head>
+
+<body class="skin-default card-no-border">
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
+    <div class="preloader">
+        <div class="loader">
+            <div class="loader__figure"></div>
+            <p class="loader__label"></p>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <section id="wrapper">
+      <%- body %>
+    </section>
+    <script src="/dependencies/sails.io.js"></script>
+    <script src="/dependencies/lodash.js"></script>
+    
+    <script src="/vendors/moment/moment.min.js"></script>
+    <script src="/vendors/jquery/jquery-3.2.1.min.js"></script>
+    <script src="/vendors/sweetalert/sweetalert.min.js"></script>
+    <script src="/vendors/formvalidation/formValidation.min.js"></script>
+    <script src="/vendors/formvalidation/framework/bootstrap4.min.js"></script>
+    <script src="/vendors/select2/dist/js/select2.full.min.js"></script>
+    <script src="/vendors/validate/validator.min.js"></script>
+    <script src="/vendors/popper/popper.min.js"></script>
+    <script src="/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <%- blocks.localScripts %>
+    <script src="/dependencies/cloud.js"></script>
+    <script src="/js/backend/cloud.setup.js"></script>
+    <script src="/js/backend/base.js"></script>
+    <script src="/js/backend/main.js"></script>
+  <script>
+    var EKPAction = '<%=action%>';
+  </script>
+</body>
+
+</html>

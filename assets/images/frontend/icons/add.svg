@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="42px" height="42px" preserveAspectRatio="xMaxYMax meet" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 46.2 (44496) - http://www.bohemiancoding.com/sketch -->
+    <title>+</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <filter x="-6.1%" y="-12.1%" width="117.3%" height="135.3%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="14" dy="15" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="13.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.423628827   0 0 0 0 0.423628827   0 0 0 0 0.423628827  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+        <path d="M443.803125,138.859375 L456.9,138.653125 L455.86875,155.978125 C451.468728,155.840624 447.515643,155.771875 444.009375,155.771875 L444.215625,169.075 L426.890625,168.86875 C427.028126,164.331227 427.096875,159.965646 427.096875,155.771875 L414.721875,155.978125 C414.515624,149.446842 414.378125,145.975002 414.309375,145.5625 L414,139.065625 L427.096875,139.065625 L426.890625,127.721875 C433.421908,127.515624 436.893748,127.378125 437.30625,127.309375 L443.803125,127 L443.803125,138.859375 Z" id="path-2"></path>
+        <filter x="-42.0%" y="-42.8%" width="197.9%" height="199.8%" filterUnits="objectBoundingBox" id="filter-3">
+            <feOffset dx="3" dy="3" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="6.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.501556839 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Welcome" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.380024132">
+        <g id="profile" transform="translate(-859.000000, -439.000000)">
+            <g id="Group" filter="url(#filter-1)" transform="translate(456.000000, 323.000000)">
+                <g id="Group-30">
+                    <g id="+">
+                        <use fill="black" fill-opacity="1" filter="url(#filter-3)" xlink:href="#path-2"></use>
+                        <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-2"></use>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

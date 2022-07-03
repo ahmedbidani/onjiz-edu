@@ -1,0 +1,130 @@
+<div class="tab-pane" id="healthyInfo" role="tabpanel">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-6">
+        <!-- height -->
+        <div class="form-group">
+          <label for="height"><%= __('Name') + (": ") + medical.student.fullName %></label>
+        </div>
+      </div>
+      <div class="col-6">
+        <!-- weight -->
+        <div class="form-group">
+          <label for="weight"><%= __('Date') + (": ") + medical.medical.date %></label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<form autocomplete="off" id="formMedical" data-edit-id="<%= (medical != undefined) ? medical.id : '' %>" class="" data-fv-framework="bootstrap4"
+  data-fv-message="<%= __('Invalidate') %>" data-fv-icon-valid="glyphicon glyphicon-ok"
+  data-fv-icon-invalid="glyphicon glyphicon-remove" data-fv-icon-validating="glyphicon glyphicon-refresh"
+  data-fv-live="enabled" data-manner="<%= (medical.id == undefined) ? 'add' : 'edit' %>" data-dateStart="<%= (medical.dateStart) ? moment(medical.dateStart, 'YYYY-MM-DD').format('DD/MM/YYYY') : ''%>"
+  data-dateEnd="<%= (medical.dateEnd) ? moment(medical.dateEnd, 'YYYY-MM-DD').format('DD/MM/YYYY') : ''%>" data-timeStart="<%= (medical.timeStart) ? medical.timeStart : ''%>" 
+  data-timeEnd="<%= (medical.timeEnd) ? medical.timeEnd : ''%>">
+  <input type='hidden' name='_csrf' value='<%= _csrf %>'>
+  <div class="tab-pane" id="healthyInfo" role="tabpanel">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-6">
+          <!-- height -->
+          <div class="form-group">
+            <label for="height"><%= __('Height (cm)') %></label>
+            <input type="number" step="0.1" class="form-control" id="height" name="height"
+              placeholder="<%= ('Height') %>" value="<%= medical.height %>" min="50" max="120">
+          </div>
+        </div>
+        <div class="col-6">
+          <!-- weight -->
+          <div class="form-group">
+            <label for="weight"><%= __('Weight (kg)') %></label>
+            <input type="number" step="0.1" class="form-control" id="weight" name="weight"
+              placeholder="<%= ('Weight') %>" value="<%= medical.weight %>" min="8" max="30">
+          </div>
+        </div>
+        <div class="col-6">
+          <!-- bloodGroup -->
+          <div class="form-group">
+            <label for="bloodGroup"><%= __('Blood Group') %></label>
+            <!-- <input type="text" class="form-control" id="bloodGroup" name="bloodGroup" placeholder="Nhóm máu"
+              value="<%= medical.bloodGroup %>"> -->
+            <select id="bloodGroup" name="bloodGroup" class="form-control"
+              data-placeholder="<%= ('Choose') %>">
+              <option value="" <%= (medical.bloodGroup == "" ? 'selected' : '') %>><%= ('Unknown') %>
+              </option>
+              <option value="O-" <%= (medical.bloodGroup == "O-" ? 'selected' : '') %>>O-</option>
+              <option value="O+" <%= (medical.bloodGroup == "O+" ? 'selected' : '') %>>O+</option>
+              <option value="A-" <%= (medical.bloodGroup == "A-" ? 'selected' : '') %>>A-</option>
+              <option value="A+" <%= (medical.bloodGroup == "A+" ? 'selected' : '') %>>A+</option>
+              <option value="B-" <%= (medical.bloodGroup == "B-" ? 'selected' : '') %>>B-</option>
+              <option value="B+" <%= (medical.bloodGroup == "B+" ? 'selected' : '') %>>B+</option>
+              <option value="AB-" <%= (medical.bloodGroup == "AB-" ? 'selected' : '') %>>AB-</option>
+              <option value="AB+" <%= (medical.bloodGroup == "AB+" ? 'selected' : '') %>>AB+</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-6">
+          <!-- allergy -->
+          <div class="form-group">
+            <label for="allergy"><%= __('Allergy') %></label>
+            <input type="text" class="form-control" id="allergy" name="allergy"
+              placeholder="<%= __('Allergy') %>" value="<%= medical.allergy %>">
+          </div>
+        </div>
+        <div class="col-6">
+          <!-- heartRate -->
+          <div class="form-group">
+            <label for="heartRate"><%= __('Heart rate (per minute)') %></label>
+            <input type="number" class="form-control" id="heartRate" name="heartRate"
+              placeholder="<%= __('Heart rate') %>" value="<%= medical.heartRate %>" min="40" max="120">
+          </div>
+        </div>
+        <div class="col-6">
+          <!-- eyes -->
+          <div class="form-group">
+            <label for="eyes"><%= __('Eye') %></label>
+            <input type="text" class="form-control" id="eyes" name="eyes" placeholder="<%= __('Eye') %>"
+              value="<%= medical.eyes %>" min="0" max="12">
+          </div>
+        </div>
+        <div class="col-6">
+          <!-- ear -->
+          <div class="form-group">
+            <label for="ear"><%= __('Ear') %></label>
+            <input type="text" class="form-control" id="ears" name="ears" placeholder="<%= __('Ear') %>"
+              value="<%= medical.ears %>" min="0" max="12">
+          </div>
+        </div>
+        <div class="col-6">
+          <!-- note -->
+          <div class="form-group">
+            <label for="notes"><%= __('Note') %></label>
+            <input type="text-area" class="form-control" id="notes" name="notes"
+              placeholder="<%= __('Note') %>" value="<%= medical.notes %>">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-12">
+        <div class="alert alert-danger hidden"></div>
+        <div class="text-left">
+          <a class="btn btn-primary" href="/backend/medical/detail/<%= medical.medical.id %>"><%= __('Back') %></a>
+            <!-- <div class="form-group form-material">
+              <button id="btnFormStudentMedical" type="submit" class="btn btn-primary waves-effect
+                waves-classic"><%= medical.id ? __('Update') : __('Add new') %></button>
+            </div> -->
+          </div>
+        <div class="text-right">
+          <div class="form-group form-material">
+            <button id="btnFormStudentMedical" type="submit" class="btn btn-primary waves-effect
+              waves-classic"><%= medical.id ? __('Update') : __('Add new') %></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
