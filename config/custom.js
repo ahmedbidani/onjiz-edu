@@ -23,6 +23,13 @@ module.exports.custom = {
    **************************************************************************/
   baseUrl: "http://localhost:1337",
 
+  /**
+   * Aws settings
+   */
+   awsAccessKeyId: "******", 
+   awsSecretAccessKey: "*****", 
+   awsRegion: "us-east-1",
+
   /**************************************************************************
    *                                                                         *
    * The TTL (time-to-live) for various sorts of tokens before they expire.  *

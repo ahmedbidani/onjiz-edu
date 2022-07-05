@@ -7,11 +7,21 @@
  */
 
 const moment = require("moment");
-const Sharp = require("sharp/lib");
+
+/**
+ * Old way below of using local storage using library Sharp
+ */
+//const Sharp = require("sharp/lib");
+
+/**
+ * New way to upload to Aws s3
+ */
+ var aws_module = require('aws-sdk');
 
 const ErrorMessages = require("../../../../config/errors");
 const MediaService = require("../../../services/MediaService");
 const Utils = require("../../../utils");
+const { getMaxListeners } = require("process");
 
 const BackendMediaController = {
   /**
@@ -89,9 +99,21 @@ const BackendMediaController = {
     );
   },
 
+  /**
+   * 
+   * New way
+   */
   uploadThumbnail: async (req, res) => {
     // GET ALL PARAMS
     const params = req.allParams();
+
+    // Initialize aws s3
+    let bucketName = "someBucketName"
+    let s3_instance = new aws_module.S3();
+    let  bucketParam = {Bucket: bucketName};
+    s3_instance.createBucket(bucketParam);
+    var s3Bucket = new aws_module.S3( { params: {Bucket: bucketName} } );
+
     //upload file
     let filesUpload = [];
     if (req.file("files[]")) {
@@ -118,55 +140,27 @@ const BackendMediaController = {
           for (let size of uploadConfig.SIZES) {
             let destFileName =
               filename[0] + "_" + size.name + "." + filename[1];
-            if (size.type === "origin") {
-              Sharp(file.fd)
-                .resize(size.width)
-                .toFile(
-                  require("path").resolve(
-                    uploadConfig.PATH_FOLDER,
-                    "assets/uploads/"
-                  ) +
-                    "/" +
-                    moment().format("YYYY/MM") +
-                    "/" +
-                    destFileName
-                )
-                .then((info) => {
-                  //filesUpload[count].thumbnail.width = info.width;
-                  //filesUpload[count].thumbnail.height = info.height;
-                })
-                .catch((err) => {
-                  sails.log(err);
-                });
-              filesUpload[count].thumbnail.path =
-                "assets/uploads/" +
-                moment().format("YYYY/MM") +
-                "/" +
-                destFileName;
-            } else {
-              Sharp(file.fd)
-                .resize(size.width, size.height)
-                .toFile(
-                  require("path").resolve(
-                    uploadConfig.PATH_FOLDER,
-                    "assets/uploads/"
-                  ) +
-                    "/" +
-                    moment().format("YYYY/MM") +
-                    "/" +
-                    destFileName
-                )
-                .then((info) => {})
-                .catch((err) => {
-                  sails.log(err);
-                });
-              filesUpload[count].thumbnail.sizes[size.type] = {
-                width: size.width,
-                height: size.height,
-                path:
-                  "/uploads/" + moment().format("YYYY/MM") + "/" + destFileName,
+
+
+              let fileBuffer = file.fd.buffer._readableState.buffer[0]
+              
+              let data = {
+                Bucket: bucketName,
+                Key: 'image1', fileBuffer, ACL: 'public-read', ContentEncoding: 'base64',
+                ContentType: 'image/png'
               };
-            }
+
+              s3Bucket.upload(data, function (err, data) {
+                if (err) {
+                  console.log('Error uploading Image!');
+                  res.json({error: err})
+                } else {
+                  console.log('Image upload successfully!', data);
+                  res.json({message: 'Image upload successfully!'})
+                }
+              } )
+
+        
           }
           count++;
         }
@@ -201,6 +195,123 @@ const BackendMediaController = {
       data: medias,
     });
   },
+
+  /**
+   * 
+   * Old way
+   */
+  // uploadThumbnail: async (req, res) => {
+  //   // GET ALL PARAMS
+  //   const params = req.allParams();
+  //   //upload file
+  //   let filesUpload = [];
+  //   if (req.file("files[]")) {
+  //     let ofiles = await sails.helpers.uploadFile.with({
+  //       req: req,
+  //       file: "files[]",
+  //     });
+  //     if (ofiles.length) {
+  //       let count = 0;
+  //       for (let file of ofiles) {
+  //         filesUpload.push({
+  //           thumbnail: {
+  //             width: 0,
+  //             height: 0,
+  //             path: "",
+  //             sizes: {},
+  //           },
+  //         });
+  //         // sails.log('ofiles', file);
+  //         let filename = file.fd.replace(/^.*[\\\/]/, "");
+  //         filename = filename.split(".");
+  //         let uploadConfig = sails.config.custom.UPLOAD;
+  //         //sails.log(uploadConfig.PATH_FOLDER);
+  //         for (let size of uploadConfig.SIZES) {
+  //           let destFileName =
+  //             filename[0] + "_" + size.name + "." + filename[1];
+  //           if (size.type === "origin") {
+  //             Sharp(file.fd)
+  //               .resize(size.width)
+  //               .toFile(
+  //                 require("path").resolve(
+  //                   uploadConfig.PATH_FOLDER,
+  //                   "assets/uploads/"
+  //                 ) +
+  //                   "/" +
+  //                   moment().format("YYYY/MM") +
+  //                   "/" +
+  //                   destFileName
+  //               )
+  //               .then((info) => {
+  //                 //filesUpload[count].thumbnail.width = info.width;
+  //                 //filesUpload[count].thumbnail.height = info.height;
+  //               })
+  //               .catch((err) => {
+  //                 sails.log(err);
+  //               });
+  //             filesUpload[count].thumbnail.path =
+  //               "assets/uploads/" +
+  //               moment().format("YYYY/MM") +
+  //               "/" +
+  //               destFileName;
+  //           } else {
+  //             Sharp(file.fd)
+  //               .resize(size.width, size.height)
+  //               .toFile(
+  //                 require("path").resolve(
+  //                   uploadConfig.PATH_FOLDER,
+  //                   "assets/uploads/"
+  //                 ) +
+  //                   "/" +
+  //                   moment().format("YYYY/MM") +
+  //                   "/" +
+  //                   destFileName
+  //               )
+  //               .then((info) => {})
+  //               .catch((err) => {
+  //                 sails.log(err);
+  //               });
+  //             filesUpload[count].thumbnail.sizes[size.type] = {
+  //               width: size.width,
+  //               height: size.height,
+  //               path:
+  //                 "/uploads/" + moment().format("YYYY/MM") + "/" + destFileName,
+  //             };
+  //           }
+  //         }
+  //         count++;
+  //       }
+  //     }
+  //   }
+
+  //   if (filesUpload.length == 0) {
+  //     return res.badRequest(ErrorMessages.MEDIA_UPLOAD_FAILDED);
+  //   }
+
+  //   // PREPARE DATA MEDIA
+  //   let medias = [];
+  //   for (let file of filesUpload) {
+  //     let newData = {
+  //       title: params.title ? params.title : String(moment().valueOf()), // REQUIRED
+  //       thumbnail: file.thumbnail,
+  //       caption:
+  //         params.caption && params.caption.trim().length ? params.caption : "",
+  //       status: params.status
+  //         ? params.status
+  //         : sails.config.custom.STATUS.ACTIVE,
+  //       uploadBy: req.me.id,
+  //       school: req.me.school,
+  //     };
+
+  //     // ADD NEW DATA MEDIA
+  //     medias.push(await MediaService.add(newData));
+  //   }
+
+  //   // RETURN DATA MEDIA
+  //   return res.json({
+  //     data: medias,
+  //   });
+  // },
   /**
 	 @api {put} /Media/get 02. Get detail a Media
 		@apiName get
